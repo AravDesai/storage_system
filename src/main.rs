@@ -1,5 +1,5 @@
 use eframe::egui::{
-    self, Align2, Button, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2, Rect,
+    self, Align2, Button, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2, Rect, Ui,
 };
 use egui_circle_trim::egui_circle_trim::CircleTrim;
 use lb_rs::{Config, Core, File, Uuid};
@@ -32,6 +32,7 @@ struct MyApp {
     outer_radius: f32,
     start_angle: i32,
     data: Vec<Data>,
+    repaint_check: bool,
 }
 
 impl MyApp {
@@ -51,17 +52,26 @@ impl MyApp {
             inner_radius: 50.0,
             outer_radius: 70.0,
             start_angle: 0,
+            repaint_check: true,
         }
     }
-}
+    fn file_recurser(&self, ui: &mut Ui,layer_id: i32, parent: Data, radius: f32, mut inner_bound: i32, outer_bound: i32, center: Pos2) {
+        for file in &self.data {
+            if file.file.parent == parent.file.id && file.file.id != self.current_root.file.id {
+                let chunk = ((file.size/parent.size) * 360) as i32;
+                let trim = CircleTrim::new(Color32::BLUE, radius, inner_bound, inner_bound + chunk, center, layer_id);
+                
+                ui.add(trim);
 
-fn file_recurser(parent: Data, data: Vec<Data>, root: Data) {
-    let mut files = vec![];
-    for file in data {
-        if (file.file.parent == parent.file.id && file.file.id != root.file.id) {
-            files.push(file);
+                if file.file.is_folder(){
+                    self.file_recurser(ui, layer_id + 1, file.clone(), radius + 20.0, inner_bound, inner_bound + chunk, center);
+                }
+
+                inner_bound+= chunk;
+            }
         }
     }
+
 }
 
 impl eframe::App for MyApp {
@@ -104,22 +114,6 @@ impl eframe::App for MyApp {
                 painter
                     .clone()
                     .with_layer_id(LayerId {
-                        order: egui::Order::PanelResizeLine,
-                        id: Id::new(4),
-                    })
-                    .circle(
-                        window_size.max / 2.0,
-                        70.0,
-                        Color32::TRANSPARENT,
-                        egui::Stroke {
-                            width: 2.0,
-                            color: Color32::from_rgb(255, 0, 0),
-                        },
-                    );
-
-                painter
-                    .clone()
-                    .with_layer_id(LayerId {
                         order: egui::Order::Foreground,
                         id: Id::new(1),
                     })
@@ -134,29 +128,32 @@ impl eframe::App for MyApp {
                         Color32::BLACK,
                     );
                 ui.allocate_ui_at_rect(center_text, |ui| {
-                    ui.label(self.current_root.file.name.to_string())
+                    ui.label(self.current_root.size.to_string() + " MB")
                         .on_hover_text(self.current_root.file.name.to_string());
                 });
-                let trim = CircleTrim::new(Color32::BLUE, self.inner_radius, 0, 90, center.min);
 
-                ui.allocate_ui_at_rect(CircleTrim::get_center_rect(&trim), |ui| {
-                    ui.with_layer_id(
-                        LayerId {
-                            order: egui::Order::Foreground,
-                            id: Id::new(1),
-                        },
-                        |ui| {
-                            ui.add(Button::new("").fill(Color32::WHITE).rounding(100.0).small())
-                                .on_hover_text("Test")
-                        },
-                    )
-                });
-                ui.add(trim);
-                file_recurser(
-                    self.current_root.clone(),
-                    self.data.clone(),
-                    self.current_root.clone(),
-                );
+                //ui.add(CircleTrim::new(Color32::RED, 70.0, 0, 180, center.min));
+
+
+
+
+                // ui.allocate_ui_at_rect(CircleTrim::get_center_rect(&trim), |ui| {
+                //     ui.with_layer_id(
+                //         LayerId {
+                //             order: egui::Order::Foreground,
+                //             id: Id::new(1),
+                //         },
+                //         |ui| {
+                //             ui.add(Button::new("").fill(Color32::WHITE).rounding(100.0).small())
+                //                 .on_hover_text("Test")
+                //         },
+                //     )
+                // });
+
+                if (self.repaint_check) {
+                    self.file_recurser(ui, 2, self.current_root.clone(), 50.0, 0, 360, center.min);
+                    self.repaint_check = false;
+                }
             });
         });
     }

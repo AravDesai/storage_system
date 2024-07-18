@@ -5,7 +5,7 @@ pub mod egui_circle_trim {
     use eframe::egui::layers::ShapeIdx;
     use eframe::egui::{
         Button, Color32, Context, Id, Label, LayerId, Painter, Pos2, Rect, Response, Rounding,
-        Stroke, Ui, Vec2, WidgetText,
+        Shape, Stroke, Ui, Vec2, WidgetText,
     };
 
     use eframe::epaint::tessellator::{path, Path};
@@ -17,6 +17,7 @@ pub mod egui_circle_trim {
         start_angle: i32,
         end_angle: i32,
         center: Pos2,
+        layer: i32,
     }
 
     impl CircleTrim {
@@ -26,6 +27,7 @@ pub mod egui_circle_trim {
             start_angle: i32,
             end_angle: i32,
             center: Pos2,
+            layer: i32,
         ) -> Self {
             Self {
                 color,
@@ -33,32 +35,39 @@ pub mod egui_circle_trim {
                 start_angle,
                 end_angle,
                 center,
+                layer,
             }
         }
 
         pub fn get_center_rect(&self) -> Rect {
             return Rect {
                 min: Pos2 {
-                    x: self.center.x + self.inner_radius - 12.0
-                        + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).sin(),
-                    y: self.center.y + self.inner_radius - 12.0
-                        + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).cos(),
+                    x: self.center.x + self.inner_radius,
+                    //+ ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).sin(),
+                    y: self.center.y + self.inner_radius,
+                    //+ ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).cos(),
                 },
                 max: Pos2 {
-                    x: self.center.x + self.inner_radius - 12.0
-                        + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).sin(),
-                    y: self.center.y + self.inner_radius - 12.0
-                        + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).cos(),
+                    x: self.center.x + self.inner_radius,
+                    //+ ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).sin(),
+                    y: self.center.y + self.inner_radius,
+                    //+ ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).cos(),
                 },
             };
         }
 
         pub fn make_button(&self, ui: &mut Ui) -> Response {
             return ui
-                .allocate_ui_at_rect(self.get_center_rect(), |ui| {
-                    ui.add(Button::new("").fill(Color32::WHITE).rounding(100.0).small());
+                .allocate_ui_at_rect(Rect { min: Pos2 { x: 0.0, y: 0.0 }, max: Pos2 { x: 0.0, y: 0.0 } }, |ui| {
+                    ui
+                        .add(Button::new("").fill(Color32::TRANSPARENT).rounding(100.0).small())
+                        .clicked()
                 })
                 .response;
+        }
+
+        pub fn text(&self, ui: &mut Ui) -> Response {
+            return ui.label("heeho");
         }
 
         //Sector of annulus
@@ -82,38 +91,36 @@ pub mod egui_circle_trim {
                 });
             }
 
-            painter.add(PathShape {
+            painter
+            .clone()
+            .with_layer_id(LayerId {
+                order: eframe::egui::Order::PanelResizeLine,
+                id: Id::new(self.layer),
+            })
+            .add(PathShape {
                 points: path_points,
                 closed: true,
-                fill: Color32::BLUE,
+                fill: self.color,
                 stroke: PathStroke {
                     width: 1.0,
-                    color: eframe::epaint::ColorMode::Solid(self.color),
+                    color: eframe::epaint::ColorMode::Solid(Color32::BLACK),
                 },
             });
-
-            //painter.rect_filled(self.get_center_rect(), Rounding::ZERO, Color32::WHITE);
         }
 
         fn add_contents(&mut self, ui: &mut Ui) -> eframe::egui::Response {
-            let button_pos = self.get_center_rect();
-
             let desired_size = Vec2 {
-                x: button_pos.width(),
-                y: button_pos.height(),
+                x: self.center.x,
+                y: self.center.y,
             };
-
-            // let desired_size = Vec2{
-            //     x: self.center.x,
-            //     y: self.center.y,
-            // };
 
             let (rect, response) =
                 ui.allocate_exact_size(desired_size, eframe::egui::Sense::click());
 
             if ui.is_rect_visible(rect) {
                 self.paint_annulus_sector(ui);
-                //self.make_button(ui);
+                self.make_button(ui);
+                //self.text(ui);
             }
 
             response
