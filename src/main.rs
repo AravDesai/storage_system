@@ -14,6 +14,11 @@ struct Data {
     size: u64,
 }
 
+struct Tree {
+    data: Data,
+    children: Vec<Data>,
+}
+
 fn main() {
     let options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default().with_inner_size([500.0, 500.0]),
@@ -29,7 +34,6 @@ fn main() {
 struct MyApp {
     current_root: Data,
     inner_radius: f32,
-    outer_radius: f32,
     start_angle: i32,
     data: Vec<Data>,
 }
@@ -45,14 +49,18 @@ impl MyApp {
                 root = item;
             }
         }
+
+        let mut sorted = vec![];
+        sorted.push(root);
+
         Self {
             data: data_clone,
-            current_root: root,
+            current_root: sorted[0].clone(),
             inner_radius: 50.0,
-            outer_radius: 70.0,
             start_angle: 0,
         }
     }
+<<<<<<< Updated upstream
 }
 
 fn file_recurser(parent: Data, data: Vec<Data>, root: Data) {
@@ -60,6 +68,23 @@ fn file_recurser(parent: Data, data: Vec<Data>, root: Data) {
     for file in data {
         if (file.file.parent == parent.file.id && file.file.id != root.file.id) {
             files.push(file);
+=======
+
+    fn file_recurser(&self, ui: &mut Ui,layer_id: i32, parent: Data, radius: f32, mut inner_bound: i32, outer_bound: i32, center: Pos2) {
+        for file in &self.data {
+            if file.file.parent == parent.file.id && file.file.id != self.current_root.file.id {
+                let chunk = ((file.size/parent.size) * 360) as i32;
+                let trim = CircleTrim::new(Color32::BLUE, radius, inner_bound, inner_bound + chunk, center, layer_id);
+                
+                ui.add(trim);
+
+                if file.file.is_folder(){
+                    self.file_recurser(ui, layer_id + 1, file.clone(), radius + 20.0, inner_bound, inner_bound + chunk, center);
+                }   
+
+                inner_bound+= chunk;
+            }
+>>>>>>> Stashed changes
         }
     }
 }
@@ -69,7 +94,7 @@ impl eframe::App for MyApp {
         egui::CentralPanel::default().show(ctx, |ui| {
             let window_size = ctx.input(|i: &egui::InputState| i.screen_rect());
 
-            ui.heading("Storage Viewer");
+            ui.heading("Memory Viewer");
 
             let center = Rect {
                 min: window_size.max / 2.0,
@@ -85,21 +110,21 @@ impl eframe::App for MyApp {
             };
             ui.allocate_ui_at_rect(center, |ui| {
                 let painter = ui.painter();
-                painter
-                    .clone()
-                    .with_layer_id(LayerId {
-                        order: egui::Order::PanelResizeLine,
-                        id: Id::new(2),
-                    })
-                    .circle(
-                        window_size.max / 2.0,
-                        50.0,
-                        Color32::WHITE,
-                        egui::Stroke {
-                            width: 0.0,
-                            color: Color32::from_rgb(255, 255, 255),
-                        },
-                    );
+                // painter
+                //     .clone()
+                //     .with_layer_id(LayerId {
+                //         order: egui::Order::PanelResizeLine,
+                //         id: Id::new(2),
+                //     })
+                //     .circle(
+                //         window_size.max / 2.0,
+                //         50.0,
+                //         Color32::WHITE,
+                //         egui::Stroke {
+                //             width: 0.0,
+                //             color: Color32::from_rgb(255, 255, 255),
+                //         },
+                //     );
 
                 painter
                     .clone()
@@ -139,6 +164,7 @@ impl eframe::App for MyApp {
                 });
                 let trim = CircleTrim::new(Color32::BLUE, self.inner_radius, 0, 90, center.min);
 
+<<<<<<< Updated upstream
                 ui.allocate_ui_at_rect(CircleTrim::get_center_rect(&trim), |ui| {
                     ui.with_layer_id(
                         LayerId {
@@ -157,6 +183,34 @@ impl eframe::App for MyApp {
                     self.data.clone(),
                     self.current_root.clone(),
                 );
+=======
+                //ui.add(CircleTrim::new(Color32::RED, 50.0, 0, 90, center.min, 4));
+
+                let mut blue = CircleTrim::new(Color32::BLUE, 50.0, 0, 90, center.min, 20);
+
+                if blue.draw(ui).root_changed{
+
+                }
+
+
+                // ui.allocate_ui_at_rect(CircleTrim::get_center_rect(&trim), |ui| {
+                //     ui.with_layer_id(
+                //         LayerId {
+                //             order: egui::Order::Foreground,
+                //             id: Id::new(1),
+                //         },
+                //         |ui| {
+                //             ui.add(Button::new("").fill(Color32::WHITE).rounding(100.0).small())
+                //                 .on_hover_text("Test")
+                //         },
+                //     )
+                // });
+
+                // if (self.repaint_check) {
+                //     self.file_recurser(ui, 2, self.current_root.clone(), 50.0, 0, 360, center.min);
+                //     self.repaint_check = false;
+                // }
+>>>>>>> Stashed changes
             });
         });
     }
