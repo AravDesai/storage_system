@@ -9,19 +9,26 @@ pub mod egui_circle_trim {
         Stroke, Ui, Vec2, WidgetText,
     };
 
+    use eframe::egui_glow::painter;
     use eframe::epaint::tessellator::{path, Path};
     use eframe::epaint::{PathShape, PathStroke};
 
+    use crate::ViewType;
+
+    #[derive(Clone, Copy)]
     pub struct CircleTrim {
-        color: Color32,
-        inner_radius: f32,
-        start_angle: i32,
-        end_angle: i32,
-        center: Pos2,
+        pub(crate) color: Color32,
+        pub(crate) inner_radius: f32,
+        pub(crate) start_angle: u64,
+        pub(crate) end_angle: u64,
+        pub(crate) center: Pos2,
+        pub(crate) layer_id: LayerId,
+        pub(crate) button_pressed: bool,
+        pub(crate) view_type: ViewType,
     }
 
     #[derive(Default)]
-    pub struct CircleResponse{
+    pub struct CircleResponse {
         pub root_changed: bool,
     }
 
@@ -29,9 +36,12 @@ pub mod egui_circle_trim {
         pub fn new(
             color: Color32,
             inner_radius: f32,
-            start_angle: i32,
-            end_angle: i32,
+            start_angle: u64,
+            end_angle: u64,
             center: Pos2,
+            layer_id: LayerId,
+            button_pressed: bool,
+            view_type: ViewType
         ) -> Self {
             Self {
                 color,
@@ -39,139 +49,112 @@ pub mod egui_circle_trim {
                 start_angle,
                 end_angle,
                 center,
+                layer_id,
+                button_pressed,
+                view_type,
             }
         }
 
         pub fn get_center_rect(&self) -> Rect {
-            return Rect {
-                min: Pos2 {
-<<<<<<< Updated upstream
-                    x: self.center.x + self.inner_radius - 12.0
-                        + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).sin(),
-                    y: self.center.y + self.inner_radius - 12.0
-                        + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).cos(),
-                },
-                max: Pos2 {
-                    x: self.center.x + self.inner_radius - 12.0
-                        + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).sin(),
-                    y: self.center.y + self.inner_radius - 12.0
-                        + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).cos(),
-=======
-                    x: self.center.x + self.inner_radius
-                    + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).sin(),
-                    y: self.center.y + self.inner_radius
-                    + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).cos(),
-                },
-                max: Pos2 {
-                    x: self.center.x + self.inner_radius
-                    + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).sin(),
-                    y: self.center.y + self.inner_radius
-                    + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).cos(),
->>>>>>> Stashed changes
-                },
-            };
+            if self.view_type == ViewType::Circular{
+                return Rect {
+                    min: Pos2 {
+                        x: self.center.x + self.inner_radius - 12.0
+                            + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).sin(),
+                        y: self.center.y + self.inner_radius - 12.0
+                            + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).cos(),
+                    },
+                    max: Pos2 {
+                        x: self.center.x + self.inner_radius - 12.0
+                            + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).sin(),
+                        y: self.center.y + self.inner_radius - 12.0
+                            + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).cos(),
+                    },
+                };
+            }
+            if self.view_type == ViewType::Rectangular{
+                return Rect {
+                    min: Pos2{ x: self.center.x + self.inner_radius + ((self.start_angle + self.end_angle)/2) as f32 - 12.0 , y: self.center.y + self.inner_radius + ((self.start_angle + self.end_angle)/2) as f32 - 12.0 },
+                    max: Pos2{ x: self.center.x + self.inner_radius + ((self.start_angle + self.end_angle)/2) as f32 + 12.0 , y: self.center.y + self.inner_radius + ((self.start_angle + self.end_angle)/2) as f32 + 12.0 },
+                }
+            }
+            panic!("Invalid ViewType");
         }
 
-<<<<<<< Updated upstream
-        pub fn make_button(&self, ui: &mut Ui) -> Response {
-            return ui
-                .allocate_ui_at_rect(self.get_center_rect(), |ui| {
-                    ui.add(Button::new("").fill(Color32::WHITE).rounding(100.0).small());
-                })
-                .response;
-=======
-        pub fn make_button(&self, ui: &mut Ui, out: &mut CircleResponse){
-            // ui.ctx().input(|i|{
-            //     for event in i.events{
-            //         match event{
-            //             eframe::egui::Event::Copy => todo!(),
-            //             eframe::egui::Event::Cut => todo!(),
-            //             eframe::egui::Event::Paste(_) => todo!(),
-            //             eframe::egui::Event::Text(_) => todo!(),
-            //             eframe::egui::Event::Key { key, physical_key, pressed, repeat, modifiers } => todo!(),
-            //             eframe::egui::Event::PointerMoved(_) => todo!(),
-            //             eframe::egui::Event::MouseMoved(_) => todo!(),
-            //             eframe::egui::Event::PointerButton { pos, button, pressed, modifiers } => todo!(),
-            //             eframe::egui::Event::PointerGone => todo!(),
-            //             eframe::egui::Event::Zoom(_) => todo!(),
-            //             eframe::egui::Event::Ime(_) => todo!(),
-            //             eframe::egui::Event::Touch { device_id, id, phase, pos, force } => todo!(),
-            //             eframe::egui::Event::MouseWheel { unit, delta, modifiers } => todo!(),
-            //             eframe::egui::Event::WindowFocused(_) => todo!(),
-            //             eframe::egui::Event::AccessKitActionRequest(_) => todo!(),
-            //             eframe::egui::Event::Screenshot { viewport_id, image } => todo!(),
-            //         }
-            //     }})
-            
-            if ui
-                .allocate_ui_at_rect(self.get_center_rect(), |ui| {
-                    ui
-                        .add(Button::new("").fill(Color32::WHITE).rounding(100.0).small())
-                        .clicked()
-                })
-                .response.clicked(){
-                    out.root_changed = true;
-                }
->>>>>>> Stashed changes
+        pub fn status(&self) -> bool {
+            //println!("{}", self.button_pressed);
+            self.button_pressed
+        }
+
+        pub fn make_button(&mut self, ui: &mut Ui, out: &mut CircleResponse) {
+            ui.with_layer_id(
+                LayerId {
+                    order: eframe::egui::Order::Foreground,
+                    id: Id::new(1),
+                },
+                |ui| {
+                    ui.allocate_ui_at_rect(self.get_center_rect(), |ui| {
+                        if ui
+                            .add(Button::new("").fill(Color32::WHITE).rounding(100.0).small())
+                            .clicked()
+                        {
+                            println!("Clicked!");
+                            self.button_pressed = true;
+                            out.root_changed = true;
+                        }
+                    })
+                },
+            );
         }
 
         //Sector of annulus
         pub fn paint_annulus_sector(&self, ui: &mut Ui) {
-            let painter = ui.painter();
-            let mut path_points = vec![];
+            if self.view_type == ViewType::Circular{
+                let painter = ui.painter();
+                let mut path_points = vec![];
 
-            for i in (self.start_angle..self.end_angle).rev() {
-                let angle = (i as f32 * PI) / 180.0;
-                path_points.push(Pos2 {
-                    x: self.center.x + ((self.inner_radius + 20.0) * angle.cos()),
-                    y: self.center.y + ((self.inner_radius + 20.0) * angle.sin()),
+                for i in self.start_angle..self.end_angle {
+                    let angle = (i as f32 * PI) / 180.0;
+                    path_points.push(Pos2 {
+                        x: self.center.x + (self.inner_radius * angle.sin()),
+                        y: self.center.y + (self.inner_radius * angle.cos()),
+                    });
+                }
+
+                for i in (self.start_angle..self.end_angle).rev() {
+                    let angle = (i as f32 * PI) / 180.0;
+                    path_points.push(Pos2 {
+                        x: self.center.x + ((self.inner_radius + 20.0) * angle.sin()),
+                        y: self.center.y + ((self.inner_radius + 20.0) * angle.cos()),
+                    });
+                }
+
+                painter.clone().with_layer_id(self.layer_id).add(PathShape {
+                    points: path_points,
+                    closed: true,
+                    fill: self.color,
+                    stroke: PathStroke {
+                        width: 1.0,
+                        color: eframe::epaint::ColorMode::Solid(self.color),
+                    },
                 });
+
+                //painter.rect_filled(self.get_center_rect(), Rounding::ZERO, Color32::WHITE);
             }
 
-<<<<<<< Updated upstream
-            painter.add(PathShape {
-=======
-            for i in self.start_angle..self.end_angle {
-                let angle = (i as f32 * PI) / 180.0;
-                path_points.push(Pos2 {
-                    x: self.center.x + (self.inner_radius * angle.cos()),
-                    y: self.center.y + (self.inner_radius * angle.sin()),
-                });
+            if self.view_type == ViewType::Rectangular{
+                let painter = ui.painter();
+                let paint_rect = Rect{
+                    min: Pos2 { x: self.center.x + (self.start_angle) as f32, y: self.center.y - self.inner_radius - 20.0},
+                    max: Pos2 { x: self.center.x + (self.end_angle) as f32, y: self.center.y},
+                };
+                painter.clone().with_layer_id(self.layer_id).rect_filled(paint_rect, Rounding::ZERO, self.color);
             }
-
-
-            let print_points = path_points.iter().enumerate().map(|(i,p)|format!("({}, {}, {})", p.x, p.y, i)).collect::<Vec<String>>().join("\n");
-            println!("{}", print_points);
-
-            painter
-            .clone()
-            .with_layer_id(LayerId {
-                order: eframe::egui::Order::PanelResizeLine,
-                id: Id::new(self.layer),
-            })
-            .add(PathShape {
->>>>>>> Stashed changes
-                points: path_points,
-                closed: true,
-                fill: Color32::BLUE,
-                stroke: PathStroke {
-                    width: 1.0,
-                    color: eframe::epaint::ColorMode::Solid(self.color),
-                },
-            });
-
-            //painter.rect_filled(self.get_center_rect(), Rounding::ZERO, Color32::WHITE);
+            
         }
 
-<<<<<<< Updated upstream
         fn add_contents(&mut self, ui: &mut Ui) -> eframe::egui::Response {
             let button_pos = self.get_center_rect();
-=======
-        pub fn draw(&mut self, ui: &mut Ui) -> CircleResponse {
-
-            let mut output = CircleResponse::default();
-
->>>>>>> Stashed changes
 
             let desired_size = Vec2 {
                 x: button_pos.width(),
@@ -188,19 +171,19 @@ pub mod egui_circle_trim {
 
             if ui.is_rect_visible(rect) {
                 self.paint_annulus_sector(ui);
-<<<<<<< Updated upstream
-                //self.make_button(ui);
-=======
-                self.make_button(ui, &mut output);
->>>>>>> Stashed changes
+                self.make_button(
+                    ui,
+                    &mut CircleResponse {
+                        root_changed: false,
+                    },
+                );
             }
-
-            return output;
+            response
         }
     }
-    // impl eframe::egui::Widget for CircleTrim {
-    //     fn ui(mut self, ui: &mut Ui) -> eframe::egui::Response {
-    //         self.add_contents(ui)
-    //     }
-    // }
+    impl eframe::egui::Widget for CircleTrim {
+        fn ui(mut self, ui: &mut Ui) -> eframe::egui::Response {
+            self.add_contents(ui)
+        }
+    }
 }
