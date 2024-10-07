@@ -1,13 +1,11 @@
 use eframe::egui::{
-    self, Align2, Button, Color32, Context, FontFamily, FontId, Id, LayerId, Order, Pos2, Rect, Ui,
+    self, Align2, Button, Color32, Context, FontFamily, FontId, Id, LayerId, Order, Pos2, Rect, TextWrapMode, Ui, Vec2
 };
 use egui_circle_trim::egui_circle_trim::CircleTrim;
 use lb_rs::{File, Uuid};
-use rand::Rng;
 use serde::{Deserialize, Serialize};
 use std::fs::{self};
 use std::collections::HashMap;
-use std::hash;
 use std::hash::Hash;
 use lb_rs::FileType;
 
@@ -60,7 +58,6 @@ impl MyApp {
         let json_info = fs::read_to_string("parth-doc-data.json").expect("Couldn't read file");
         let data: Vec<Data> = serde_json::from_str(&json_info).expect("Json not formatted well");
 
-        let data_clone = data.clone();
         let data_clone_two = data.clone();
         let data_clone_three = data.clone();
 
@@ -100,7 +97,6 @@ impl MyApp {
         }
 
         let root_hash = hash_data_converter(cleaned_root);
-        let mut root_hash_clean = root_hash.clone();
         let root_hash_pass= root_hash.clone(); //needed to pass root value to self
 
         let mut data_map = HashMap::new();
@@ -117,10 +113,6 @@ impl MyApp {
         let children_clone = children.clone();
 
         data_map = children_maker(data_map, children_clone, &size_to_hash_two);
-
-        // let debug_hash = root_hash_pass.clone();
-
-        // println!("{:?}", data_map.get(&debug_hash));
 
         pub fn children_maker(mut hashmap: HashMap<HashData, Vec<HashData>>, children: Vec<HashData>, data: &Vec<Data>) -> HashMap<HashData, Vec<HashData>>{
             for key in children{
@@ -174,45 +166,44 @@ impl MyApp {
         
     }
 
-    pub fn get_color() -> Color32 {
-        let colors = vec![
-            Color32::BROWN,
-            Color32::BLUE,
-            Color32::RED,
-            Color32::GREEN,
-            Color32::YELLOW,
-        ];
-        return colors[rand::thread_rng().gen_range(0..colors.len())];
+    pub fn get_color(mut general: usize, mut specific: usize) -> Color32 {
+        if general > 3 {
+            general = general%4; 
+        }
+        if specific > 2 {
+            specific = specific % 3; 
+        }
+        let colors = vec![[Color32::RED, Color32::DARK_RED, Color32::LIGHT_RED],[Color32::GREEN, Color32::DARK_GREEN, Color32::LIGHT_GREEN],[Color32::BLUE, Color32::DARK_BLUE, Color32::LIGHT_BLUE], [Color32::YELLOW, Color32::from_rgb(139, 128, 0), Color32::from_rgb(255, 245, 158)]];
+        return colors[general][specific];
     }
 
     pub fn file_recurser(
         &self,
         ui: &mut Ui,
-        mut layer_id: i32,
+        layer_id: i32,
         parent: HashData,
         radius: f32,
         mut inner_bound: f32,
         outer_bound: u64,
         center: Pos2,
         view_type: ViewType,
+        mut general_color: usize,
+        specific_color: usize,
     ) {
         let potential_children = self.data_map.get(&parent);
         match potential_children{
             Some(children) => for child in children{
-                println!("Child: {:?}", child);
-                println!("Parent size: {:?}", parent.size);
-                println!("Outer Bound: {}", outer_bound);
                 let child_length = (child.size as f32/parent.size as f32) * outer_bound as f32;
-                println!("Child Length: {}", child_length);
-                let trim = CircleTrim{ color: Self::get_color(), inner_radius: radius, start_angle: inner_bound, end_angle: inner_bound + child_length, center, layer_id: LayerId { order: Order::PanelResizeLine, id: Id::new(layer_id) }, button_pressed: false, view_type };
-                ui.add(trim);
+                let trim = CircleTrim{ color: Self::get_color(general_color,specific_color), inner_radius: radius, start_angle: inner_bound, end_angle: inner_bound + child_length, center, layer_id: LayerId { order: Order::PanelResizeLine, id: Id::new(layer_id) }, button_pressed: false, view_type };
+                CircleTrim::paint_annulus_sector(&trim, ui);
+                if child.file_type == FileType::Folder {
+                    self.file_recurser(ui, layer_id + 1, child.clone(), radius+20.0, inner_bound, (inner_bound + child_length) as u64, center, view_type, general_color, specific_color + 1);
+                }
                 inner_bound+=child_length;
-                //layer_id += 1;
+                general_color+=1;
             }
             None => return,
         }
-        println!("");
-        println!("");
     }
 
 }
@@ -274,7 +265,7 @@ impl eframe::App for MyApp {
                         .text(
                             center.min,
                             Align2::CENTER_CENTER,
-                            self.current_root.size.to_string() + " MB",
+                            self.current_root.size.to_string() + " B",
                             FontId {
                                 size: 15.0,
                                 family: FontFamily::Proportional,
@@ -282,12 +273,12 @@ impl eframe::App for MyApp {
                             Color32::BLACK,
                         );
                     ui.allocate_ui_at_rect(center_text, |ui| {
-                        ui.label(self.current_root.size.to_string() + " MB")
+                        ui.label(self.current_root.size.to_string() + " B")
                             .on_hover_text(self.current_root.name.to_string());
                     });
                 });
 
-                self.file_recurser(ui, 1, self.current_root.clone(), self.inner_radius, 0.0, 360, center.min, self.view_type);
+                self.file_recurser(ui, 1, self.current_root.clone(), self.inner_radius, 0.0, 360, center.min, self.view_type, 0, 0);
             }
 
             if self.view_type == ViewType::Rectangular {
@@ -325,7 +316,7 @@ impl eframe::App for MyApp {
                     .text(
                         bottom_text.min,
                         Align2::CENTER_BOTTOM,
-                        self.current_root.size.to_string() + " MB",
+                        self.current_root.size.to_string() + " B",
                         FontId {
                             size: 15.0,
                             family: FontFamily::Proportional,
@@ -341,27 +332,13 @@ impl eframe::App for MyApp {
                         max: bottom_text.max,
                     },
                     |ui| {
-                        ui.label(self.current_root.size.to_string() + " MB")
+                        ui.label(self.current_root.size.to_string() + " B")
                             .on_hover_text(self.current_root.name.to_string());
                     },
                 );
 
-                self.file_recurser(ui, 1, self.current_root.clone(), self.inner_radius, 0.0, bottom.max.x as u64, bottom.min, self.view_type);
-
-                // let slab = CircleTrim{ color: Color32::BLUE, inner_radius: 20.0, start_angle: 0, end_angle: bottom.max.x as u64, center: bottom.min, layer_id: LayerId{
-                //     order: egui::Order::PanelResizeLine,
-                //     id: Id::new(1),
-                // }, button_pressed: false, view_type: self.view_type };
-
-                // ui.add(slab);
-
+                self.file_recurser(ui, 1, self.current_root.clone(), self.inner_radius, 0.0, bottom.max.x as u64, bottom.min, self.view_type,0,0);
             }
-
-
-
-            //Recurse through files. For every file see how it fairs in terms of percentage on basis of size and start. make end new start for its fellow children
-
-            //if this fails make thread make it run and maybe channel data like current root and repaint check back to it
         });
     }
 }

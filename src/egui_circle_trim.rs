@@ -17,13 +17,13 @@ pub mod egui_circle_trim {
 
     #[derive(Clone, Copy)]
     pub struct CircleTrim {
-        pub(crate) color: Color32,
-        pub(crate) inner_radius: f32,
-        pub(crate) start_angle: f32,
-        pub(crate) end_angle: f32,
-        pub(crate) center: Pos2,
-        pub(crate) layer_id: LayerId,
-        pub(crate) button_pressed: bool,
+        pub color: Color32,
+        pub inner_radius: f32,
+        pub start_angle: f32,
+        pub end_angle: f32,
+        pub center: Pos2,
+        pub layer_id: LayerId,
+        pub button_pressed: bool,
         pub(crate) view_type: ViewType,
     }
 
