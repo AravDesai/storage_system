@@ -19,8 +19,8 @@ pub mod egui_circle_trim {
     pub struct CircleTrim {
         pub(crate) color: Color32,
         pub(crate) inner_radius: f32,
-        pub(crate) start_angle: u64,
-        pub(crate) end_angle: u64,
+        pub(crate) start_angle: f32,
+        pub(crate) end_angle: f32,
         pub(crate) center: Pos2,
         pub(crate) layer_id: LayerId,
         pub(crate) button_pressed: bool,
@@ -36,8 +36,8 @@ pub mod egui_circle_trim {
         pub fn new(
             color: Color32,
             inner_radius: f32,
-            start_angle: u64,
-            end_angle: u64,
+            start_angle: f32,
+            end_angle: f32,
             center: Pos2,
             layer_id: LayerId,
             button_pressed: bool,
@@ -74,8 +74,8 @@ pub mod egui_circle_trim {
             }
             if self.view_type == ViewType::Rectangular{
                 return Rect {
-                    min: Pos2{ x: self.center.x + self.inner_radius + ((self.start_angle + self.end_angle)/2) as f32 - 12.0 , y: self.center.y + self.inner_radius + ((self.start_angle + self.end_angle)/2) as f32 - 12.0 },
-                    max: Pos2{ x: self.center.x + self.inner_radius + ((self.start_angle + self.end_angle)/2) as f32 + 12.0 , y: self.center.y + self.inner_radius + ((self.start_angle + self.end_angle)/2) as f32 + 12.0 },
+                    min: Pos2{ x: self.center.x + self.inner_radius + ((self.start_angle + self.end_angle)/2.0)  - 12.0 , y: self.center.y + self.inner_radius + ((self.start_angle + self.end_angle)/2.0) - 12.0 },
+                    max: Pos2{ x: self.center.x + self.inner_radius + ((self.start_angle + self.end_angle)/2.0)  + 12.0 , y: self.center.y + self.inner_radius + ((self.start_angle + self.end_angle)/2.0) + 12.0 },
                 }
             }
             panic!("Invalid ViewType");
@@ -113,7 +113,7 @@ pub mod egui_circle_trim {
                 let painter = ui.painter();
                 let mut path_points = vec![];
 
-                for i in self.start_angle..self.end_angle {
+                for i in self.start_angle as u32 ..self.end_angle as u32{
                     let angle = (i as f32 * PI) / 180.0;
                     path_points.push(Pos2 {
                         x: self.center.x + (self.inner_radius * angle.sin()),
@@ -121,7 +121,7 @@ pub mod egui_circle_trim {
                     });
                 }
 
-                for i in (self.start_angle..self.end_angle).rev() {
+                for i in (self.start_angle as u32 ..self.end_angle as u32).rev() {
                     let angle = (i as f32 * PI) / 180.0;
                     path_points.push(Pos2 {
                         x: self.center.x + ((self.inner_radius + 20.0) * angle.sin()),

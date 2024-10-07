@@ -5,10 +5,11 @@ use egui_circle_trim::egui_circle_trim::CircleTrim;
 use lb_rs::{File, Uuid};
 use rand::Rng;
 use serde::{Deserialize, Serialize};
-use std::fs;
+use std::fs::{self};
 use std::collections::HashMap;
 use std::hash;
 use std::hash::Hash;
+use lb_rs::FileType;
 
 pub mod egui_circle_trim;
 
@@ -23,6 +24,7 @@ struct HashData{
     id: Uuid,
     parent: Uuid,
     name: String,
+    file_type: FileType,
     size: u64
 }
 
@@ -61,7 +63,6 @@ impl MyApp {
         let data_clone = data.clone();
         let data_clone_two = data.clone();
         let data_clone_three = data.clone();
-        
 
         let mut root = data[0].clone();
 
@@ -71,18 +72,42 @@ impl MyApp {
             }
         }
 
-        let root_hash = hash_data_converter(root);
+        let root_cleaner = root.clone();
+
+        let mut size_adjusted_data = vec![];
+
+        for item in data_clone_two{
+            if item.file.is_folder(){
+                let new_size = size_finder(item.clone(), data_clone_three.clone(), 0, root_cleaner.clone());
+                if new_size == 0 {
+                    continue;
+                }
+                size_adjusted_data.push(Data { file: item.clone().file, size: new_size });
+            }
+            if item.file.is_document(){
+                size_adjusted_data.push(item);
+            }
+        }
+
+        let size_to_hash = size_adjusted_data.clone();
+        let size_to_hash_two = size_adjusted_data.clone();
+
+        let mut cleaned_root = size_adjusted_data[0].clone();
+        for item in size_adjusted_data {
+            if item.file.id == item.file.parent {
+                cleaned_root = item;
+            }
+        }
+
+        let root_hash = hash_data_converter(cleaned_root);
+        let mut root_hash_clean = root_hash.clone();
         let root_hash_pass= root_hash.clone(); //needed to pass root value to self
 
-        //let size_adjusted_data = vec![];
-
-
-        
         let mut data_map = HashMap::new();
 
         
         let mut children = vec![];
-        for item in data_clone {
+        for item in size_to_hash {
             if item.file.parent == root_hash.id && item.file.id != root_hash.id {
                 children.push(hash_data_converter(item));
             }
@@ -91,7 +116,11 @@ impl MyApp {
 
         let children_clone = children.clone();
 
-        data_map = children_maker(data_map, children_clone.clone(), &data_clone_two);
+        data_map = children_maker(data_map, children_clone, &size_to_hash_two);
+
+        // let debug_hash = root_hash_pass.clone();
+
+        // println!("{:?}", data_map.get(&debug_hash));
 
         pub fn children_maker(mut hashmap: HashMap<HashData, Vec<HashData>>, children: Vec<HashData>, data: &Vec<Data>) -> HashMap<HashData, Vec<HashData>>{
             for key in children{
@@ -111,7 +140,26 @@ impl MyApp {
         }
 
         pub fn hash_data_converter(data: Data)->HashData{
-            return HashData { id: data.file.id, parent: data.file.parent, name: data.file.name.clone(), size: data.size }
+            return HashData { id: data.file.id, parent: data.file.parent, name: data.file.name.clone(), size: data.size, file_type: data.file.file_type }
+        }
+
+        //There's probably something more efficient than this - quickfix for now
+        pub fn size_finder(subject: Data, dataset: Vec<Data>, mut size: u64, root: Data) -> u64 {
+            let mut visited = vec![];
+            for item in &dataset {
+                if item.file.parent == subject.file.id && item.file.id != root.file.id && !visited.contains(item) {
+                    visited.push(item.clone());
+                    if item.file.is_folder() {
+                        size += size_finder(item.clone(), dataset.clone(), 0, root.clone());
+                    } else {
+                        size += item.size;
+                    }
+                }
+            }
+            if visited.is_empty() && size == 0{
+                return 0;
+            }
+            return size;
         }
 
         Self {
@@ -143,7 +191,7 @@ impl MyApp {
         mut layer_id: i32,
         parent: HashData,
         radius: f32,
-        mut inner_bound: u64,
+        mut inner_bound: f32,
         outer_bound: u64,
         center: Pos2,
         view_type: ViewType,
@@ -151,8 +199,11 @@ impl MyApp {
         let potential_children = self.data_map.get(&parent);
         match potential_children{
             Some(children) => for child in children{
-                //println!("{:?}", child);
-                let child_length = (child.size/parent.size) * outer_bound;
+                println!("Child: {:?}", child);
+                println!("Parent size: {:?}", parent.size);
+                println!("Outer Bound: {}", outer_bound);
+                let child_length = (child.size as f32/parent.size as f32) * outer_bound as f32;
+                println!("Child Length: {}", child_length);
                 let trim = CircleTrim{ color: Self::get_color(), inner_radius: radius, start_angle: inner_bound, end_angle: inner_bound + child_length, center, layer_id: LayerId { order: Order::PanelResizeLine, id: Id::new(layer_id) }, button_pressed: false, view_type };
                 ui.add(trim);
                 inner_bound+=child_length;
@@ -160,7 +211,8 @@ impl MyApp {
             }
             None => return,
         }
-        //println!("");
+        println!("");
+        println!("");
     }
 
 }
@@ -235,7 +287,7 @@ impl eframe::App for MyApp {
                     });
                 });
 
-                self.file_recurser(ui, 1, self.current_root.clone(), self.inner_radius, 0, 360, center.min, self.view_type);
+                self.file_recurser(ui, 1, self.current_root.clone(), self.inner_radius, 0.0, 360, center.min, self.view_type);
             }
 
             if self.view_type == ViewType::Rectangular {
@@ -294,7 +346,7 @@ impl eframe::App for MyApp {
                     },
                 );
 
-                self.file_recurser(ui, 1, self.current_root.clone(), self.inner_radius, 0, bottom.max.x as u64, bottom.min, self.view_type);
+                self.file_recurser(ui, 1, self.current_root.clone(), self.inner_radius, 0.0, bottom.max.x as u64, bottom.min, self.view_type);
 
                 // let slab = CircleTrim{ color: Color32::BLUE, inner_radius: 20.0, start_angle: 0, end_angle: bottom.max.x as u64, center: bottom.min, layer_id: LayerId{
                 //     order: egui::Order::PanelResizeLine,
