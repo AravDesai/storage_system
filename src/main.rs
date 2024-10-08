@@ -167,13 +167,13 @@ impl MyApp {
     }
 
     pub fn get_color(mut general: usize, mut specific: usize) -> Color32 {
-        if general > 3 {
-            general = general%4; 
+        let colors = vec![[Color32::RED, Color32::DARK_RED, Color32::LIGHT_RED, Color32::from_rgb(255,165,0)],[Color32::GREEN, Color32::DARK_GREEN, Color32::LIGHT_GREEN, Color32::from_rgb(0,250,154)],[Color32::BLUE, Color32::DARK_BLUE, Color32::LIGHT_BLUE, Color32::from_rgb(123, 104, 238)], [Color32::YELLOW, Color32::from_rgb(139, 128, 0), Color32::from_rgb(255, 245, 158), Color32::from_rgb(249, 166, 2)]];
+        if general >= colors.len() {
+            general = general%colors.len(); 
         }
-        if specific > 2 {
-            specific = specific % 3; 
+        if specific >= colors[0].len() {
+            specific = specific % colors[0].len(); 
         }
-        let colors = vec![[Color32::RED, Color32::DARK_RED, Color32::LIGHT_RED],[Color32::GREEN, Color32::DARK_GREEN, Color32::LIGHT_GREEN],[Color32::BLUE, Color32::DARK_BLUE, Color32::LIGHT_BLUE], [Color32::YELLOW, Color32::from_rgb(139, 128, 0), Color32::from_rgb(255, 245, 158)]];
         return colors[general][specific];
     }
 
