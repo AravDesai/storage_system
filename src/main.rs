@@ -1,7 +1,7 @@
 use eframe::egui::{
     self, Align2, Button, Color32, Context, FontFamily, FontId, Id, LayerId, Order, Pos2, Rect, TextWrapMode, Ui, Vec2
 };
-use egui_circle_trim::egui_circle_trim::CircleTrim;
+use egui_circle_trim::egui_circle_trim::{CircleResponse, CircleTrim};
 use lb_rs::{File, Uuid};
 use serde::{Deserialize, Serialize};
 use std::fs::{self};
@@ -194,9 +194,26 @@ impl MyApp {
         match potential_children{
             Some(children) => for child in children{
                 let child_length = (child.size as f32/parent.size as f32) * outer_bound as f32;
-                let trim = CircleTrim{ color: Self::get_color(general_color,specific_color), inner_radius: radius, start_angle: inner_bound, end_angle: inner_bound + child_length, center, layer_id: LayerId { order: Order::PanelResizeLine, id: Id::new(layer_id) }, button_pressed: false, view_type };
+                let mut trim = CircleTrim{ color: Self::get_color(general_color,specific_color), inner_radius: radius, start_angle: inner_bound, end_angle: inner_bound + child_length, center, layer_id: LayerId { order: Order::PanelResizeLine, id: Id::new(layer_id) }, button_pressed: false, view_type };
                 CircleTrim::paint_annulus_sector(&trim, ui);
                 if child.file_type == FileType::Folder {
+                    ui.with_layer_id(
+                        LayerId {
+                            order: eframe::egui::Order::Debug,
+                            id: Id::new(1),
+                        },
+                        |ui| {
+                            ui.allocate_ui_at_rect(trim.get_center_rect(), |ui| {
+                                if ui
+                                    .add(Button::new("").fill(Color32::WHITE).rounding(100.0).small())
+                                    .clicked()
+                                {
+                                    println!("{}", child.name);
+                                }
+                            })
+                        },
+                    );
+                    //CircleTrim::make_button(&mut trim, ui, &mut CircleResponse{ root_changed: false});
                     self.file_recurser(ui, layer_id + 1, child.clone(), radius+20.0, inner_bound, (inner_bound + child_length) as u64, center, view_type, general_color, specific_color + 1);
                 }
                 inner_bound+=child_length;
@@ -336,6 +353,28 @@ impl eframe::App for MyApp {
                             .on_hover_text(self.current_root.name.to_string());
                     },
                 );
+
+                // let slab = CircleTrim{ color: Color32::BLUE, inner_radius: 20.0, start_angle: 30.0, end_angle: 60.0 , center: bottom.min, layer_id: LayerId{
+                //         order: egui::Order::PanelResizeLine,
+                //         id: Id::new(1),
+                //     }, button_pressed: false, view_type: self.view_type };
+                //     CircleTrim::paint_annulus_sector(&slab, ui);
+                //     ui.with_layer_id(
+                //         LayerId {
+                //             order: eframe::egui::Order::Foreground,
+                //             id: Id::new(1),
+                //         },
+                //         |ui| {
+                //             ui.allocate_ui_at_rect(slab.get_center_rect(), |ui| {
+                //                 if ui
+                //                     .add(Button::new("").fill(Color32::WHITE).rounding(100.0).small())
+                //                     .clicked()
+                //                 {
+                //                     println!("Clicked!");
+                //                 }
+                //             })
+                //         },
+                //     );
 
                 self.file_recurser(ui, 1, self.current_root.clone(), self.inner_radius, 0.0, bottom.max.x as u64, bottom.min, self.view_type,0,0);
             }

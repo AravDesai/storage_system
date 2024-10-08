@@ -74,8 +74,8 @@ pub mod egui_circle_trim {
             }
             if self.view_type == ViewType::Rectangular{
                 return Rect {
-                    min: Pos2{ x: self.center.x + self.inner_radius + ((self.start_angle + self.end_angle)/2.0)  - 12.0 , y: self.center.y + self.inner_radius + ((self.start_angle + self.end_angle)/2.0) - 12.0 },
-                    max: Pos2{ x: self.center.x + self.inner_radius + ((self.start_angle + self.end_angle)/2.0)  + 12.0 , y: self.center.y + self.inner_radius + ((self.start_angle + self.end_angle)/2.0) + 12.0 },
+                    min: Pos2{ x: self.center.x + ((self.start_angle + self.end_angle)/2.0) - 3.0, y: self.center.y - self.inner_radius},
+                    max: Pos2{ x: self.center.x + ((self.start_angle + self.end_angle)/2.0) -3.0 , y: self.center.y - self.inner_radius},
                 }
             }
             panic!("Invalid ViewType");
@@ -89,7 +89,7 @@ pub mod egui_circle_trim {
         pub fn make_button(&mut self, ui: &mut Ui, out: &mut CircleResponse) {
             ui.with_layer_id(
                 LayerId {
-                    order: eframe::egui::Order::Foreground,
+                    order: eframe::egui::Order::Debug,
                     id: Id::new(1),
                 },
                 |ui| {
