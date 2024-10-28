@@ -1,13 +1,13 @@
 use eframe::egui::{
-    self, Align2, Button, Color32, Context, FontFamily, FontId, Id, LayerId, Order, Pos2, Rect, TextWrapMode, Ui, Vec2
+    self, Align2, Button, Color32, Context, FontFamily, FontId, Id, LayerId, Order, Pos2, Rect, Rounding, Stroke, TextWrapMode, Ui, Vec2
 };
 use egui_circle_trim::egui_circle_trim::{CircleResponse, CircleTrim};
+use lb_rs::FileType;
 use lb_rs::{File, Uuid};
 use serde::{Deserialize, Serialize};
-use std::fs::{self};
 use std::collections::HashMap;
+use std::fs::{self};
 use std::hash::Hash;
-use lb_rs::FileType;
 
 pub mod egui_circle_trim;
 
@@ -18,12 +18,12 @@ struct Data {
 }
 
 #[derive(Debug, Deserialize, Clone, Hash, PartialEq, Eq)]
-struct HashData{
+struct HashData {
     id: Uuid,
     parent: Uuid,
     name: String,
     file_type: FileType,
-    size: u64
+    size: u64,
 }
 
 #[derive(PartialEq, Clone, Copy)]
@@ -34,7 +34,7 @@ enum ViewType {
 
 fn main() {
     let options = eframe::NativeOptions {
-        viewport: egui::ViewportBuilder::default().with_inner_size([500.0, 500.0]),
+        viewport: egui::ViewportBuilder::default().with_inner_size([1500.0, 750.0]),
         ..Default::default()
     };
     let _ = eframe::run_native(
@@ -45,7 +45,7 @@ fn main() {
 }
 
 struct MyApp {
-    data_map: HashMap<HashData, Vec<HashData>>,
+    data_map: HashMap<HashData, Vec<HashData>>, //name better
     current_root: HashData,
     inner_radius: f32,
     start_angle: i32,
@@ -61,7 +61,7 @@ impl MyApp {
         let data_clone_two = data.clone();
         let data_clone_three = data.clone();
 
-        let mut root = data[0].clone();
+        let mut root = data[0].clone(); //try cloning the id - error handling things
 
         for item in data {
             if item.file.id == item.file.parent {
@@ -73,15 +73,23 @@ impl MyApp {
 
         let mut size_adjusted_data = vec![];
 
-        for item in data_clone_two{
-            if item.file.is_folder(){
-                let new_size = size_finder(item.clone(), data_clone_three.clone(), 0, root_cleaner.clone());
+        for item in data_clone_two {
+            if item.file.is_folder() {
+                let new_size = size_finder(
+                    item.clone(),
+                    data_clone_three.clone(),
+                    0,
+                    root_cleaner.clone(),
+                );
                 if new_size == 0 {
                     continue;
                 }
-                size_adjusted_data.push(Data { file: item.clone().file, size: new_size });
+                size_adjusted_data.push(Data {
+                    file: item.clone().file,
+                    size: new_size,
+                });
             }
-            if item.file.is_document(){
+            if item.file.is_document() {
                 size_adjusted_data.push(item);
             }
         }
@@ -97,11 +105,10 @@ impl MyApp {
         }
 
         let root_hash = hash_data_converter(cleaned_root);
-        let root_hash_pass= root_hash.clone(); //needed to pass root value to self
+        let root_hash_pass = root_hash.clone(); //needed to pass root value to self
 
         let mut data_map = HashMap::new();
 
-        
         let mut children = vec![];
         for item in size_to_hash {
             if item.file.parent == root_hash.id && item.file.id != root_hash.id {
@@ -114,15 +121,19 @@ impl MyApp {
 
         data_map = children_maker(data_map, children_clone, &size_to_hash_two);
 
-        pub fn children_maker(mut hashmap: HashMap<HashData, Vec<HashData>>, children: Vec<HashData>, data: &Vec<Data>) -> HashMap<HashData, Vec<HashData>>{
-            for key in children{
+        pub fn children_maker(
+            mut hashmap: HashMap<HashData, Vec<HashData>>,
+            children: Vec<HashData>,
+            data: &Vec<Data>,
+        ) -> HashMap<HashData, Vec<HashData>> {
+            for key in children {
                 let mut spread = vec![];
-                for item in data{
+                for item in data {
                     if item.file.parent == key.id {
                         spread.push(hash_data_converter(item.clone()));
                     }
                 }
-                if !spread.is_empty(){
+                if !spread.is_empty() {
                     let spread_clone = spread.clone();
                     hashmap.insert(key, spread);
                     hashmap = children_maker(hashmap, spread_clone, data)
@@ -131,15 +142,24 @@ impl MyApp {
             return hashmap;
         }
 
-        pub fn hash_data_converter(data: Data)->HashData{
-            return HashData { id: data.file.id, parent: data.file.parent, name: data.file.name.clone(), size: data.size, file_type: data.file.file_type }
+        pub fn hash_data_converter(data: Data) -> HashData {
+            return HashData {
+                id: data.file.id,
+                parent: data.file.parent,
+                name: data.file.name.clone(),
+                size: data.size,
+                file_type: data.file.file_type,
+            };
         }
 
         //There's probably something more efficient than this - quickfix for now
         pub fn size_finder(subject: Data, dataset: Vec<Data>, mut size: u64, root: Data) -> u64 {
             let mut visited = vec![];
             for item in &dataset {
-                if item.file.parent == subject.file.id && item.file.id != root.file.id && !visited.contains(item) {
+                if item.file.parent == subject.file.id
+                    && item.file.id != root.file.id
+                    && !visited.contains(item)
+                {
                     visited.push(item.clone());
                     if item.file.is_folder() {
                         size += size_finder(item.clone(), dataset.clone(), 0, root.clone());
@@ -148,7 +168,7 @@ impl MyApp {
                     }
                 }
             }
-            if visited.is_empty() && size == 0{
+            if visited.is_empty() && size == 0 {
                 return 0;
             }
             return size;
@@ -157,22 +177,48 @@ impl MyApp {
         Self {
             data_map: data_map,
             current_root: root_hash_pass,
-            inner_radius: 50.0,
+            inner_radius: 20.0,
             start_angle: 0,
             repaint_check: true,
             view_type: ViewType::Rectangular,
         }
-
-        
     }
 
     pub fn get_color(mut general: usize, mut specific: usize) -> Color32 {
-        let colors = vec![[Color32::RED, Color32::DARK_RED, Color32::LIGHT_RED, Color32::from_rgb(255,165,0)],[Color32::GREEN, Color32::DARK_GREEN, Color32::LIGHT_GREEN, Color32::from_rgb(0,250,154)],[Color32::BLUE, Color32::DARK_BLUE, Color32::LIGHT_BLUE, Color32::from_rgb(123, 104, 238)], [Color32::YELLOW, Color32::from_rgb(139, 128, 0), Color32::from_rgb(255, 245, 158), Color32::from_rgb(249, 166, 2)]];
+        let colors = vec![
+            [
+                Color32::RED,
+                Color32::DARK_RED,
+                Color32::LIGHT_RED,
+                Color32::from_rgb(255, 165, 0),
+            ],
+            [
+                Color32::GREEN,
+                Color32::DARK_GREEN,
+                Color32::LIGHT_GREEN,
+                Color32::from_rgb(0, 250, 154),
+            ],
+            [
+                Color32::BLUE,
+                Color32::DARK_BLUE,
+                Color32::LIGHT_BLUE,
+                Color32::from_rgb(123, 104, 238),
+            ],
+            [
+                Color32::YELLOW,
+                Color32::from_rgb(139, 128, 0),
+                Color32::from_rgb(255, 245, 158),
+                Color32::from_rgb(249, 166, 2),
+            ],
+        ];
+
         if general >= colors.len() {
-            general = general%colors.len(); 
+            general = general % colors.len();
         }
+
         if specific >= colors[0].len() {
-            specific = specific % colors[0].len(); 
+            //general += 1;
+            specific = specific % colors[0].len();
         }
         return colors[general][specific];
     }
@@ -191,38 +237,73 @@ impl MyApp {
         specific_color: usize,
     ) {
         let potential_children = self.data_map.get(&parent);
-        match potential_children{
-            Some(children) => for child in children{
-                let child_length = (child.size as f32/parent.size as f32) * outer_bound as f32;
-                let mut trim = CircleTrim{ color: Self::get_color(general_color,specific_color), inner_radius: radius, start_angle: inner_bound, end_angle: inner_bound + child_length, center, layer_id: LayerId { order: Order::PanelResizeLine, id: Id::new(layer_id) }, button_pressed: false, view_type };
-                CircleTrim::paint_annulus_sector(&trim, ui);
-                if child.file_type == FileType::Folder {
-                    ui.with_layer_id(
-                        LayerId {
-                            order: eframe::egui::Order::Debug,
-                            id: Id::new(1),
+        match potential_children {
+            Some(children) => {
+                for child in children {
+                    let child_length =
+                        (child.size as f32 / parent.size as f32) * outer_bound as f32;
+                    let mut trim = CircleTrim {
+                        color: Self::get_color(general_color, specific_color),
+                        inner_radius: radius,
+                        start_angle: inner_bound,
+                        end_angle: inner_bound + child_length,
+                        center,
+                        layer_id: LayerId {
+                            order: Order::PanelResizeLine,
+                            id: Id::new(layer_id),
                         },
-                        |ui| {
-                            ui.allocate_ui_at_rect(trim.get_center_rect(), |ui| {
-                                if ui
-                                    .add(Button::new("").fill(Color32::WHITE).rounding(100.0).small())
-                                    .clicked()
-                                {
-                                    println!("{}", child.name);
-                                }
-                            })
-                        },
-                    );
-                    //CircleTrim::make_button(&mut trim, ui, &mut CircleResponse{ root_changed: false});
-                    self.file_recurser(ui, layer_id + 1, child.clone(), radius+20.0, inner_bound, (inner_bound + child_length) as u64, center, view_type, general_color, specific_color + 1);
+                        button_pressed: false,
+                        view_type,
+                    };
+                    CircleTrim::paint_annulus_sector(&trim, ui);
+                    if child.file_type == FileType::Folder {
+                        ui.with_layer_id(
+                            LayerId {
+                                order: eframe::egui::Order::Debug,
+                                id: Id::new(1),
+                            },
+                            |ui| {
+                                ui.allocate_ui_at_rect(trim.get_center_rect(), |ui| {
+                                    if ui
+                                        .add(
+                                            Button::new("")
+                                                .fill(Color32::WHITE)
+                                                .rounding(100.0)
+                                                .small(),
+                                        )
+                                        .clicked()
+                                    {
+                                        println!("{}", child.name);
+                                        println!("{}", child.size);
+                                        println!("Radius: {}", radius);
+                                        println!("Layer: {}", layer_id);
+                                        println!("General: {}", general_color);
+                                        println!("Specific: {}", specific_color);
+                                    }
+                                })
+                            },
+                        );
+                        //CircleTrim::make_button(&mut trim, ui, &mut CircleResponse{ root_changed: false});
+                        self.file_recurser(
+                            ui,
+                            layer_id + 9,
+                            child.clone(),
+                            radius + 20.0,
+                            inner_bound,
+                            (inner_bound + child_length) as u64,
+                            center,
+                            view_type,
+                            general_color,
+                            specific_color + 1,
+                        );
+                    }
+                    inner_bound += child_length;
+                    general_color += 1;
                 }
-                inner_bound+=child_length;
-                general_color+=1;
             }
             None => return,
         }
     }
-
 }
 
 impl eframe::App for MyApp {
@@ -295,7 +376,18 @@ impl eframe::App for MyApp {
                     });
                 });
 
-                self.file_recurser(ui, 1, self.current_root.clone(), self.inner_radius, 0.0, 360, center.min, self.view_type, 0, 0);
+                self.file_recurser(
+                    ui,
+                    1,
+                    self.current_root.clone(),
+                    self.inner_radius,
+                    0.0,
+                    360,
+                    center.min,
+                    self.view_type,
+                    0,
+                    0,
+                );
             }
 
             if self.view_type == ViewType::Rectangular {
@@ -354,29 +446,53 @@ impl eframe::App for MyApp {
                     },
                 );
 
-                // let slab = CircleTrim{ color: Color32::BLUE, inner_radius: 20.0, start_angle: 30.0, end_angle: 60.0 , center: bottom.min, layer_id: LayerId{
-                //         order: egui::Order::PanelResizeLine,
-                //         id: Id::new(1),
-                //     }, button_pressed: false, view_type: self.view_type };
-                //     CircleTrim::paint_annulus_sector(&slab, ui);
-                //     ui.with_layer_id(
-                //         LayerId {
-                //             order: eframe::egui::Order::Foreground,
-                //             id: Id::new(1),
-                //         },
-                //         |ui| {
-                //             ui.allocate_ui_at_rect(slab.get_center_rect(), |ui| {
-                //                 if ui
-                //                     .add(Button::new("").fill(Color32::WHITE).rounding(100.0).small())
-                //                     .clicked()
-                //                 {
-                //                     println!("Clicked!");
-                //                 }
-                //             })
-                //         },
-                //     );
+                println!("{}", bottom);
 
-                self.file_recurser(ui, 1, self.current_root.clone(), self.inner_radius, 0.0, bottom.max.x as u64, bottom.min, self.view_type,0,0);
+                let mut trim = CircleTrim {
+                    color: Self::get_color(0, 0),
+                    inner_radius: 20.0,
+                    start_angle: 0.0,
+                    end_angle: 100.0,
+                    layer_id: LayerId {
+                        order: Order::PanelResizeLine,
+                        id: Id::new(1),
+                    },
+                    button_pressed: false,
+                    view_type: self.view_type,
+                    center: bottom.min,
+                };
+                CircleTrim::paint_annulus_sector(&trim, ui);
+
+                let mut brim = CircleTrim {
+                    color: Self::get_color(0, 1),
+                    inner_radius: 40.0,
+                    start_angle: 0.0,
+                    end_angle: 50.0,
+                    layer_id: LayerId {
+                        order: Order::PanelResizeLine,
+                        id: Id::new(1),
+                    },
+                    button_pressed: false,
+                    view_type: self.view_type,
+                    center: bottom.min,
+                };
+                CircleTrim::paint_annulus_sector(&brim, ui);
+
+                
+
+                // self.file_recurser(
+                //     ui,
+                //     1,
+                //     self.current_root.clone(),
+                //     self.inner_radius,
+                //     0.0,
+                //     bottom.max.x as u64,
+                //     bottom.min,
+                //     self.view_type,
+                //     0,
+                //     0,
+                // );
+
             }
         });
     }

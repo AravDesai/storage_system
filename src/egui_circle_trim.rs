@@ -41,7 +41,7 @@ pub mod egui_circle_trim {
             center: Pos2,
             layer_id: LayerId,
             button_pressed: bool,
-            view_type: ViewType
+            view_type: ViewType,
         ) -> Self {
             Self {
                 color,
@@ -56,27 +56,37 @@ pub mod egui_circle_trim {
         }
 
         pub fn get_center_rect(&self) -> Rect {
-            if self.view_type == ViewType::Circular{
+            if self.view_type == ViewType::Circular {
                 return Rect {
                     min: Pos2 {
                         x: self.center.x + self.inner_radius - 12.0
-                            + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).sin(),
+                            + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0)
+                                .sin(),
                         y: self.center.y + self.inner_radius - 12.0
-                            + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).cos(),
+                            + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0)
+                                .cos(),
                     },
                     max: Pos2 {
                         x: self.center.x + self.inner_radius - 12.0
-                            + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).sin(),
+                            + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0)
+                                .sin(),
                         y: self.center.y + self.inner_radius - 12.0
-                            + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0).cos(),
+                            + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0)
+                                .cos(),
                     },
                 };
             }
-            if self.view_type == ViewType::Rectangular{
+            if self.view_type == ViewType::Rectangular {
                 return Rect {
-                    min: Pos2{ x: self.center.x + ((self.start_angle + self.end_angle)/2.0) - 3.0, y: self.center.y - self.inner_radius},
-                    max: Pos2{ x: self.center.x + ((self.start_angle + self.end_angle)/2.0) -3.0 , y: self.center.y - self.inner_radius},
-                }
+                    min: Pos2 {
+                        x: self.center.x + ((self.start_angle + self.end_angle) / 2.0),
+                        y: self.center.y - self.inner_radius,
+                    },
+                    max: Pos2 {
+                        x: self.center.x + ((self.start_angle + self.end_angle) / 2.0),
+                        y: self.center.y - self.inner_radius,
+                    },
+                };
             }
             panic!("Invalid ViewType");
         }
@@ -109,11 +119,11 @@ pub mod egui_circle_trim {
 
         //Sector of annulus
         pub fn paint_annulus_sector(&self, ui: &mut Ui) {
-            if self.view_type == ViewType::Circular{
+            if self.view_type == ViewType::Circular {
                 let painter = ui.painter();
                 let mut path_points = vec![];
 
-                for i in self.start_angle as u32 ..self.end_angle as u32{
+                for i in self.start_angle as u32..self.end_angle as u32 {
                     let angle = (i as f32 * PI) / 180.0;
                     path_points.push(Pos2 {
                         x: self.center.x + (self.inner_radius * angle.sin()),
@@ -121,7 +131,7 @@ pub mod egui_circle_trim {
                     });
                 }
 
-                for i in (self.start_angle as u32 ..self.end_angle as u32).rev() {
+                for i in (self.start_angle as u32..self.end_angle as u32).rev() {
                     let angle = (i as f32 * PI) / 180.0;
                     path_points.push(Pos2 {
                         x: self.center.x + ((self.inner_radius + 20.0) * angle.sin()),
@@ -142,15 +152,29 @@ pub mod egui_circle_trim {
                 //painter.rect_filled(self.get_center_rect(), Rounding::ZERO, Color32::WHITE);
             }
 
-            if self.view_type == ViewType::Rectangular{
+            if self.view_type == ViewType::Rectangular {
                 let painter = ui.painter();
-                let paint_rect = Rect{
-                    min: Pos2 { x: self.center.x + (self.start_angle) as f32, y: self.center.y - self.inner_radius - 20.0},
-                    max: Pos2 { x: self.center.x + (self.end_angle) as f32, y: self.center.y},
+                let paint_rect = Rect {
+                    min: Pos2 {
+                        x: self.center.x + self.start_angle as f32,
+                        y: self.center.y - 50.0 - self.inner_radius - 20.0,
+                    },
+                    max: Pos2 {
+                        x: self.center.x + self.end_angle as f32,
+                        y: self.center.y - 50.0 - self.inner_radius,
+                    },
                 };
-                painter.clone().with_layer_id(self.layer_id).rect_filled(paint_rect, Rounding::ZERO, self.color);
+                println!("Paint rect: {}", paint_rect);
+                painter.clone().with_layer_id(self.layer_id).rect(
+                    paint_rect,
+                    Rounding::ZERO,
+                    self.color,
+                    Stroke {
+                        width: 0.5,
+                        color: Color32::BLACK,
+                    },
+                );
             }
-            
         }
 
         fn add_contents(&mut self, ui: &mut Ui) -> eframe::egui::Response {
