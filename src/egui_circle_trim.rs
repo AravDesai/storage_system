@@ -21,7 +21,7 @@ pub mod egui_circle_trim {
         pub inner_radius: f32,
         pub start_angle: f32,
         pub end_angle: f32,
-        pub center: Pos2,
+        pub center: Rect,
         pub layer_id: LayerId,
         pub button_pressed: bool,
         pub(crate) view_type: ViewType,
@@ -38,7 +38,7 @@ pub mod egui_circle_trim {
             inner_radius: f32,
             start_angle: f32,
             end_angle: f32,
-            center: Pos2,
+            center: Rect,
             layer_id: LayerId,
             button_pressed: bool,
             view_type: ViewType,
@@ -59,34 +59,45 @@ pub mod egui_circle_trim {
             if self.view_type == ViewType::Circular {
                 return Rect {
                     min: Pos2 {
-                        x: self.center.x + self.inner_radius - 12.0
+                        x: self.center.min.x + self.inner_radius - 12.0
                             + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0)
                                 .sin(),
-                        y: self.center.y + self.inner_radius - 12.0
+                        y: self.center.min.y + self.inner_radius - 12.0
                             + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0)
                                 .cos(),
                     },
                     max: Pos2 {
-                        x: self.center.x + self.inner_radius - 12.0
+                        x: self.center.min.x + self.inner_radius - 12.0
                             + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0)
                                 .sin(),
-                        y: self.center.y + self.inner_radius - 12.0
+                        y: self.center.min.y + self.inner_radius - 12.0
                             + ((((self.end_angle - self.start_angle) as f32) / 2.0) * PI / 180.0)
                                 .cos(),
                     },
                 };
             }
             if self.view_type == ViewType::Rectangular {
+
                 return Rect {
                     min: Pos2 {
-                        x: self.center.x + ((self.start_angle + self.end_angle) / 2.0),
-                        y: self.center.y - self.inner_radius,
+                        x: self.center.min.x + ((self.start_angle + self.end_angle) as f32)/2.0 - 5.0,
+                        y: self.center.max.y - self.inner_radius - 35.0,
                     },
                     max: Pos2 {
-                        x: self.center.x + ((self.start_angle + self.end_angle) / 2.0),
-                        y: self.center.y - self.inner_radius,
+                        x: self.center.min.x + ((self.start_angle + self.end_angle) as f32)/2.0 - 5.0,
+                        y: self.center.max.y - self.inner_radius - 30.0,
                     },
                 };
+                // return Rect {
+                //     min: Pos2 {
+                //         x: self.center.min.x + ((self.start_angle + self.end_angle) / 2.0),
+                //         y: self.center.max.y - self.inner_radius,
+                //     },
+                //     max: Pos2 {
+                //         x: self.center.min.x + ((self.start_angle + self.end_angle) / 2.0),
+                //         y: self.center.max.y - self.inner_radius,
+                //     },
+                // };
             }
             panic!("Invalid ViewType");
         }
@@ -126,16 +137,16 @@ pub mod egui_circle_trim {
                 for i in self.start_angle as u32..self.end_angle as u32 {
                     let angle = (i as f32 * PI) / 180.0;
                     path_points.push(Pos2 {
-                        x: self.center.x + (self.inner_radius * angle.sin()),
-                        y: self.center.y + (self.inner_radius * angle.cos()),
+                        x: self.center.min.x + (self.inner_radius * angle.sin()),
+                        y: self.center.min.y + (self.inner_radius * angle.cos()),
                     });
                 }
 
                 for i in (self.start_angle as u32..self.end_angle as u32).rev() {
                     let angle = (i as f32 * PI) / 180.0;
                     path_points.push(Pos2 {
-                        x: self.center.x + ((self.inner_radius + 20.0) * angle.sin()),
-                        y: self.center.y + ((self.inner_radius + 20.0) * angle.cos()),
+                        x: self.center.min.x + ((self.inner_radius + 20.0) * angle.sin()),
+                        y: self.center.min.y + ((self.inner_radius + 20.0) * angle.cos()),
                     });
                 }
 
@@ -149,22 +160,21 @@ pub mod egui_circle_trim {
                     },
                 });
 
-                //painter.rect_filled(self.get_center_rect(), Rounding::ZERO, Color32::WHITE);
+                //painter.rect_filled(self.get_center.min_rect(), Rounding::ZERO, Color32::WHITE);
             }
 
             if self.view_type == ViewType::Rectangular {
                 let painter = ui.painter();
                 let paint_rect = Rect {
                     min: Pos2 {
-                        x: self.center.x + self.start_angle as f32,
-                        y: self.center.y - 50.0 - self.inner_radius - 20.0,
+                        x: self.center.min.x + self.start_angle as f32,
+                        y: self.center.max.y - self.inner_radius - 40.0,
                     },
                     max: Pos2 {
-                        x: self.center.x + self.end_angle as f32,
-                        y: self.center.y - 50.0 - self.inner_radius,
+                        x: self.center.min.x + self.end_angle as f32,
+                        y: self.center.max.y - self.inner_radius - 20.0,
                     },
                 };
-                println!("Paint rect: {}", paint_rect);
                 painter.clone().with_layer_id(self.layer_id).rect(
                     paint_rect,
                     Rounding::ZERO,
@@ -186,8 +196,8 @@ pub mod egui_circle_trim {
             };
 
             // let desired_size = Vec2{
-            //     x: self.center.x,
-            //     y: self.center.y,
+            //     x: self.center.min.x,
+            //     y: self.center.min.y,
             // };
 
             let (rect, response) =

@@ -231,7 +231,7 @@ impl MyApp {
         radius: f32,
         mut inner_bound: f32,
         outer_bound: u64,
-        center: Pos2,
+        center: Rect,
         view_type: ViewType,
         mut general_color: usize,
         specific_color: usize,
@@ -383,7 +383,7 @@ impl eframe::App for MyApp {
                     self.inner_radius,
                     0.0,
                     360,
-                    center.min,
+                    center,
                     self.view_type,
                     0,
                     0,
@@ -446,52 +446,57 @@ impl eframe::App for MyApp {
                     },
                 );
 
-                println!("{}", bottom);
+                // let mut trim = CircleTrim {
+                //     color: Self::get_color(0, 0),
+                //     inner_radius: 20.0,
+                //     start_angle: 0.0,
+                //     end_angle: 100.0,
+                //     layer_id: LayerId {
+                //         order: Order::PanelResizeLine,
+                //         id: Id::new(1),
+                //     },
+                //     button_pressed: false,
+                //     view_type: self.view_type,
+                //     center: bottom,
+                // };
+                // CircleTrim::paint_annulus_sector(&trim, ui);
 
-                let mut trim = CircleTrim {
-                    color: Self::get_color(0, 0),
-                    inner_radius: 20.0,
-                    start_angle: 0.0,
-                    end_angle: 100.0,
-                    layer_id: LayerId {
-                        order: Order::PanelResizeLine,
-                        id: Id::new(1),
-                    },
-                    button_pressed: false,
-                    view_type: self.view_type,
-                    center: bottom.min,
-                };
-                CircleTrim::paint_annulus_sector(&trim, ui);
+                // let mut brim = CircleTrim {
+                //     color: Self::get_color(0, 1),
+                //     inner_radius: 40.0,
+                //     start_angle: 0.0,
+                //     end_angle: 50.0,
+                //     layer_id: LayerId {
+                //         order: Order::PanelResizeLine,
+                //         id: Id::new(1),
+                //     },
+                //     button_pressed: false,
+                //     view_type: self.view_type,
+                //     center: bottom,
+                // };
+                // CircleTrim::paint_annulus_sector(&brim, ui);
 
-                let mut brim = CircleTrim {
-                    color: Self::get_color(0, 1),
-                    inner_radius: 40.0,
-                    start_angle: 0.0,
-                    end_angle: 50.0,
-                    layer_id: LayerId {
-                        order: Order::PanelResizeLine,
-                        id: Id::new(1),
-                    },
-                    button_pressed: false,
-                    view_type: self.view_type,
-                    center: bottom.min,
-                };
-                CircleTrim::paint_annulus_sector(&brim, ui);
+                // ui.allocate_ui_at_rect(trim.get_center_rect(), |ui| {
+                //     ui.with_layer_id(LayerId { order: Order::Debug, id: Id::new(1) }, |ui|{
+                //         ui.add(
+                //             Button::new("")
+                //                 .fill(Color32::DEBUG_COLOR)
+                //                 .rounding(100.0)
+                //                 .small(),
+                // )})});
 
-                
-
-                // self.file_recurser(
-                //     ui,
-                //     1,
-                //     self.current_root.clone(),
-                //     self.inner_radius,
-                //     0.0,
-                //     bottom.max.x as u64,
-                //     bottom.min,
-                //     self.view_type,
-                //     0,
-                //     0,
-                // );
+                self.file_recurser(
+                    ui,
+                    1,
+                    self.current_root.clone(),
+                    self.inner_radius,
+                    0.0,
+                    bottom.max.x as u64,
+                    bottom,
+                    self.view_type,
+                    0,
+                    0,
+                );
 
             }
         });
