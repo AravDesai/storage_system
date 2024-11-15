@@ -45,11 +45,9 @@ fn main() {
 }
 
 struct MyApp {
-    data_map: HashMap<HashData, Vec<HashData>>, //name better
+    folder_table: HashMap<HashData, Vec<HashData>>,
     current_root: HashData,
     inner_radius: f32,
-    start_angle: i32,
-    repaint_check: bool,
     view_type: ViewType,
 }
 
@@ -107,7 +105,7 @@ impl MyApp {
         let root_hash = hash_data_converter(cleaned_root);
         let root_hash_pass = root_hash.clone(); //needed to pass root value to self
 
-        let mut data_map = HashMap::new();
+        let mut folder_table = HashMap::new();
 
         let mut children = vec![];
         for item in size_to_hash {
@@ -115,11 +113,11 @@ impl MyApp {
                 children.push(hash_data_converter(item));
             }
         }
-        data_map.insert(root_hash, children.clone());
+        folder_table.insert(root_hash, children.clone());
 
         let children_clone = children.clone();
 
-        data_map = children_maker(data_map, children_clone, &size_to_hash_two);
+        folder_table = children_maker(folder_table, children_clone, &size_to_hash_two);
 
         pub fn children_maker(
             mut hashmap: HashMap<HashData, Vec<HashData>>,
@@ -175,11 +173,9 @@ impl MyApp {
         }
 
         Self {
-            data_map: data_map,
+            folder_table: folder_table,
             current_root: root_hash_pass,
             inner_radius: 20.0,
-            start_angle: 0,
-            repaint_check: true,
             view_type: ViewType::Rectangular,
         }
     }
@@ -217,7 +213,6 @@ impl MyApp {
         }
 
         if specific >= colors[0].len() {
-            //general += 1;
             specific = specific % colors[0].len();
         }
         return colors[general][specific];
@@ -235,14 +230,14 @@ impl MyApp {
         view_type: ViewType,
         mut general_color: usize,
         specific_color: usize,
-    ) {
-        let potential_children = self.data_map.get(&parent);
+    ) -> Option<HashData> {
+        let potential_children = self.folder_table.get(&parent);
         match potential_children {
             Some(children) => {
                 for child in children {
                     let child_length =
                         (child.size as f32 / parent.size as f32) * outer_bound as f32;
-                    let mut trim = CircleTrim {
+                    let trim = CircleTrim {
                         color: Self::get_color(general_color, specific_color),
                         inner_radius: radius,
                         start_angle: inner_bound,
@@ -259,38 +254,53 @@ impl MyApp {
                     if child.file_type == FileType::Folder {
                         ui.with_layer_id(
                             LayerId {
-                                order: eframe::egui::Order::Debug,
+                                order: eframe::egui::Order::Foreground,
                                 id: Id::new(1),
                             },
                             |ui| {
                                 ui.allocate_ui_at_rect(trim.get_center_rect(), |ui| {
+                                    let mut checker = false;
                                     if ui
                                         .add(
                                             Button::new("")
                                                 .fill(Color32::WHITE)
                                                 .rounding(100.0)
                                                 .small(),
-                                        )
+                                        ).on_hover_text(child.name.clone())
                                         .clicked()
                                     {
-                                        println!("{}", child.name);
-                                        println!("{}", child.size);
+                                        println!("Name: {}", child.name);
+                                        println!("Parent: {}", child.parent);
+                                        println!("Size: {}", child.size);
                                         println!("Radius: {}", radius);
                                         println!("Layer: {}", layer_id);
-                                        println!("General: {}", general_color);
-                                        println!("Specific: {}", specific_color);
+                                        println!("Color: {:?}", Self::get_color(general_color, specific_color));
+                                        println!("Rect: {}", trim.get_center_rect());
+                                        println!("Child Length: {}", child_length);
+                                        println!("Out: {}", outer_bound);
+                                        println!("");
+                                        checker = true;
+                                        //return Some(child);
                                     }
+                                    if checker {
+                                        println!("Inside if");
+                                        println!("{:?}", Some(child));
+                                        return Some(child);
+                                    }
+                                    else{
+                                        return None;
+                                    }
+                                    
                                 })
                             },
                         );
-                        //CircleTrim::make_button(&mut trim, ui, &mut CircleResponse{ root_changed: false});
                         self.file_recurser(
                             ui,
                             layer_id + 9,
                             child.clone(),
                             radius + 20.0,
                             inner_bound,
-                            (inner_bound + child_length) as u64,
+                            (child_length) as u64,
                             center,
                             view_type,
                             general_color,
@@ -300,8 +310,9 @@ impl MyApp {
                     inner_bound += child_length;
                     general_color += 1;
                 }
+                return None;
             }
-            None => return,
+            None => return None,
         }
     }
 }
@@ -485,7 +496,7 @@ impl eframe::App for MyApp {
                 //                 .small(),
                 // )})});
 
-                self.file_recurser(
+                match self.file_recurser(
                     ui,
                     1,
                     self.current_root.clone(),
@@ -496,8 +507,15 @@ impl eframe::App for MyApp {
                     self.view_type,
                     0,
                     0,
-                );
-
+                ) {
+                    Some(root) => {
+                        println!("In the match!");
+                        self.current_root = root;
+                    },
+                    None => {
+                        return;
+                    },
+                }
             }
         });
     }
