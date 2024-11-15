@@ -1,21 +1,18 @@
+use data::FileRow;
 use eframe::egui::{
-    self, Align2, Button, Color32, Context, FontFamily, FontId, Id, LayerId, Order, Pos2, Rect, Rounding, Stroke, TextWrapMode, Ui, Vec2
+    self, Align2, Button, Color32, Context, FontFamily, FontId, Id, LayerId, Order, Pos2, Rect,
+    Rounding, Stroke, TextWrapMode, Ui, Vec2,
 };
 use egui_circle_trim::egui_circle_trim::{CircleResponse, CircleTrim};
-use lb_rs::FileType;
-use lb_rs::{File, Uuid};
+use lb_rs::model::file_metadata::FileType;
+use lb_rs::Uuid;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs::{self};
 use std::hash::Hash;
 
+mod data;
 pub mod egui_circle_trim;
-
-#[derive(Debug, Deserialize, Clone, Hash, PartialEq, Eq)]
-struct Data {
-    file: File,
-    size: u64,
-}
 
 #[derive(Debug, Deserialize, Clone, Hash, PartialEq, Eq)]
 struct HashData {
@@ -27,7 +24,7 @@ struct HashData {
 }
 
 #[derive(PartialEq, Clone, Copy)]
-enum ViewType {
+pub(crate) enum ViewType {
     Rectangular,
     Circular,
 }
@@ -54,16 +51,13 @@ struct MyApp {
 impl MyApp {
     fn init(ctx: Context) -> Self {
         let json_info = fs::read_to_string("parth-doc-data.json").expect("Couldn't read file");
-        let data: Vec<Data> = serde_json::from_str(&json_info).expect("Json not formatted well");
-
-        let data_clone_two = data.clone();
-        let data_clone_three = data.clone();
+        let data: Vec<FileRow> = serde_json::from_str(&json_info).expect("Json not formatted well");
 
         let mut root = data[0].clone(); //try cloning the id - error handling things
 
-        for item in data {
+        for item in &data {
             if item.file.id == item.file.parent {
-                root = item;
+                root = item.clone();
             }
         }
 
@@ -71,24 +65,24 @@ impl MyApp {
 
         let mut size_adjusted_data = vec![];
 
-        for item in data_clone_two {
+        for item in &data {
             if item.file.is_folder() {
                 let new_size = size_finder(
                     item.clone(),
-                    data_clone_three.clone(),
+                    data.clone(),
                     0,
                     root_cleaner.clone(),
                 );
                 if new_size == 0 {
                     continue;
                 }
-                size_adjusted_data.push(Data {
+                size_adjusted_data.push(FileRow {
                     file: item.clone().file,
                     size: new_size,
                 });
             }
             if item.file.is_document() {
-                size_adjusted_data.push(item);
+                size_adjusted_data.push(item.clone());
             }
         }
 
@@ -122,7 +116,7 @@ impl MyApp {
         pub fn children_maker(
             mut hashmap: HashMap<HashData, Vec<HashData>>,
             children: Vec<HashData>,
-            data: &Vec<Data>,
+            data: &Vec<FileRow>,
         ) -> HashMap<HashData, Vec<HashData>> {
             for key in children {
                 let mut spread = vec![];
@@ -140,7 +134,7 @@ impl MyApp {
             return hashmap;
         }
 
-        pub fn hash_data_converter(data: Data) -> HashData {
+        pub fn hash_data_converter(data: FileRow) -> HashData {
             return HashData {
                 id: data.file.id,
                 parent: data.file.parent,
@@ -151,7 +145,12 @@ impl MyApp {
         }
 
         //There's probably something more efficient than this - quickfix for now
-        pub fn size_finder(subject: Data, dataset: Vec<Data>, mut size: u64, root: Data) -> u64 {
+        pub fn size_finder(
+            subject: FileRow,
+            dataset: Vec<FileRow>,
+            mut size: u64,
+            root: FileRow,
+        ) -> u64 {
             let mut visited = vec![];
             for item in &dataset {
                 if item.file.parent == subject.file.id
@@ -266,7 +265,8 @@ impl MyApp {
                                                 .fill(Color32::WHITE)
                                                 .rounding(100.0)
                                                 .small(),
-                                        ).on_hover_text(child.name.clone())
+                                        )
+                                        .on_hover_text(child.name.clone())
                                         .clicked()
                                     {
                                         println!("Name: {}", child.name);
@@ -274,7 +274,10 @@ impl MyApp {
                                         println!("Size: {}", child.size);
                                         println!("Radius: {}", radius);
                                         println!("Layer: {}", layer_id);
-                                        println!("Color: {:?}", Self::get_color(general_color, specific_color));
+                                        println!(
+                                            "Color: {:?}",
+                                            Self::get_color(general_color, specific_color)
+                                        );
                                         println!("Rect: {}", trim.get_center_rect());
                                         println!("Child Length: {}", child_length);
                                         println!("Out: {}", outer_bound);
@@ -286,11 +289,9 @@ impl MyApp {
                                         println!("Inside if");
                                         println!("{:?}", Some(child));
                                         return Some(child);
-                                    }
-                                    else{
+                                    } else {
                                         return None;
                                     }
-                                    
                                 })
                             },
                         );
@@ -333,21 +334,91 @@ impl eframe::App for MyApp {
 
             ui.heading("Storage Viewer");
 
-            if self.view_type == ViewType::Circular {
-                let center = Rect {
-                    min: window_size.max / 2.0,
-                    max: window_size.max,
-                };
+            match self.view_type {
+                ViewType::Circular => {
+                    let center = Rect {
+                        min: window_size.max / 2.0,
+                        max: window_size.max,
+                    };
 
-                let center_text = Rect {
-                    min: Pos2 {
-                        x: (window_size.max.x / 2.0) - 25.0,
-                        y: (window_size.max.y / 2.0) - 5.0,
-                    },
-                    max: window_size.max,
-                };
+                    let center_text = Rect {
+                        min: Pos2 {
+                            x: (window_size.max.x / 2.0) - 25.0,
+                            y: (window_size.max.y / 2.0) - 5.0,
+                        },
+                        max: window_size.max,
+                    };
 
-                ui.allocate_ui_at_rect(center, |ui| {
+                    ui.allocate_ui_at_rect(center, |ui| {
+                        let painter = ui.painter();
+                        painter
+                            .clone()
+                            .with_layer_id(LayerId {
+                                order: egui::Order::Foreground,
+                                id: Id::new(1),
+                            })
+                            .circle(
+                                window_size.max / 2.0,
+                                50.0,
+                                Color32::WHITE,
+                                egui::Stroke {
+                                    width: 0.0,
+                                    color: Color32::from_rgb(255, 255, 255),
+                                },
+                            );
+
+                        painter
+                            .clone()
+                            .with_layer_id(LayerId {
+                                order: egui::Order::Debug,
+                                id: Id::new(1),
+                            })
+                            .text(
+                                center.min,
+                                Align2::CENTER_CENTER,
+                                self.current_root.size.to_string() + " B",
+                                FontId {
+                                    size: 15.0,
+                                    family: FontFamily::Proportional,
+                                },
+                                Color32::BLACK,
+                            );
+                        ui.allocate_ui_at_rect(center_text, |ui| {
+                            ui.label(self.current_root.size.to_string() + " B")
+                                .on_hover_text(self.current_root.name.to_string());
+                        });
+                    });
+
+                    self.file_recurser(
+                        ui,
+                        1,
+                        self.current_root.clone(),
+                        self.inner_radius,
+                        0.0,
+                        360,
+                        center,
+                        self.view_type,
+                        0,
+                        0,
+                    );
+                }
+                ViewType::Rectangular => {
+                    let bottom = Rect {
+                        min: Pos2 {
+                            x: 0.0,
+                            y: window_size.max.y - 40.0,
+                        },
+                        max: window_size.max,
+                    };
+
+                    let bottom_text = Rect {
+                        min: Pos2 {
+                            x: bottom.max.x / 2.0,
+                            y: bottom.max.y - 15.0,
+                        },
+                        max: window_size.max,
+                    };
+
                     let painter = ui.painter();
                     painter
                         .clone()
@@ -355,25 +426,17 @@ impl eframe::App for MyApp {
                             order: egui::Order::Foreground,
                             id: Id::new(1),
                         })
-                        .circle(
-                            window_size.max / 2.0,
-                            50.0,
-                            Color32::WHITE,
-                            egui::Stroke {
-                                width: 0.0,
-                                color: Color32::from_rgb(255, 255, 255),
-                            },
-                        );
+                        .rect_filled(bottom, 0.0, Color32::WHITE);
 
                     painter
                         .clone()
                         .with_layer_id(LayerId {
                             order: egui::Order::Debug,
-                            id: Id::new(1),
+                            id: Id::new(2),
                         })
                         .text(
-                            center.min,
-                            Align2::CENTER_CENTER,
+                            bottom_text.min,
+                            Align2::CENTER_BOTTOM,
                             self.current_root.size.to_string() + " B",
                             FontId {
                                 size: 15.0,
@@ -381,140 +444,79 @@ impl eframe::App for MyApp {
                             },
                             Color32::BLACK,
                         );
-                    ui.allocate_ui_at_rect(center_text, |ui| {
-                        ui.label(self.current_root.size.to_string() + " B")
-                            .on_hover_text(self.current_root.name.to_string());
-                    });
-                });
-
-                self.file_recurser(
-                    ui,
-                    1,
-                    self.current_root.clone(),
-                    self.inner_radius,
-                    0.0,
-                    360,
-                    center,
-                    self.view_type,
-                    0,
-                    0,
-                );
-            }
-
-            if self.view_type == ViewType::Rectangular {
-                let bottom = Rect {
-                    min: Pos2 {
-                        x: 0.0,
-                        y: window_size.max.y - 40.0,
-                    },
-                    max: window_size.max,
-                };
-
-                let bottom_text = Rect {
-                    min: Pos2 {
-                        x: bottom.max.x / 2.0,
-                        y: bottom.max.y - 15.0,
-                    },
-                    max: window_size.max,
-                };
-
-                let painter = ui.painter();
-                painter
-                    .clone()
-                    .with_layer_id(LayerId {
-                        order: egui::Order::Foreground,
-                        id: Id::new(1),
-                    })
-                    .rect_filled(bottom, 0.0, Color32::WHITE);
-
-                painter
-                    .clone()
-                    .with_layer_id(LayerId {
-                        order: egui::Order::Debug,
-                        id: Id::new(2),
-                    })
-                    .text(
-                        bottom_text.min,
-                        Align2::CENTER_BOTTOM,
-                        self.current_root.size.to_string() + " B",
-                        FontId {
-                            size: 15.0,
-                            family: FontFamily::Proportional,
+                    ui.allocate_ui_at_rect(
+                        Rect {
+                            min: Pos2 {
+                                x: bottom_text.min.x - 30.0,
+                                y: bottom_text.min.y - 15.0,
+                            },
+                            max: bottom_text.max,
                         },
-                        Color32::BLACK,
+                        |ui| {
+                            ui.label(self.current_root.size.to_string() + " B")
+                                .on_hover_text(self.current_root.name.to_string());
+                        },
                     );
-                ui.allocate_ui_at_rect(
-                    Rect {
-                        min: Pos2 {
-                            x: bottom_text.min.x - 30.0,
-                            y: bottom_text.min.y - 15.0,
-                        },
-                        max: bottom_text.max,
-                    },
-                    |ui| {
-                        ui.label(self.current_root.size.to_string() + " B")
-                            .on_hover_text(self.current_root.name.to_string());
-                    },
-                );
 
-                // let mut trim = CircleTrim {
-                //     color: Self::get_color(0, 0),
-                //     inner_radius: 20.0,
-                //     start_angle: 0.0,
-                //     end_angle: 100.0,
-                //     layer_id: LayerId {
-                //         order: Order::PanelResizeLine,
-                //         id: Id::new(1),
-                //     },
-                //     button_pressed: false,
-                //     view_type: self.view_type,
-                //     center: bottom,
-                // };
-                // CircleTrim::paint_annulus_sector(&trim, ui);
+                    // let mut trim = CircleTrim {
+                    //     color: Self::get_color(0, 0),
+                    //     inner_radius: 20.0,
+                    //     start_angle: 0.0,
+                    //     end_angle: 100.0,
+                    //     layer_id: LayerId {
+                    //         order: Order::PanelResizeLine,
+                    //         id: Id::new(1),
+                    //     },
+                    //     button_pressed: false,
+                    //     view_type: self.view_type,
+                    //     center: bottom,
+                    // };
+                    // CircleTrim::paint_annulus_sector(&trim, ui);
 
-                // let mut brim = CircleTrim {
-                //     color: Self::get_color(0, 1),
-                //     inner_radius: 40.0,
-                //     start_angle: 0.0,
-                //     end_angle: 50.0,
-                //     layer_id: LayerId {
-                //         order: Order::PanelResizeLine,
-                //         id: Id::new(1),
-                //     },
-                //     button_pressed: false,
-                //     view_type: self.view_type,
-                //     center: bottom,
-                // };
-                // CircleTrim::paint_annulus_sector(&brim, ui);
+                    // let mut brim = CircleTrim {
+                    //     color: Self::get_color(0, 1),
+                    //     inner_radius: 40.0,
+                    //     start_angle: 0.0,
+                    //     end_angle: 50.0,
+                    //     layer_id: LayerId {
+                    //         order: Order::PanelResizeLine,
+                    //         id: Id::new(1),
+                    //     },
+                    //     button_pressed: false,
+                    //     view_type: self.view_type,
+                    //     center: bottom,
+                    // };
+                    // CircleTrim::paint_annulus_sector(&brim, ui);
 
-                // ui.allocate_ui_at_rect(trim.get_center_rect(), |ui| {
-                //     ui.with_layer_id(LayerId { order: Order::Debug, id: Id::new(1) }, |ui|{
-                //         ui.add(
-                //             Button::new("")
-                //                 .fill(Color32::DEBUG_COLOR)
-                //                 .rounding(100.0)
-                //                 .small(),
-                // )})});
+                    // ui.allocate_ui_at_rect(trim.get_center_rect(), |ui| {
+                    //     ui.with_layer_id(LayerId { order: Order::Debug, id: Id::new(1) }, |ui|{
+                    //         ui.add(
+                    //             Button::new("")
+                    //                 .fill(Color32::DEBUG_COLOR)
+                    //                 .rounding(100.0)
+                    //                 .small(),
+                    // )})});
 
-                match self.file_recurser(
-                    ui,
-                    1,
-                    self.current_root.clone(),
-                    self.inner_radius,
-                    0.0,
-                    bottom.max.x as u64,
-                    bottom,
-                    self.view_type,
-                    0,
-                    0,
-                ) {
-                    Some(root) => {
-                        println!("In the match!");
-                        self.current_root = root;
-                    },
-                    None => {
-                        return;
-                    },
+                    match self.file_recurser(
+                        ui,
+                        1,
+                        self.current_root.clone(),
+                        self.inner_radius,
+                        0.0,
+                        bottom.max.x as u64,
+                        bottom,
+                        self.view_type,
+                        0,
+                        0,
+                    ) {
+                        Some(root) => {
+                            println!("In the match!");
+                            self.current_root = root;
+                        }
+                        None => {
+                            return;
+                        }
+                    }
                 }
             }
         });

@@ -77,14 +77,15 @@ pub mod egui_circle_trim {
                 };
             }
             if self.view_type == ViewType::Rectangular {
-
                 return Rect {
                     min: Pos2 {
-                        x: self.center.min.x + ((self.start_angle + self.end_angle) as f32)/2.0 - 5.0,
+                        x: self.center.min.x + ((self.start_angle + self.end_angle) as f32) / 2.0
+                            - 5.0,
                         y: self.center.max.y - self.inner_radius - 35.0,
                     },
                     max: Pos2 {
-                        x: self.center.min.x + ((self.start_angle + self.end_angle) as f32)/2.0 - 5.0,
+                        x: self.center.min.x + ((self.start_angle + self.end_angle) as f32) / 2.0
+                            - 5.0,
                         y: self.center.max.y - self.inner_radius - 30.0,
                     },
                 };
