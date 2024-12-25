@@ -1,6 +1,7 @@
 use data::FileRow;
 use eframe::egui::{
-    self, Align2, Button, Color32, Context, FontFamily, FontId, Id, LayerId, Order, Pos2, Rect, Rounding, Stroke, TextBuffer, TextWrapMode, Ui, Vec2
+    self, Align2, Button, Color32, Context, FontFamily, FontId, Id, LayerId, Order, Pos2, Rect,
+    Rounding, Stroke, TextBuffer, TextWrapMode, Ui, Vec2,
 };
 use egui_circle_trim::egui_circle_trim::{CircleResponse, CircleTrim};
 //use lb_rs::model::file_metadata::FileType;
@@ -53,7 +54,7 @@ impl MyApp {
         let json_info = fs::read_to_string("parth-doc-data.json").expect("Couldn't read file");
         let data: Vec<FileRow> = serde_json::from_str(&json_info).expect("Json not formatted well");
 
-        data::Data::get_children(&data::Data::init(), Uuid::parse_str("201a4ace-8c36-4eae-b982-181816a24b5d").as_ref().unwrap());
+        //data::Data::get_children(&data::Data::init(), Uuid::parse_str("201a4ace-8c36-4eae-b982-181816a24b5d").as_ref().unwrap());
         println!("Made it through!");
 
         let mut root = data[0].clone(); //try cloning the id - error handling things
@@ -70,12 +71,7 @@ impl MyApp {
 
         for item in &data {
             if item.file.is_folder() {
-                let new_size = size_finder(
-                    item.clone(),
-                    data.clone(),
-                    0,
-                    root_cleaner.clone(),
-                );
+                let new_size = size_finder(item.clone(), data.clone(), 0, root_cleaner.clone());
                 if new_size == 0 {
                     continue;
                 }

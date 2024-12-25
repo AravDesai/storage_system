@@ -1,0 +1,50 @@
+[
+    {
+    "file": {
+        "id": "8cac2286-87d0-4df3-b6f7-5c86c4fa928c",
+        "parent": "8cac2286-87d0-4df3-b6f7-5c86c4fa928c",
+        "name": "Root",
+        "file_type": "Folder",
+        "last_modified": 1693063210788,
+        "last_modified_by": "parth",
+        "shares": []
+    },
+    "size": 1000
+    },
+    {
+    "file": {
+        "id": "1c890596-1df9-4638-b0c1-ec77fdaa7a49",
+        "parent": "8cac2286-87d0-4df3-b6f7-5c86c4fa928c",
+        "name": "Layer1",
+        "file_type": "Folder",
+        "last_modified": 1693063210788,
+        "last_modified_by": "parth",
+        "shares": []
+    },
+    "size": 1000
+    },
+    {
+    "file": {
+        "id": "9b052bca-50b4-47b1-8f6a-8a51e3310d86",
+        "parent": "1c890596-1df9-4638-b0c1-ec77fdaa7a49",
+        "name": "Layer2",
+        "file_type": "Folder",
+        "last_modified": 1693063210788,
+        "last_modified_by": "parth",
+        "shares": []
+    },
+    "size": 1000
+    },
+    {
+    "file": {
+        "id": "fc50112e-5f9d-4ebf-b6a8-023ba619fd0f",
+        "parent": "9b052bca-50b4-47b1-8f6a-8a51e3310d86",
+        "name": "File",
+        "file_type": "Document",
+        "last_modified": 1693063210788,
+        "last_modified_by": "parth",
+        "shares": []
+    },
+    "size": 320
+    }
+]
