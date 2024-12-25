@@ -139,6 +139,7 @@ mod test {
         assert_eq!(root_size, 1400);
     }
 
+    //This test fails sometimes because the json is not parsed in order
     #[test]
     fn get_children_root_two_files() {
         let file_contents =
