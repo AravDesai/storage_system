@@ -8,6 +8,7 @@ pub struct Data {
     current_root: Uuid,
     all_files: HashMap<Uuid, FileRow>,
     folder_sizes: HashMap<Uuid, u64>,
+    overall_root: Uuid,
 }
 
 #[derive(PartialEq, Debug)]
@@ -66,30 +67,17 @@ impl Data {
 
         Self {
             current_root: root,
+            overall_root: root,
             all_files,
             folder_sizes,
         }
     }
 
-    // pub struct Layers {
-    //     layers: Vec<Vec<BetterNode>>
-    // }
-
-    // pub struct BetterNode {
-    //     id: Uuid,
-    //     name: String,
-    //     portion: f64,
-    // }
-
-    // populate Vec<Node>
-    // write some basic tests at the bottom and fix any mistakes in here
-    // all we're trying to accomplish by wed 4th is a very reliable data abstraction
     pub fn get_children(&self, id: &Uuid) -> Vec<Node> {
         if !self.all_files.get(id).unwrap().file.is_folder() {
             return vec![];
         }
-        println!("ID: {}", id);
-        let total_size = *self.folder_sizes.get(id).unwrap() as f64;
+        let total_size = *self.folder_sizes.get(&self.current_root).unwrap() as f64;
         let children = self
             .all_files
             .values()
@@ -106,6 +94,15 @@ impl Data {
         }
         return gathered_children;
     }
+
+    pub fn get_paint_order(&self) -> Vec<Node>{
+        let mut master_vec: Vec<Node> = vec![];
+        //Planning to make a layer field in the Node struct. This will be populated recursively using get_children
+        //I will get initial children of the current root and then add all nodes produced to master_vec.
+        //I will then run get_children on children produced by children with a loop until nothing can be added to the vec
+        //The master_vec will be sorted using sort_by in descending order in the terms of layer field and returned 
+        return master_vec;
+    }
 }
 
 #[cfg(test)]
@@ -113,7 +110,7 @@ mod test {
     use std::fs;
 
     use eframe::egui::TextBuffer;
-    use lb_rs::Uuid;
+    use lb_rs::{File, Uuid};
 
     use crate::data::{FileRow, Node};
 
@@ -122,6 +119,8 @@ mod test {
     //Test init: Root and two files. Verify order of files
     //Test get_children(): Root and two files
     //another variant of both of the above with a deeply nested folder structure
+
+    //How should my program handle these? A current_root must always exist and only folders will be interactable
     //empty list
     //only one file
     //root missing
@@ -139,29 +138,205 @@ mod test {
         assert_eq!(root_size, 1400);
     }
 
-    //This test fails sometimes because the json is not parsed in order
     #[test]
     fn get_children_root_two_files() {
-        let file_contents =
-            fs::read_to_string("./test_files/root_two_files.json").expect("Couldn't read file");
-        let data: Vec<FileRow> =
-            serde_json::from_str(&file_contents).expect("Json not formatted well");
+        // let file_contents =
+        //     fs::read_to_string("./test_files/root_two_files.json").expect("Couldn't read file");
+        let data: Vec<FileRow> = vec![
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                    parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                    name: "Root".to_string(),
+                    file_type: lb_rs::FileType::Folder,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 1000,
+            },
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
+                    parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                    name: "file1".to_string(),
+                    file_type: lb_rs::FileType::Document,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 800,
+            },
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
+                    parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                    name: "file2".to_string(),
+                    file_type: lb_rs::FileType::Document,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 600,
+            },
+        ];
         let hold = Data::init(data);
         let actual_children = Data::get_children(&hold, &hold.current_root);
         let expected_children = vec![
             Node {
                 id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                 name: "file1".to_string(),
-                portion: 800.0/1400.0,
+                portion: 800.0 / 1400.0,
                 children: vec![],
             },
             Node {
                 id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                 name: "file2".to_string(),
-                portion: 600.0/1400.0,
+                portion: 600.0 / 1400.0,
                 children: vec![],
             },
         ];
         assert_eq!(actual_children, expected_children);
+    }
+
+    //the tests below should work when I get the metadata size of each folder
+    #[test]
+    fn get_children_nested_folders() {
+        let data: Vec<FileRow> = vec![
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                    parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                    name: "Root".to_string(),
+                    file_type: lb_rs::FileType::Folder,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 1000,
+            },
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
+                    parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                    name: "file1".to_string(),
+                    file_type: lb_rs::FileType::Document,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 1000,
+            },
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
+                    parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                    name: "file2".to_string(),
+                    file_type: lb_rs::FileType::Document,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 800,
+            },
+        ];
+        let hold = Data::init(data);
+        let actual_children = Data::get_children(&hold, &hold.current_root);
+        let expected_children = vec![Node {
+            id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
+            name: "Layer1".to_string(),
+            portion: 1.0,
+            children: vec![Node {
+                id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
+                name: "Layer2".to_string(),
+                portion: 1.0,
+                children: vec![Node {
+                    id: Uuid::parse_str("fc50112e-5f9d-4ebf-b6a8-023ba619fd0f").unwrap(),
+                    name: "file".to_string(),
+                    portion: 1.0,
+                    children: vec![],
+                }],
+            }],
+        }];
+        assert_eq!(expected_children, actual_children);
+    }
+
+    //This code will be finished when get paint order is finished
+    #[test]
+    fn nested_two_files_order() {
+        let data: Vec<FileRow> = vec![
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                    parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                    name: "Root".to_string(),
+                    file_type: lb_rs::FileType::Folder,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 1000,
+            },
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
+                    parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                    name: "leftlayer1".to_string(),
+                    file_type: lb_rs::FileType::Folder,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 1000,
+            },
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
+                    parent: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
+                    name: "leftlayer2file".to_string(),
+                    file_type: lb_rs::FileType::Document,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 800,
+            },
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("219df288-f08b-422b-adf6-59534df7ee91").unwrap(),
+                    parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                    name: "rightlayer1".to_string(),
+                    file_type: lb_rs::FileType::Folder,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 1000,
+            },
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
+                    parent: Uuid::parse_str("219df288-f08b-422b-adf6-59534df7ee91").unwrap(),
+                    name: "rightlayer2file1".to_string(),
+                    file_type: lb_rs::FileType::Document,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 300,
+            },
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("fe777276-381f-408b-b41a-bac9b302b9cc").unwrap(),
+                    parent: Uuid::parse_str("219df288-f08b-422b-adf6-59534df7ee91").unwrap(),
+                    name: "rightlayer2file2".to_string(),
+                    file_type: lb_rs::FileType::Document,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 300,
+            },
+        ];
     }
 }
