@@ -51,9 +51,6 @@ impl Data {
             }
         }
         for datum in data {
-            if datum.file.is_folder() {
-                continue;
-            }
             let datum_size = datum.size;
             let mut current_id = datum.file.id;
             loop {
@@ -83,18 +80,24 @@ impl Data {
         if !self.all_files.get(id).unwrap().file.is_folder() {
             return vec![];
         }
-        let current_size = *self.folder_sizes.get(id).unwrap() as f64;
+        //let current_size = *self.folder_sizes.get(id).unwrap() as f64;
         let total_size = *self.folder_sizes.get(&self.current_root).unwrap() as f64;
         let children = self
             .all_files
             .values()
             .filter(|f| f.file.parent == *id && f.file.id != *id)
-            .map(|f| Node {
+            .map(|f| { 
+                
+                let mut current_size = f.size as f64;
+                if f.file.is_folder(){
+                    current_size = *self.folder_sizes.get(&f.file.id).unwrap() as f64;
+                }
+                Node {
                 id: f.file.id,
                 name: f.file.name.clone(),
                 portion: current_size / total_size,
                 children: self.get_children(&f.file.id),
-            });
+            }});
         let mut gathered_children = vec![];
         for child in children.into_iter() {
             gathered_children.push(child);
