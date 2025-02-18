@@ -131,7 +131,7 @@ impl Data {
             });
             if !slice.children.is_empty() {
                 let hold = Data::set_layers(&slice.children, current_layer + 1, raw_layers.clone());
-                for item in hold {
+                for item in hold.iter().skip(1) {
                     raw_layers.push(item.clone());
                 }
             }
@@ -361,7 +361,6 @@ mod test {
         assert_eq!(expected_children, actual_children);
     }
 
-    //This code will be finished when get paint order is finished
     #[test]
     fn nested_two_files_order() {
         let data: Vec<FileRow> = vec![
