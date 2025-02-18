@@ -2,6 +2,7 @@ use std::{collections::HashMap, fs};
 //model::file::File
 use lb_rs::{shared::file::File, shared::file_metadata::FileType, Uuid};
 use serde::Deserialize;
+use std::cmp::Ordering;
 
 #[derive(Debug)]
 pub struct Data {
@@ -11,12 +12,20 @@ pub struct Data {
     overall_root: Uuid,
 }
 
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Debug, Clone)]
 pub struct Node {
     pub id: Uuid,
     pub name: String,
     pub portion: f64,
     pub children: Vec<Node>,
+}
+
+#[derive(PartialEq, Debug, Clone)]
+pub struct NodeLayer {
+    pub id: Uuid,
+    pub name: String,
+    pub portion: f64,
+    pub layer: u64,
 }
 
 #[derive(Debug, Deserialize, Clone, Hash, PartialEq, Eq)]
@@ -44,10 +53,10 @@ impl Data {
         }
 
         let mut folder_sizes = HashMap::new();
+        //Initial for loop for folders is necessary to give folders starting value as we need to go over folders again to update sizes
         for datum in data.clone() {
             if datum.file.is_folder() {
-                folder_sizes.insert(datum.file.id, 1000);
-                continue;
+                folder_sizes.insert(datum.file.id, datum.size);
             }
         }
         for datum in data {
@@ -80,24 +89,23 @@ impl Data {
         if !self.all_files.get(id).unwrap().file.is_folder() {
             return vec![];
         }
-        //let current_size = *self.folder_sizes.get(id).unwrap() as f64;
         let total_size = *self.folder_sizes.get(&self.current_root).unwrap() as f64;
         let children = self
             .all_files
             .values()
             .filter(|f| f.file.parent == *id && f.file.id != *id)
-            .map(|f| { 
-                
+            .map(|f| {
                 let mut current_size = f.size as f64;
-                if f.file.is_folder(){
+                if f.file.is_folder() {
                     current_size = *self.folder_sizes.get(&f.file.id).unwrap() as f64;
                 }
                 Node {
-                id: f.file.id,
-                name: f.file.name.clone(),
-                portion: current_size / total_size,
-                children: self.get_children(&f.file.id),
-            }});
+                    id: f.file.id,
+                    name: f.file.name.clone(),
+                    portion: current_size / total_size,
+                    children: self.get_children(&f.file.id),
+                }
+            });
         let mut gathered_children = vec![];
         for child in children.into_iter() {
             gathered_children.push(child);
@@ -105,12 +113,50 @@ impl Data {
         return gathered_children;
     }
 
-    pub fn get_paint_order(&self) -> Vec<Node> {
-        let mut paint_order_vec: Vec<Node> = vec![];
-        //Planning to make a layer field in the Node struct. This will be populated recursively using get_children
-        //I will get initial children of the current root and then add all nodes produced to master_vec.
-        //I will then run get_children on children produced by children with a loop until nothing can be added to the vec
-        //The master_vec will be sorted using sort_by in descending order in the terms of layer field and returned
+    pub fn reset_root(&mut self) {
+        self.current_root = self.overall_root;
+    }
+
+    fn set_layers(
+        tree: &Vec<Node>,
+        current_layer: u64,
+        mut raw_layers: Vec<NodeLayer>,
+    ) -> Vec<NodeLayer> {
+        for slice in tree {
+            raw_layers.push(NodeLayer {
+                id: slice.id,
+                name: slice.name.clone(),
+                portion: slice.portion,
+                layer: current_layer,
+            });
+            if !slice.children.is_empty() {
+                let hold = Data::set_layers(&slice.children, current_layer + 1, raw_layers.clone());
+                for item in hold {
+                    raw_layers.push(item.clone());
+                }
+            }
+        }
+        return raw_layers;
+    }
+
+    pub fn get_paint_order(&self) -> Vec<NodeLayer> {
+        //maybe add paint order to a field of self so that it only calls set if nothing is present/current root is changed
+
+        let tree = self.get_children(&self.current_root);
+        let mut paint_order_vec = Data::set_layers(&tree, 1, vec![]);
+        paint_order_vec.push(NodeLayer {
+            id: self.current_root,
+            name: self
+                .all_files
+                .get(&self.current_root)
+                .unwrap()
+                .file
+                .name
+                .clone(),
+            portion: 1.0,
+            layer: 0,
+        });
+        paint_order_vec.sort_by(|a, b| a.layer.cmp(&b.layer));
         return paint_order_vec;
     }
 }
@@ -122,7 +168,7 @@ mod test {
     use eframe::egui::TextBuffer;
     use lb_rs::{File, Uuid};
 
-    use crate::data::{FileRow, Node};
+    use crate::data::{FileRow, Node, NodeLayer};
 
     use super::Data;
 
@@ -369,7 +415,7 @@ mod test {
             },
             FileRow {
                 file: File {
-                    id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
+                    id: Uuid::parse_str("f2c90c41-4aea-44be-a79d-caea3f0306aa").unwrap(),
                     parent: Uuid::parse_str("219df288-f08b-422b-adf6-59534df7ee91").unwrap(),
                     name: "rightlayer2file1".to_string(),
                     file_type: lb_rs::FileType::Document,
@@ -392,5 +438,46 @@ mod test {
                 size: 300,
             },
         ];
+        let hold = Data::init(data);
+        let expected_order: Vec<NodeLayer> = vec![
+            NodeLayer {
+                id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                name: "Root".to_string(),
+                portion: 1.0,
+                layer: 0,
+            },
+            NodeLayer {
+                id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
+                name: "leftlayer1".to_string(),
+                portion: 0.52941176470588235294117647058824,
+                layer: 1,
+            },
+            NodeLayer {
+                id: Uuid::parse_str("219df288-f08b-422b-adf6-59534df7ee91").unwrap(),
+                name: "rightlayer1".to_string(),
+                portion: 0.47058823529411764705882352941176,
+                layer: 1,
+            },
+            NodeLayer {
+                id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
+                name: "leftlayer2file".to_string(),
+                portion: 0.23529411764705882352941176470588,
+                layer: 2,
+            },
+            NodeLayer {
+                id: Uuid::parse_str("f2c90c41-4aea-44be-a79d-caea3f0306aa").unwrap(),
+                name: "rightlayer2file1".to_string(),
+                portion: 0.08823529411764705882352941176471,
+                layer: 2,
+            },
+            NodeLayer {
+                id: Uuid::parse_str("fe777276-381f-408b-b41a-bac9b302b9cc").unwrap(),
+                name: "rightlayer2file2".to_string(),
+                portion: 0.08823529411764705882352941176471,
+                layer: 2,
+            },
+        ];
+        let actual_order = Data::get_paint_order(&hold);
+        assert_eq!(expected_order, actual_order);
     }
 }
