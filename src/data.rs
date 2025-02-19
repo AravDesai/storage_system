@@ -159,7 +159,7 @@ impl Data {
             portion: 1.0,
             layer: 0,
         });
-        paint_order_vec.sort_by(|a, b| a.layer.cmp(&b.layer));
+        paint_order_vec.sort_by(|a, b| b.layer.cmp(&a.layer));
         return paint_order_vec;
     }
 }
@@ -443,27 +443,9 @@ mod test {
         let hold = Data::init(data);
         let expected_order: Vec<NodeLayer> = vec![
             NodeLayer {
-                id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
-                name: "Root".to_string(),
-                portion: 1.0,
-                layer: 0,
-            },
-            NodeLayer {
-                id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
-                name: "leftlayer1".to_string(),
-                portion: 1800.0 / 4400.0,
-                layer: 1,
-            },
-            NodeLayer {
-                id: Uuid::parse_str("219df288-f08b-422b-adf6-59534df7ee91").unwrap(),
-                name: "rightlayer1".to_string(),
-                portion: 1600.0 / 4400.0,
-                layer: 1,
-            },
-            NodeLayer {
-                id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
-                name: "leftlayer2file".to_string(),
-                portion: 800.0 / 4400.0,
+                id: Uuid::parse_str("fe777276-381f-408b-b41a-bac9b302b9cc").unwrap(),
+                name: "rightlayer2file2".to_string(),
+                portion: 300.0 / 4400.0,
                 layer: 2,
             },
             NodeLayer {
@@ -473,13 +455,133 @@ mod test {
                 layer: 2,
             },
             NodeLayer {
-                id: Uuid::parse_str("fe777276-381f-408b-b41a-bac9b302b9cc").unwrap(),
-                name: "rightlayer2file2".to_string(),
-                portion: 300.0 / 4400.0,
+                id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
+                name: "leftlayer2file".to_string(),
+                portion: 800.0 / 4400.0,
                 layer: 2,
             },
+            NodeLayer {
+                id: Uuid::parse_str("219df288-f08b-422b-adf6-59534df7ee91").unwrap(),
+                name: "rightlayer1".to_string(),
+                portion: 1600.0 / 4400.0,
+                layer: 1,
+            },
+            NodeLayer {
+                id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
+                name: "leftlayer1".to_string(),
+                portion: 1800.0 / 4400.0,
+                layer: 1,
+            },
+            NodeLayer {
+                id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                name: "Root".to_string(),
+                portion: 1.0,
+                layer: 0,
+            },
+
         ];
         let actual_order = Data::get_paint_order(&hold);
+        assert_eq!(expected_order, actual_order, "\nExpected: \n{:?}\nActual:\n{:?}\n",expected_order,actual_order);
+    }
+
+    #[test]
+    fn jumbled_input_uneven_tree(){
+        let data: Vec<FileRow> = vec![
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("fc50112e-5f9d-4ebf-b6a8-023ba619fd0f").unwrap(),
+                    parent: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
+                    name: "Left3".to_string(),
+                    file_type: lb_rs::FileType::Document,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 800,
+            },
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                    parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                    name: "Root".to_string(),
+                    file_type: lb_rs::FileType::Folder,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 1000,
+            },
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
+                    parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                    name: "Left1".to_string(),
+                    file_type: lb_rs::FileType::Folder,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 1000,
+            },
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
+                    parent: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
+                    name: "Left2".to_string(),
+                    file_type: lb_rs::FileType::Folder,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 1000,
+            },
+            FileRow {
+                file: File {
+                    id: Uuid::parse_str("6c1cb978-7c4e-4d83-825a-477287f89c69").unwrap(),
+                    parent: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
+                    name: "Right2".to_string(),
+                    file_type: lb_rs::FileType::Document,
+                    last_modified: 1693063210788,
+                    last_modified_by: "parth".to_string(),
+                    shares: [].to_vec(),
+                },
+                size: 2000,
+            },
+        ];
+        let hold = Data::init(data);
+        let actual_order = Data::get_paint_order(&hold);
+        let expected_order: Vec<NodeLayer> = vec![
+            NodeLayer {
+                id: Uuid::parse_str("fc50112e-5f9d-4ebf-b6a8-023ba619fd0f").unwrap(),
+                name: "Left3".to_string(),
+                portion: 800.0/5800.0,
+                layer: 3,
+            },
+            NodeLayer {
+                id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
+                name: "Left2".to_string(),
+                portion: 1800.0/5800.0,
+                layer: 2,
+            },
+            NodeLayer {
+                id: Uuid::parse_str("6c1cb978-7c4e-4d83-825a-477287f89c69").unwrap(),
+                name: "Right2".to_string(),
+                portion: 2000.0/5800.0,
+                layer: 2,
+            },
+            NodeLayer {
+                id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
+                name: "Left1".to_string(),
+                portion: 4800.0 / 5800.0,
+                layer: 1,
+            },
+            NodeLayer {
+                id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
+                name: "Root".to_string(),
+                portion: 1.0,
+                layer: 0,
+            },
+        ];
         assert_eq!(expected_order, actual_order, "\nExpected: \n{:?}\nActual:\n{:?}\n",expected_order,actual_order);
     }
 }
