@@ -131,7 +131,10 @@ impl Data {
             });
             if !slice.children.is_empty() {
                 let hold = Data::set_layers(&slice.children, current_layer + 1, raw_layers.clone());
-                for item in hold.iter().skip(1) {
+                for item in hold {
+                    if raw_layers.contains(&item){
+                        continue;
+                    }
                     raw_layers.push(item.clone());
                 }
             }
@@ -448,35 +451,35 @@ mod test {
             NodeLayer {
                 id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                 name: "leftlayer1".to_string(),
-                portion: 0.52941176470588235294117647058824,
+                portion: 1800.0 / 4400.0,
                 layer: 1,
             },
             NodeLayer {
                 id: Uuid::parse_str("219df288-f08b-422b-adf6-59534df7ee91").unwrap(),
                 name: "rightlayer1".to_string(),
-                portion: 0.47058823529411764705882352941176,
+                portion: 1600.0 / 4400.0,
                 layer: 1,
             },
             NodeLayer {
                 id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                 name: "leftlayer2file".to_string(),
-                portion: 0.23529411764705882352941176470588,
+                portion: 800.0 / 4400.0,
                 layer: 2,
             },
             NodeLayer {
                 id: Uuid::parse_str("f2c90c41-4aea-44be-a79d-caea3f0306aa").unwrap(),
                 name: "rightlayer2file1".to_string(),
-                portion: 0.08823529411764705882352941176471,
+                portion: 300.0 / 4400.0,
                 layer: 2,
             },
             NodeLayer {
                 id: Uuid::parse_str("fe777276-381f-408b-b41a-bac9b302b9cc").unwrap(),
                 name: "rightlayer2file2".to_string(),
-                portion: 0.08823529411764705882352941176471,
+                portion: 300.0 / 4400.0,
                 layer: 2,
             },
         ];
         let actual_order = Data::get_paint_order(&hold);
-        assert_eq!(expected_order, actual_order);
+        assert_eq!(expected_order, actual_order, "\nExpected: \n{:?}\nActual:\n{:?}\n",expected_order,actual_order);
     }
 }
