@@ -44,7 +44,7 @@ fn main() {
 
 struct MyApp {
     data: data::Data,
-    layer_height: u64,
+    layer_height: f32,
     view_type: ViewType,
     paint_order: Vec<NodeLayer>,
 }
@@ -60,7 +60,7 @@ impl MyApp {
             data: data,
             view_type: ViewType::Rectangular,
             paint_order: vec![],
-            layer_height: 20,
+            layer_height: 20.0,
         }
     }
 
@@ -102,7 +102,7 @@ impl MyApp {
         return colors[general][specific];
     }
 
-    pub fn follow_paint_order(&self, ui: &mut Ui, bottom: Rect ) {
+    pub fn follow_paint_order(&self, ui: &mut Ui, bottom: Rect) {
         let mut current_layer = 0;
         let mut current_position = 0.0;
         let mut general_counter = 1;
@@ -114,32 +114,42 @@ impl MyApp {
             match self.view_type {
                 ViewType::Rectangular => {
                     let painter = ui.painter();
-                    let paint_rect = 
-                        Rect {
-                            min: Pos2 {
-                                x: current_position,
-                                y: bottom.min.y - ((current_layer + 1) as f32),
-                            },
-                            max: Pos2 {
-                                x: current_position+item.portion,
-                                y: bottom.min.y - (current_layer as f32),
-                            },
-                        };
-
+                    let paint_rect = Rect {
+                        min: Pos2 {
+                            x: current_position,
+                            y: bottom.min.y - ((current_layer + 1) as f32) * self.layer_height,
+                        },
+                        max: Pos2 {
+                            x: current_position + (item.portion * bottom.max.x),
+                            y: bottom.min.y - (current_layer as f32) * self.layer_height,
+                        },
+                    };
+                    paint_rect.center();
                     painter.clone().rect(
                         paint_rect,
                         Rounding::ZERO,
-                        MyApp::get_color(general_counter,current_layer as usize), //Ill make this look nicer soon,
+                        MyApp::get_color(general_counter, current_layer as usize), //Ill make this look nicer soon,
                         Stroke {
                             width: 0.5,
                             color: Color32::BLACK,
                         },
                     );
+                    ui.allocate_ui_at_rect(paint_rect, |ui| {
+                        ui.with_layer_id(
+                            LayerId {
+                                order: eframe::egui::Order::Debug,
+                                id: Id::new(1),
+                            },
+                            |ui| {
+                                ui.label(".").on_hover_text(self.data.all_files.get(&item.id).unwrap().file.name.to_string());
+                            },
+                        )
+                    });
                 }
                 ViewType::Circular => return, //will fill in logic here soon
             }
-            current_position+=item.portion;
-            general_counter+=1;
+            current_position += (item.portion * bottom.max.x);
+            general_counter += 1;
         }
     }
 
