@@ -1,0 +1,4973 @@
+[
+  {
+    "file": {
+      "id": "8cac2286-87d0-4df3-b6f7-5c86c4fa928c",
+      "parent": "93b860b1-fd7b-4b9d-8e44-409d48557aa9",
+      "name": "why-we-build-lockbook.md",
+      "file_type": "Document",
+      "last_modified": 1693063210788,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3743
+  },
+  {
+    "file": {
+      "id": "185b02d7-4039-4933-80c9-32e5717ca92c",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "locks.md",
+      "file_type": "Document",
+      "last_modified": 1711222054467,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2558
+  },
+  {
+    "file": {
+      "id": "32921027-a9d8-488a-8863-7c127cd4d2e5",
+      "parent": "bde71547-49c4-4a45-9866-1e5ad7e0dab4",
+      "name": "timeline.md",
+      "file_type": "Document",
+      "last_modified": 1685313100994,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 4031
+  },
+  {
+    "file": {
+      "id": "5728cc53-ad7d-4eb4-a525-4f6045a9fac7",
+      "parent": "6c1cb978-7c4e-4d83-825a-477287f89c69",
+      "name": "todo.md",
+      "file_type": "Document",
+      "last_modified": 1689351232303,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1906
+  },
+  {
+    "file": {
+      "id": "5a35c34f-00bc-4d91-ace1-4bd613f54f2c",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "crates.md",
+      "file_type": "Document",
+      "last_modified": 1674190469623,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1828
+  },
+  {
+    "file": {
+      "id": "a0d75297-7e0d-4cf6-add9-e9786d58984d",
+      "parent": "ad8b9057-6e72-4b7b-8b7c-ca4f3e936320",
+      "name": "npat.md",
+      "file_type": "Document",
+      "last_modified": 1685668743392,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1165
+  },
+  {
+    "file": {
+      "id": "8ed5e139-cf20-4844-9cea-c8a525c62ce7",
+      "parent": "a2b2f0e5-14ef-442a-b5ef-e4ac985ef277",
+      "name": "DI.md",
+      "file_type": "Document",
+      "last_modified": 1687529150257,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1039
+  },
+  {
+    "file": {
+      "id": "1c890596-1df9-4638-b0c1-ec77fdaa7a49",
+      "parent": "b987fe7f-8d89-483f-aad7-73aa7ea5a304",
+      "name": "stories",
+      "file_type": "Folder",
+      "last_modified": 1692376055757,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "9b4b52b0-d8af-417e-82c3-c7abb7bb921b",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "untitled.md",
+      "file_type": "Document",
+      "last_modified": 1718144018543,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "a26df194-c6c8-4aa5-b601-d17d7fbd13f2",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "9633fc71-3.png",
+      "file_type": "Document",
+      "last_modified": 1700446513903,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 27448
+  },
+  {
+    "file": {
+      "id": "97e6c7c3-2295-4bce-becf-adcf7b55aae8",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "writing",
+      "file_type": "Folder",
+      "last_modified": 1681873865717,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "f81d464b-51d8-465a-888d-d3b553e76673",
+      "parent": "b987fe7f-8d89-483f-aad7-73aa7ea5a304",
+      "name": "film-day-11-05.md",
+      "file_type": "Document",
+      "last_modified": 1699228341914,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3564
+  },
+  {
+    "file": {
+      "id": "5ce6a4e2-0416-461c-bb61-c3025c596822",
+      "parent": "ad7e7911-baec-4aed-b3f8-0159a4142467",
+      "name": "drafts",
+      "file_type": "Folder",
+      "last_modified": 1686013596044,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "7cfb1d64-70d8-4cb1-9c65-67bbc7cb7879",
+      "parent": "e884f84a-e31d-4aae-a048-1ae1b68b3f28",
+      "name": "lockbook",
+      "file_type": "Folder",
+      "last_modified": 1708468497227,
+      "last_modified_by": "parth",
+      "shares": [
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "travis"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "steve"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "adam"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "<unknown>"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "<unknown>"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "raayan"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "smail"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "krishma"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "siddhant"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "coreycole"
+        }
+      ]
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "f2c90c41-4aea-44be-a79d-caea3f0306aa",
+      "parent": "b6505cef-d870-4051-b1ac-1ebfcf766439",
+      "name": "egui-arch.draw",
+      "file_type": "Document",
+      "last_modified": 1695071717862,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3301695
+  },
+  {
+    "file": {
+      "id": "6e2fde86-ec2b-493e-8d63-ccfbeb60eab1",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "new file.draw",
+      "file_type": "Document",
+      "last_modified": 1704820448711,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 113413
+  },
+  {
+    "file": {
+      "id": "c2549c37-1066-40d3-8055-e2d26c0efa46",
+      "parent": "985e9b6d-e83c-4419-ad09-fdbedaca4bc7",
+      "name": "realtime-collaboration.md",
+      "file_type": "Document",
+      "last_modified": 1718837394802,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3747
+  },
+  {
+    "file": {
+      "id": "81196c0e-22b8-4b5a-a829-e474efa2d1bd",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "0.8.2-retro.md",
+      "file_type": "Document",
+      "last_modified": 1696524374199,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1723
+  },
+  {
+    "file": {
+      "id": "884fc16d-045e-4c22-ba43-dfc9a1985700",
+      "parent": "173063cb-702d-4a3f-8444-d3012996c754",
+      "name": "todo.md",
+      "file_type": "Document",
+      "last_modified": 1715120658901,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1125
+  },
+  {
+    "file": {
+      "id": "e884f84a-e31d-4aae-a048-1ae1b68b3f28",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "work",
+      "file_type": "Folder",
+      "last_modified": 1686778676362,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "44546010-0812-4e65-bbcf-0e7d00d5e6c9",
+      "parent": "e337fc67-737e-4e6b-88be-2eb605dd59ea",
+      "name": "2011.md",
+      "file_type": "Document",
+      "last_modified": 1660843374511,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 44767
+  },
+  {
+    "file": {
+      "id": "17697487-f0ba-4759-ad89-67369ba74e98",
+      "parent": "73fce7af-d632-4135-b7c5-40d47e7d12ae",
+      "name": "drive-status.md",
+      "file_type": "Document",
+      "last_modified": 1706315621492,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3109
+  },
+  {
+    "file": {
+      "id": "c40bca8f-6455-439e-a307-ed0812a48ade",
+      "parent": "e337fc67-737e-4e6b-88be-2eb605dd59ea",
+      "name": "2012.md",
+      "file_type": "Document",
+      "last_modified": 1660843369786,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 15821
+  },
+  {
+    "file": {
+      "id": "fc7833d8-5d44-4f35-a2ef-9ff9ea66516c",
+      "parent": "7bfbc7e9-4e88-4608-9d6e-e45f87fd6951",
+      "name": "apt",
+      "file_type": "Folder",
+      "last_modified": 1660843366836,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "a2b2f0e5-14ef-442a-b5ef-e4ac985ef277",
+      "parent": "99d1f3de-1cc6-4c38-abbb-a0f7ec93903c",
+      "name": "drafts",
+      "file_type": "Folder",
+      "last_modified": 1687529150219,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "0e1d30c3-703b-4476-9e39-2429321b7cb8",
+      "parent": "84f3d670-2657-42c1-9f14-660066de923b",
+      "name": "ios-file-tree-animation-fix.md",
+      "file_type": "Document",
+      "last_modified": 1717437160907,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1434
+  },
+  {
+    "file": {
+      "id": "610e8bdf-2965-4dff-a91f-55ee9eedb2f0",
+      "parent": "8b5f49ee-5c7c-4d30-a739-fbd356de1ddb",
+      "name": "test.md",
+      "file_type": "Document",
+      "last_modified": 1674190381622,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1413
+  },
+  {
+    "file": {
+      "id": "ef2eb950-0d0e-4eab-9c91-8e6b72926aa6",
+      "parent": "7bfbc7e9-4e88-4608-9d6e-e45f87fd6951",
+      "name": "billing",
+      "file_type": "Folder",
+      "last_modified": 1660843366828,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "b7a97fa5-7690-4f5f-ab36-0560c6d799f5",
+      "parent": "b64713a3-62c5-41b5-b92e-949b42d76f56",
+      "name": "cli-rs.md",
+      "file_type": "Document",
+      "last_modified": 1696646680212,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1910
+  },
+  {
+    "file": {
+      "id": "9422e638-b909-42a6-88c5-277680229b8f",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "shared",
+      "file_type": "Document",
+      "last_modified": 1674190381194,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1406
+  },
+  {
+    "file": {
+      "id": "50a9dfea-c94e-4cd0-9e81-f3241d5f8cd6",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "service.md",
+      "file_type": "Document",
+      "last_modified": 1660843370228,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2378
+  },
+  {
+    "file": {
+      "id": "93b860b1-fd7b-4b9d-8e44-409d48557aa9",
+      "parent": "6c1cb978-7c4e-4d83-825a-477287f89c69",
+      "name": "posts",
+      "file_type": "Folder",
+      "last_modified": 1693062838877,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "01934282-5f6b-451d-a2e5-a210a7ed1c25",
+      "parent": "fd97fcaa-78e4-43b6-8d42-eef839897119",
+      "name": "taking-stock-of-our-purchase.md",
+      "file_type": "Document",
+      "last_modified": 1694796835848,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 4822
+  },
+  {
+    "file": {
+      "id": "4f92f38b-8f94-418e-b8c4-dcba14b95879",
+      "parent": "e606e2d2-efee-40ce-b82e-f430e80d14bf",
+      "name": "release.md",
+      "file_type": "Document",
+      "last_modified": 1686778631248,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1215
+  },
+  {
+    "file": {
+      "id": "f73bd85e-ea23-4e38-ad82-2e21467b93e9",
+      "parent": "64a1e269-69f7-4453-ac60-e162985afe6f",
+      "name": "tor.md",
+      "file_type": "Document",
+      "last_modified": 1660843367721,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1101
+  },
+  {
+    "file": {
+      "id": "e0813747-5a2d-4a2f-a7a8-a1496a2bec24",
+      "parent": "ce5c29b2-62aa-46ca-9c2c-ad9c0e64970e",
+      "name": "tasks",
+      "file_type": "Folder",
+      "last_modified": 1660843366838,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "c119828c-b55c-4434-a20d-872e6a5b34da",
+      "parent": "fcb95408-0898-4ee4-a20c-4167c305c169",
+      "name": "svg_editor.md",
+      "file_type": "Document",
+      "last_modified": 1704839573926,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 4519
+  },
+  {
+    "file": {
+      "id": "c0464542-f084-4ab2-89ed-ec3b7c7fe4ac",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "checked-in.md",
+      "file_type": "Document",
+      "last_modified": 1714752876823,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1287
+  },
+  {
+    "file": {
+      "id": "6e0ca914-4fd1-4a9e-a34b-c18345c13168",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "ml-cli.md",
+      "file_type": "Document",
+      "last_modified": 1660843374175,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1100
+  },
+  {
+    "file": {
+      "id": "60da34bc-f5e0-4930-a7bb-beb5f4685b60",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "untitled.svg",
+      "file_type": "Document",
+      "last_modified": 1718840862481,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "7b64f58e-2059-4d6c-8855-a6e6f7b666fb",
+      "parent": "7249d168-a2b0-4ec7-a8c3-4915427fbe80",
+      "name": "todo.md",
+      "file_type": "Document",
+      "last_modified": 1686778631249,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1386
+  },
+  {
+    "file": {
+      "id": "d484eb87-2036-4202-bf52-ddc0ec3ee0a6",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "serde_redis.md",
+      "file_type": "Document",
+      "last_modified": 1660843369546,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1086
+  },
+  {
+    "file": {
+      "id": "504df9eb-2d37-45d1-acd9-3d2b3d2241a3",
+      "parent": "c0d3f25c-d464-4b59-8a67-0b93c4fb5138",
+      "name": "to-buy.md",
+      "file_type": "Document",
+      "last_modified": 1660843367928,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1377
+  },
+  {
+    "file": {
+      "id": "6958e179-58d0-4ea6-9a63-dbb71fb4ed38",
+      "parent": "7bfbc7e9-4e88-4608-9d6e-e45f87fd6951",
+      "name": "1-22-24.key",
+      "file_type": "Document",
+      "last_modified": 1706481864919,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2892796
+  },
+  {
+    "file": {
+      "id": "23ebd487-3397-4d7d-915f-76cc02655592",
+      "parent": "3a7375f1-c6d8-49d9-b70c-48b0b4dee447",
+      "name": "pasted_image_2024-05-16_04-46-05.png",
+      "file_type": "Document",
+      "last_modified": 1715835592033,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 5881647
+  },
+  {
+    "file": {
+      "id": "64a1e269-69f7-4453-ac60-e162985afe6f",
+      "parent": "c982ff9f-3441-4ae9-934a-e1bf0d4735af",
+      "name": "reading-notes",
+      "file_type": "Folder",
+      "last_modified": 1660843366821,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "6a8e9487-326e-4ce2-a187-f985c65905e0",
+      "parent": "aa12d6bf-5c38-4c87-a347-aaa7f2155a7d",
+      "name": "keyboard.md",
+      "file_type": "Document",
+      "last_modified": 1660843371734,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1162
+  },
+  {
+    "file": {
+      "id": "0341208f-8f7f-4fb2-9f96-e28064280513",
+      "parent": "173063cb-702d-4a3f-8444-d3012996c754",
+      "name": "types-of-racing.md",
+      "file_type": "Document",
+      "last_modified": 1693111126737,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2324
+  },
+  {
+    "file": {
+      "id": "fbee841b-baef-4144-acf1-32bfee83d545",
+      "parent": "fcb95408-0898-4ee4-a20c-4167c305c169",
+      "name": "Ideas.md",
+      "file_type": "Document",
+      "last_modified": 1712080021490,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2247
+  },
+  {
+    "file": {
+      "id": "a1f255e3-018e-4c11-b26b-625a1683bc9b",
+      "parent": "c0d3f25c-d464-4b59-8a67-0b93c4fb5138",
+      "name": "gift-ideas.md",
+      "file_type": "Document",
+      "last_modified": 1690074991970,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1356
+  },
+  {
+    "file": {
+      "id": "66cf0a6c-b51a-4ad0-9014-d11a60ce75b2",
+      "parent": "aa12d6bf-5c38-4c87-a347-aaa7f2155a7d",
+      "name": "devices-checkin.md",
+      "file_type": "Document",
+      "last_modified": 1660843372811,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1966
+  },
+  {
+    "file": {
+      "id": "b10d7b41-1c22-4cbd-8c9d-cd6e2a37824f",
+      "parent": "b6505cef-d870-4051-b1ac-1ebfcf766439",
+      "name": "0.8.2-release-film.md",
+      "file_type": "Document",
+      "last_modified": 1696137480495,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1951
+  },
+  {
+    "file": {
+      "id": "150089d5-0036-471c-8029-39ef3b126e00",
+      "parent": "ce5c29b2-62aa-46ca-9c2c-ad9c0e64970e",
+      "name": "articles",
+      "file_type": "Folder",
+      "last_modified": 1660843366816,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "19de6d4d-f36b-4d2b-ab86-94c5b7d52bfe",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "privacy-policy.md",
+      "file_type": "Document",
+      "last_modified": 1674190380984,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1423
+  },
+  {
+    "file": {
+      "id": "5de11003-d209-4e2c-969d-17b449debd94",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "standup.key",
+      "file_type": "Document",
+      "last_modified": 1710883244550,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 409598
+  },
+  {
+    "file": {
+      "id": "5c65ada8-80d2-4d8b-8cdf-2db4a623369a",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "hmdb-integration.md",
+      "file_type": "Document",
+      "last_modified": 1674190381122,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1422
+  },
+  {
+    "file": {
+      "id": "876fadc2-c711-482c-91c1-4b225a95d0cf",
+      "parent": "c0d3f25c-d464-4b59-8a67-0b93c4fb5138",
+      "name": "to-consume.md",
+      "file_type": "Document",
+      "last_modified": 1660843369401,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1901
+  },
+  {
+    "file": {
+      "id": "1908bdd0-5734-4c12-938c-91677ebae691",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "errors.md",
+      "file_type": "Document",
+      "last_modified": 1716818190790,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "e191913f-e8a1-4c15-a53f-c6fe852b514a",
+      "parent": "8b5f49ee-5c7c-4d30-a739-fbd356de1ddb",
+      "name": "design.draw",
+      "file_type": "Document",
+      "last_modified": 1689351232304,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1043817
+  },
+  {
+    "file": {
+      "id": "309bf295-8663-4b45-8abb-8483e9714ea4",
+      "parent": "3755ea90-559c-41e6-9562-72bfb9718391",
+      "name": "good-notes.md",
+      "file_type": "Document",
+      "last_modified": 1710877574107,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1116
+  },
+  {
+    "file": {
+      "id": "b9f20f2b-1b1d-461b-961c-d93c1e62cfbe",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "plan.md",
+      "file_type": "Document",
+      "last_modified": 1660843372913,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 4034
+  },
+  {
+    "file": {
+      "id": "c74e2932-e0fa-4348-97a0-479aaff4a96d",
+      "parent": "aa12d6bf-5c38-4c87-a347-aaa7f2155a7d",
+      "name": "x1c7-manifest.md",
+      "file_type": "Document",
+      "last_modified": 1660843372632,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1489
+  },
+  {
+    "file": {
+      "id": "7e6bf9df-de34-47e3-99d5-67011b67ea10",
+      "parent": "e337fc67-737e-4e6b-88be-2eb605dd59ea",
+      "name": "2013.md",
+      "file_type": "Document",
+      "last_modified": 1660843368788,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 25134
+  },
+  {
+    "file": {
+      "id": "2d96bbe1-2287-4627-b67d-9fc9bfd2cfe4",
+      "parent": "3755ea90-559c-41e6-9562-72bfb9718391",
+      "name": "icedrive.md",
+      "file_type": "Document",
+      "last_modified": 1674190381488,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1105
+  },
+  {
+    "file": {
+      "id": "f469ee16-9bce-4908-b757-a0986fc7279c",
+      "parent": "787cd8ab-58f0-444c-97a5-f16c31862085",
+      "name": "grafana-error.md",
+      "file_type": "Document",
+      "last_modified": 1687893815211,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1567
+  },
+  {
+    "file": {
+      "id": "bd42683e-796d-4c65-a524-57193e615abb",
+      "parent": "7bfbc7e9-4e88-4608-9d6e-e45f87fd6951",
+      "name": "rahul.md",
+      "file_type": "Document",
+      "last_modified": 1660843369629,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1246
+  },
+  {
+    "file": {
+      "id": "f97d966e-0993-4b6e-929e-51de695febb2",
+      "parent": "ad7e7911-baec-4aed-b3f8-0159a4142467",
+      "name": "published",
+      "file_type": "Folder",
+      "last_modified": 1686013596043,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "074b0e8a-f898-4110-bbfc-fa52d5c5b564",
+      "parent": "20a1ab69-421d-44e4-b0b8-a2b4b2cce676",
+      "name": "curriculum.md",
+      "file_type": "Document",
+      "last_modified": 1689351232444,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1078
+  },
+  {
+    "file": {
+      "id": "1e25f391-9cfd-47d1-9aef-75919e911784",
+      "parent": "e0813747-5a2d-4a2f-a7a8-a1496a2bec24",
+      "name": "marketing-tech.md",
+      "file_type": "Document",
+      "last_modified": 1660843369585,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 7087
+  },
+  {
+    "file": {
+      "id": "01f3a671-9ba5-4913-9f21-a0db7c3f2ade",
+      "parent": "3a7375f1-c6d8-49d9-b70c-48b0b4dee447",
+      "name": "pasted_image_2024-05-16_04-44-13.png",
+      "file_type": "Document",
+      "last_modified": 1715835592033,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 333090
+  },
+  {
+    "file": {
+      "id": "6940bf63-7030-4485-81de-0d152c6f6563",
+      "parent": "205d5350-b545-45b0-b7ea-69b3af10c625",
+      "name": "crisis-prep.md",
+      "file_type": "Document",
+      "last_modified": 1674190381469,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2257
+  },
+  {
+    "file": {
+      "id": "ccc88455-bc60-46b6-92bf-dd18edbb5fa1",
+      "parent": "e32ac279-d7c8-476f-9908-f493f0664225",
+      "name": "Travis",
+      "file_type": {
+        "Link": {
+          "target": "95d43411-bd3a-42be-ab1c-94b53694e1a8"
+        }
+      },
+      "last_modified": 1685291031875,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "78b1ce48-5115-4bfc-8891-29f384e8cd5f",
+      "parent": "3a7375f1-c6d8-49d9-b70c-48b0b4dee447",
+      "name": "pasted_image_2024-05-16_04-59-08.png",
+      "file_type": "Document",
+      "last_modified": 1715835592034,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2182731
+  },
+  {
+    "file": {
+      "id": "033f1be6-4229-47bf-959e-094008795f55",
+      "parent": "3a7375f1-c6d8-49d9-b70c-48b0b4dee447",
+      "name": "pasted_image_2024-05-16_04-17-24.png",
+      "file_type": "Document",
+      "last_modified": 1715835592034,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 387815
+  },
+  {
+    "file": {
+      "id": "cbaf1c25-7485-4045-bcc4-bb1730b068a9",
+      "parent": "3a7375f1-c6d8-49d9-b70c-48b0b4dee447",
+      "name": "pasted_image_2024-05-16_04-54-18.png",
+      "file_type": "Document",
+      "last_modified": 1715835592034,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2068412
+  },
+  {
+    "file": {
+      "id": "c5d093f1-4163-4282-9f1e-e789f28b98e7",
+      "parent": "e32ac279-d7c8-476f-9908-f493f0664225",
+      "name": "Family",
+      "file_type": {
+        "Link": {
+          "target": "6367be6a-5cc2-4578-aff7-a60e372afb61"
+        }
+      },
+      "last_modified": 1689474495684,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "fc3a4b61-7cdb-4f68-99ef-28ee3391cc8b",
+      "parent": "e884f84a-e31d-4aae-a048-1ae1b68b3f28",
+      "name": "writing",
+      "file_type": "Folder",
+      "last_modified": 1686013596044,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "5fa39b7e-b42d-4d6b-90c7-8f2d73bb85e2",
+      "parent": "73fce7af-d632-4135-b7c5-40d47e7d12ae",
+      "name": "content.md",
+      "file_type": "Document",
+      "last_modified": 1692720635452,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1284
+  },
+  {
+    "file": {
+      "id": "daf545e2-9036-4134-807c-e82129f9ce2e",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "todo.md",
+      "file_type": "Document",
+      "last_modified": 1715103136171,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 4206
+  },
+  {
+    "file": {
+      "id": "94ef4ec1-1af3-4b3f-a7b5-2a16f10b8eb8",
+      "parent": "aa12d6bf-5c38-4c87-a347-aaa7f2155a7d",
+      "name": "s20.md",
+      "file_type": "Document",
+      "last_modified": 1660843371771,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1476
+  },
+  {
+    "file": {
+      "id": "a6b91daf-c7cc-4855-be23-a16cc2ecde50",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "diagram-tool.md",
+      "file_type": "Document",
+      "last_modified": 1660843372672,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1588
+  },
+  {
+    "file": {
+      "id": "ee3abbaa-3b55-4b0d-a092-485331b698e4",
+      "parent": "aa12d6bf-5c38-4c87-a347-aaa7f2155a7d",
+      "name": "x1c7.md",
+      "file_type": "Document",
+      "last_modified": 1660843367838,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3336
+  },
+  {
+    "file": {
+      "id": "c88088d9-7541-4e27-ad0c-e09c606655f0",
+      "parent": "787cd8ab-58f0-444c-97a5-f16c31862085",
+      "name": "device-graph.md",
+      "file_type": "Document",
+      "last_modified": 1683053272624,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1229
+  },
+  {
+    "file": {
+      "id": "124db887-54eb-416d-a804-6e7330129b02",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "manufacturing.md",
+      "file_type": "Document",
+      "last_modified": 1660843370442,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1129
+  },
+  {
+    "file": {
+      "id": "f418dc3b-d4a0-4918-ba84-67352208979a",
+      "parent": "546eb3d0-8bec-45cc-9206-4043e0dd2e92",
+      "name": "todo.md",
+      "file_type": "Document",
+      "last_modified": 1678033917200,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1141
+  },
+  {
+    "file": {
+      "id": "8d9e4401-2275-417a-8db1-1fd2b73a24fe",
+      "parent": "9c3ddace-2c50-44ca-aadc-544297335bf3",
+      "name": "drawing-design-discussion.md",
+      "file_type": "Document",
+      "last_modified": 1697495123784,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1407
+  },
+  {
+    "file": {
+      "id": "d1d95953-6c70-4ba0-b570-38390965a786",
+      "parent": "aa12d6bf-5c38-4c87-a347-aaa7f2155a7d",
+      "name": "scala.md",
+      "file_type": "Document",
+      "last_modified": 1660843371845,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 6719
+  },
+  {
+    "file": {
+      "id": "386e31c1-a860-43db-876e-5e03efb27c5a",
+      "parent": "20a1ab69-421d-44e4-b0b8-a2b4b2cce676",
+      "name": "inspo.md",
+      "file_type": "Document",
+      "last_modified": 1660843371791,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1424
+  },
+  {
+    "file": {
+      "id": "8b8280b7-3b6e-40f9-859a-3ceb32da23a5",
+      "parent": "84f3d670-2657-42c1-9f14-660066de923b",
+      "name": "release-script.md",
+      "file_type": "Document",
+      "last_modified": 1713729700624,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2953
+  },
+  {
+    "file": {
+      "id": "1ff24e27-8494-42ef-ae3a-632b785861bb",
+      "parent": "64a1e269-69f7-4453-ac60-e162985afe6f",
+      "name": "last-call.md",
+      "file_type": "Document",
+      "last_modified": 1660843374112,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2121
+  },
+  {
+    "file": {
+      "id": "fc09e738-f176-4b25-9392-710c8f093184",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "cop.md",
+      "file_type": "Document",
+      "last_modified": 1660843372593,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1093
+  },
+  {
+    "file": {
+      "id": "bde71547-49c4-4a45-9866-1e5ad7e0dab4",
+      "parent": "4edfa086-9735-4176-97d2-3d5a1ed0a2e7",
+      "name": "watches",
+      "file_type": "Folder",
+      "last_modified": 1685310597304,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "6aa94c87-7c76-4823-bb34-a4c88658270d",
+      "parent": "b5fba061-b2d9-411a-8b2f-2dbb8b4d1d6f",
+      "name": "onboarding-ux.md",
+      "file_type": "Document",
+      "last_modified": 1710890010419,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 26816
+  },
+  {
+    "file": {
+      "id": "cdb43c8e-0a4f-4ab8-a458-375bdb509b51",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "new-editor.md",
+      "file_type": "Document",
+      "last_modified": 1660843367906,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1462
+  },
+  {
+    "file": {
+      "id": "da2e615f-6631-466e-8908-13c542e5c089",
+      "parent": "b6505cef-d870-4051-b1ac-1ebfcf766439",
+      "name": "billing.draw",
+      "file_type": "Document",
+      "last_modified": 1689351232305,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2011325
+  },
+  {
+    "file": {
+      "id": "5f749404-16ac-4a21-a9c0-390ee1987b4a",
+      "parent": "c0d3f25c-d464-4b59-8a67-0b93c4fb5138",
+      "name": "have-read.md",
+      "file_type": "Document",
+      "last_modified": 1660843369446,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1487
+  },
+  {
+    "file": {
+      "id": "4a889690-4b9e-4c70-8869-e797b9e6f8b3",
+      "parent": "c0d3f25c-d464-4b59-8a67-0b93c4fb5138",
+      "name": "items.md",
+      "file_type": "Document",
+      "last_modified": 1671835361007,
+      "last_modified_by": "parth",
+      "shares": [
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "travis"
+        }
+      ]
+    },
+    "size": 1576
+  },
+  {
+    "file": {
+      "id": "eade45b5-87b8-4462-a287-9b4e757a253d",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "metrics.md",
+      "file_type": "Document",
+      "last_modified": 1674190380043,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1323
+  },
+  {
+    "file": {
+      "id": "f85f17c9-d0fc-45f3-8737-a3bb5792a942",
+      "parent": "7fe58537-8b29-46ff-b3d5-6062332b062a",
+      "name": "opsec-primer.md",
+      "file_type": "Document",
+      "last_modified": 1686013596043,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 6579
+  },
+  {
+    "file": {
+      "id": "d30ee375-feae-4f13-938f-9ede138a20f7",
+      "parent": "a499a047-5075-4049-9f9a-249dc775ede4",
+      "name": "adam.md",
+      "file_type": "Document",
+      "last_modified": 1674190381055,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1619
+  },
+  {
+    "file": {
+      "id": "7fe58537-8b29-46ff-b3d5-6062332b062a",
+      "parent": "99d1f3de-1cc6-4c38-abbb-a0f7ec93903c",
+      "name": "paused",
+      "file_type": "Folder",
+      "last_modified": 1686013596042,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "3b0c830d-82d3-4d9c-b8c1-1e0261297748",
+      "parent": "fc50112e-5f9d-4ebf-b6a8-023ba619fd0f",
+      "name": "optimal-workout.md",
+      "file_type": "Document",
+      "last_modified": 1705039126095,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1787
+  },
+  {
+    "file": {
+      "id": "305190eb-d7fd-4e85-80b3-407153a3919b",
+      "parent": "e32ac279-d7c8-476f-9908-f493f0664225",
+      "name": "Krishma",
+      "file_type": {
+        "Link": {
+          "target": "bf25e2b3-14ed-4cf0-a741-62ebf625ebce"
+        }
+      },
+      "last_modified": 1685291011969,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "73fce7af-d632-4135-b7c5-40d47e7d12ae",
+      "parent": "33f61bf8-2646-4bb1-a73a-10981f315f6a",
+      "name": "sid",
+      "file_type": "Folder",
+      "last_modified": 1689351232306,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "a19ee645-eaec-461c-9216-72aa70a7c06c",
+      "parent": "b5fba061-b2d9-411a-8b2f-2dbb8b4d1d6f",
+      "name": "mascot.svg",
+      "file_type": "Document",
+      "last_modified": 1712356051070,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 16694
+  },
+  {
+    "file": {
+      "id": "0086c8a9-02d1-4e62-b388-cc55b9bad9ee",
+      "parent": "1dd046da-c570-41c7-8658-3aea51c7d2ba",
+      "name": "standup.md",
+      "file_type": "Document",
+      "last_modified": 1699567993120,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1032
+  },
+  {
+    "file": {
+      "id": "e5a6f88b-f63a-41fd-b07d-2aa7826371ac",
+      "parent": "b987fe7f-8d89-483f-aad7-73aa7ea5a304",
+      "name": "strategy.md",
+      "file_type": "Document",
+      "last_modified": 1692384495057,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1865
+  },
+  {
+    "file": {
+      "id": "c32c9b91-3d3a-42a6-9349-2babb5c4e82c",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "contentious-topics.md",
+      "file_type": "Document",
+      "last_modified": 1660843371808,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1175
+  },
+  {
+    "file": {
+      "id": "bfa1e855-bd54-4e19-8ead-a67a99630b75",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "ideal-lockbook.md",
+      "file_type": "Document",
+      "last_modified": 1660843369336,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1630
+  },
+  {
+    "file": {
+      "id": "6b608234-d6f0-4137-b804-fb0c4c3dc66c",
+      "parent": "fcb95408-0898-4ee4-a20c-4167c305c169",
+      "name": "release-videos.md",
+      "file_type": "Document",
+      "last_modified": 1713729032933,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2805
+  },
+  {
+    "file": {
+      "id": "fae6c38c-418b-48d7-891d-c7186af3503a",
+      "parent": "ed273968-fd31-4023-92c4-da92b51a6791",
+      "name": "keyboard-rfc.md",
+      "file_type": "Document",
+      "last_modified": 1690888385825,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1315
+  },
+  {
+    "file": {
+      "id": "546eb3d0-8bec-45cc-9206-4043e0dd2e92",
+      "parent": "33f61bf8-2646-4bb1-a73a-10981f315f6a",
+      "name": "raayan",
+      "file_type": "Folder",
+      "last_modified": 1689351232303,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "01e5fc96-c483-40dd-a5a5-2d64f903c00d",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "krishma-birthday.md",
+      "file_type": "Document",
+      "last_modified": 1715715874760,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1245
+  },
+  {
+    "file": {
+      "id": "c8b9866b-0b40-410d-b748-a3c1a0f6382e",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "migration.sql.md",
+      "file_type": "Document",
+      "last_modified": 1667408086336,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2107
+  },
+  {
+    "file": {
+      "id": "562e9252-b5c3-457e-93e8-804aba56c036",
+      "parent": "84f3d670-2657-42c1-9f14-660066de923b",
+      "name": "1-1.md",
+      "file_type": "Document",
+      "last_modified": 1718753486716,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 6953
+  },
+  {
+    "file": {
+      "id": "82d472fc-3d10-429f-8786-6c9d903f0d44",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "3c9648cf-4.png",
+      "file_type": "Document",
+      "last_modified": 1700802272193,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 76937
+  },
+  {
+    "file": {
+      "id": "ab40fc6f-49bd-454c-901b-f61635b9c809",
+      "parent": "173063cb-702d-4a3f-8444-d3012996c754",
+      "name": "our-first-2-race-weekends.md",
+      "file_type": "Document",
+      "last_modified": 1698164154368,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1130
+  },
+  {
+    "file": {
+      "id": "ac22518b-d008-43cc-919f-69390c67bd32",
+      "parent": "fc50112e-5f9d-4ebf-b6a8-023ba619fd0f",
+      "name": "morning-failures.md",
+      "file_type": "Document",
+      "last_modified": 1660843370801,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1267
+  },
+  {
+    "file": {
+      "id": "a98da74c-c9aa-41c8-9f46-24b84d1de6cb",
+      "parent": "6c1cb978-7c4e-4d83-825a-477287f89c69",
+      "name": "fuzzer.md",
+      "file_type": "Document",
+      "last_modified": 1674190380030,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1324
+  },
+  {
+    "file": {
+      "id": "6537bfd0-1857-405c-beea-54ccd138b62c",
+      "parent": "4edfa086-9735-4176-97d2-3d5a1ed0a2e7",
+      "name": "espresso.md",
+      "file_type": "Document",
+      "last_modified": 1661701477328,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1083
+  },
+  {
+    "file": {
+      "id": "8cab5fe9-c663-40cc-bf27-bd1ae4a87a08",
+      "parent": "ce5c29b2-62aa-46ca-9c2c-ad9c0e64970e",
+      "name": "todo.md",
+      "file_type": "Document",
+      "last_modified": 1660843370609,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1307
+  },
+  {
+    "file": {
+      "id": "da325e74-bb42-43ec-b466-7c6507667180",
+      "parent": "aa12d6bf-5c38-4c87-a347-aaa7f2155a7d",
+      "name": "dart.md",
+      "file_type": "Document",
+      "last_modified": 1660843369811,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1332
+  },
+  {
+    "file": {
+      "id": "ffcd509d-0290-474d-8b80-e63e737fe961",
+      "parent": "b987fe7f-8d89-483f-aad7-73aa7ea5a304",
+      "name": "film-day-12-30.md",
+      "file_type": "Document",
+      "last_modified": 1708203250542,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2143
+  },
+  {
+    "file": {
+      "id": "712d1925-ac75-4e00-bb83-1c05bfe55d14",
+      "parent": "a0df9ce0-4c79-41e8-9a32-9e09e8988be4",
+      "name": "creating-a-sick-cli.md",
+      "file_type": "Document",
+      "last_modified": 1701287591017,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 4656
+  },
+  {
+    "file": {
+      "id": "cdd9e585-5d55-4de4-9c7c-2361cb093ef0",
+      "parent": "fc50112e-5f9d-4ebf-b6a8-023ba619fd0f",
+      "name": "sleep.md",
+      "file_type": "Document",
+      "last_modified": 1660843374257,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 4637
+  },
+  {
+    "file": {
+      "id": "70d54bc9-c785-4392-aa3c-1b6bb3c0a535",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "universal-clipboard.md",
+      "file_type": "Document",
+      "last_modified": 1660843372970,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1610
+  },
+  {
+    "file": {
+      "id": "39649663-8a3f-4b1e-b74f-da462153d64e",
+      "parent": "1c890596-1df9-4638-b0c1-ec77fdaa7a49",
+      "name": "inviting-beta-testers.md",
+      "file_type": "Document",
+      "last_modified": 1697219725373,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3267
+  },
+  {
+    "file": {
+      "id": "a6727dfd-74de-4223-a0f6-54b9e1e82fd6",
+      "parent": "b987fe7f-8d89-483f-aad7-73aa7ea5a304",
+      "name": "merch",
+      "file_type": "Folder",
+      "last_modified": 1686778631250,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "eaed6d0a-b961-4043-af58-759a4c9bd631",
+      "parent": "e32ac279-d7c8-476f-9908-f493f0664225",
+      "name": "northern-lights.md",
+      "file_type": "Document",
+      "last_modified": 1706504506037,
+      "last_modified_by": "parth",
+      "shares": [
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "chefbowyer"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "adam"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "travis"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "raayan"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "smail"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "lucaloncar"
+        }
+      ]
+    },
+    "size": 1926
+  },
+  {
+    "file": {
+      "id": "14c1055c-8de5-403f-bf28-d2027e79a92b",
+      "parent": "985e9b6d-e83c-4419-ad09-fdbedaca4bc7",
+      "name": "realtime-collaboration.svg",
+      "file_type": "Document",
+      "last_modified": 1718838300331,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2981
+  },
+  {
+    "file": {
+      "id": "da4556cb-2de9-4f6e-acd5-cb06d145f31d",
+      "parent": "b14a66ac-25fc-4c6e-b81c-caff6e27a345",
+      "name": "work-tracking-parth.md",
+      "file_type": "Document",
+      "last_modified": 1715100950549,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 9897
+  },
+  {
+    "file": {
+      "id": "448fe1d5-70c2-4111-a79e-545136fdfe7b",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "pull-req-bot-for-licences.md",
+      "file_type": "Document",
+      "last_modified": 1660843368025,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1045
+  },
+  {
+    "file": {
+      "id": "a2061404-863d-456c-8d2b-2ad94e657dbe",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "todo.md",
+      "file_type": "Document",
+      "last_modified": 1711139688354,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1491
+  },
+  {
+    "file": {
+      "id": "5a6d04aa-e35d-4bbf-8dd4-bdf47dec5f53",
+      "parent": "150089d5-0036-471c-8029-39ef3b126e00",
+      "name": "marketing-datasyncer.md",
+      "file_type": "Document",
+      "last_modified": 1660843371907,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3378
+  },
+  {
+    "file": {
+      "id": "ca7f56f7-ff41-45b0-8ee8-ca80d9bae2a4",
+      "parent": "173063cb-702d-4a3f-8444-d3012996c754",
+      "name": "untitled.md",
+      "file_type": "Document",
+      "last_modified": 1715102655366,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1041
+  },
+  {
+    "file": {
+      "id": "cc02c5eb-ed6a-4454-b800-feb60e88e10f",
+      "parent": "7bfbc7e9-4e88-4608-9d6e-e45f87fd6951",
+      "name": "trips",
+      "file_type": "Folder",
+      "last_modified": 1660843366816,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "ad8b9057-6e72-4b7b-8b7c-ca4f3e936320",
+      "parent": "c982ff9f-3441-4ae9-934a-e1bf0d4735af",
+      "name": "discussions",
+      "file_type": "Folder",
+      "last_modified": 1660843366817,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "985e9b6d-e83c-4419-ad09-fdbedaca4bc7",
+      "parent": "6c1cb978-7c4e-4d83-825a-477287f89c69",
+      "name": "designs",
+      "file_type": "Folder",
+      "last_modified": 1686778631251,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "70303dab-deb4-42c7-a1b9-82981664c510",
+      "parent": "e884f84a-e31d-4aae-a048-1ae1b68b3f28",
+      "name": "todo.md",
+      "file_type": "Document",
+      "last_modified": 1685596115450,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1103
+  },
+  {
+    "file": {
+      "id": "271519f1-0e63-499f-904c-198cdde2625c",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "1-1-sept-30.md",
+      "file_type": "Document",
+      "last_modified": 1660843369696,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1217
+  },
+  {
+    "file": {
+      "id": "c94b4390-d2e0-45b1-b8b1-884b64b52d7a",
+      "parent": "7bfbc7e9-4e88-4608-9d6e-e45f87fd6951",
+      "name": "test3.md",
+      "file_type": "Document",
+      "last_modified": 1713291247888,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1133
+  },
+  {
+    "file": {
+      "id": "99d1f3de-1cc6-4c38-abbb-a0f7ec93903c",
+      "parent": "fc3a4b61-7cdb-4f68-99ef-28ee3391cc8b",
+      "name": "parth.cafe",
+      "file_type": "Folder",
+      "last_modified": 1686013596041,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "aa12d6bf-5c38-4c87-a347-aaa7f2155a7d",
+      "parent": "c0d3f25c-d464-4b59-8a67-0b93c4fb5138",
+      "name": "devices",
+      "file_type": "Folder",
+      "last_modified": 1660843366835,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "b14a66ac-25fc-4c6e-b81c-caff6e27a345",
+      "parent": "39f7c8a6-2867-432f-93b5-41932f22744c",
+      "name": "payroll",
+      "file_type": "Folder",
+      "last_modified": 1689351232303,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "a75080d7-a772-4b31-b352-044b5565c6fc",
+      "parent": "64a1e269-69f7-4453-ac60-e162985afe6f",
+      "name": "encodings.md",
+      "file_type": "Document",
+      "last_modified": 1660843367760,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1647
+  },
+  {
+    "file": {
+      "id": "c3c45d6c-45d7-42be-8526-dde24e78a472",
+      "parent": "aa12d6bf-5c38-4c87-a347-aaa7f2155a7d",
+      "name": "term.md",
+      "file_type": "Document",
+      "last_modified": 1660843366939,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1616
+  },
+  {
+    "file": {
+      "id": "b5fba061-b2d9-411a-8b2f-2dbb8b4d1d6f",
+      "parent": "3755ea90-559c-41e6-9562-72bfb9718391",
+      "name": "onboarding-ux",
+      "file_type": "Folder",
+      "last_modified": 1705076702902,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "ed65a01c-94b9-4518-b9fe-db88982812c9",
+      "parent": "1ff81926-fc1a-44d5-a406-39ecf4af3d2a",
+      "name": "editor.md",
+      "file_type": "Document",
+      "last_modified": 1686778631250,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1718
+  },
+  {
+    "file": {
+      "id": "ecbfedba-183d-4ca3-918d-2bfaeed1579a",
+      "parent": "4edfa086-9735-4176-97d2-3d5a1ed0a2e7",
+      "name": "fishing.md",
+      "file_type": "Document",
+      "last_modified": 1660843367887,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1543
+  },
+  {
+    "file": {
+      "id": "a0df9ce0-4c79-41e8-9a32-9e09e8988be4",
+      "parent": "99d1f3de-1cc6-4c38-abbb-a0f7ec93903c",
+      "name": "published",
+      "file_type": "Folder",
+      "last_modified": 1686013596043,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "e7fc53c7-a90a-44db-93a4-c18fe0246955",
+      "parent": "e337fc67-737e-4e6b-88be-2eb605dd59ea",
+      "name": "2023.md",
+      "file_type": "Document",
+      "last_modified": 1703734983201,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 12573
+  },
+  {
+    "file": {
+      "id": "c48c2a49-5df9-43d7-982b-de21e9deb206",
+      "parent": "64a1e269-69f7-4453-ac60-e162985afe6f",
+      "name": "anarchist-handbook.md",
+      "file_type": "Document",
+      "last_modified": 1660843369868,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1286
+  },
+  {
+    "file": {
+      "id": "787cd8ab-58f0-444c-97a5-f16c31862085",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "device-graph",
+      "file_type": "Folder",
+      "last_modified": 1683050902341,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "0cf234a5-df70-4558-933d-e2e254d3ceec",
+      "parent": "a0df9ce0-4c79-41e8-9a32-9e09e8988be4",
+      "name": "ideation.md",
+      "file_type": "Document",
+      "last_modified": 1686013596044,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2753
+  },
+  {
+    "file": {
+      "id": "c39b7eb6-2f45-4fa4-89a9-287d94433824",
+      "parent": "3a7375f1-c6d8-49d9-b70c-48b0b4dee447",
+      "name": "pasted_image_2024-05-16_04-28-33.png",
+      "file_type": "Document",
+      "last_modified": 1715835592033,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1991029
+  },
+  {
+    "file": {
+      "id": "0d348a4b-1354-4b99-9cca-08e79be7d4f0",
+      "parent": "3a7375f1-c6d8-49d9-b70c-48b0b4dee447",
+      "name": "pasted_image_2024-05-16_04-56-56.png",
+      "file_type": "Document",
+      "last_modified": 1715835592033,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2182731
+  },
+  {
+    "file": {
+      "id": "2f04e09b-c044-4b2e-8d62-38c8eeb73dee",
+      "parent": "20a1ab69-421d-44e4-b0b8-a2b4b2cce676",
+      "name": "videos.md",
+      "file_type": "Document",
+      "last_modified": 1660843369612,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1334
+  },
+  {
+    "file": {
+      "id": "c8b9721b-db90-4a9d-a287-f2fad16e02e5",
+      "parent": "173063cb-702d-4a3f-8444-d3012996c754",
+      "name": "imports",
+      "file_type": "Folder",
+      "last_modified": 1714935507466,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "57eb9bc8-24b0-47a0-9117-af96041f720c",
+      "parent": "ad7e7911-baec-4aed-b3f8-0159a4142467",
+      "name": "todo.md",
+      "file_type": "Document",
+      "last_modified": 1686761056770,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1233
+  },
+  {
+    "file": {
+      "id": "217c132d-2040-405e-9be6-3a72f416f8bf",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "cs220-notes.md",
+      "file_type": "Document",
+      "last_modified": 1701287595033,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1179
+  },
+  {
+    "file": {
+      "id": "f4f2d395-7a8b-4d61-82c9-6a396d8f8e3b",
+      "parent": "3a7375f1-c6d8-49d9-b70c-48b0b4dee447",
+      "name": "pasted_image_2024-05-16_04-34-52.png",
+      "file_type": "Document",
+      "last_modified": 1715835592033,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 328814
+  },
+  {
+    "file": {
+      "id": "d80e2463-f723-44df-bdf3-12945786ea3a",
+      "parent": "7bfbc7e9-4e88-4608-9d6e-e45f87fd6951",
+      "name": "happy-wedding-aniv.md",
+      "file_type": {
+        "Link": {
+          "target": "9a4dd80c-ff9a-4a4c-be71-27a290d7e5f1"
+        }
+      },
+      "last_modified": 1687279648737,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "d0690a87-97e8-409a-9786-5713d31f1c12",
+      "parent": "c8b9721b-db90-4a9d-a287-f2fad16e02e5",
+      "name": "pasted_image_2024-05-05_18-58-20.png",
+      "file_type": "Document",
+      "last_modified": 1714935507527,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 295736
+  },
+  {
+    "file": {
+      "id": "8df19981-eaf3-4f1b-9780-ae9f0255be1f",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "errors.md",
+      "file_type": "Document",
+      "last_modified": 1718028607336,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 8569
+  },
+  {
+    "file": {
+      "id": "53d34495-c49c-4ebe-8166-870e429eb36b",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "drafts",
+      "file_type": "Folder",
+      "last_modified": 1687379577585,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "705422a1-6aa5-4bff-a674-0c0ce5fc9578",
+      "parent": "ed273968-fd31-4023-92c4-da92b51a6791",
+      "name": "steps-for-creating-build-env.md",
+      "file_type": "Document",
+      "last_modified": 1690888385825,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2090
+  },
+  {
+    "file": {
+      "id": "7eb0471f-ff4f-479c-a847-f3223ca4add3",
+      "parent": "73fce7af-d632-4135-b7c5-40d47e7d12ae",
+      "name": "file-events.md",
+      "file_type": "Document",
+      "last_modified": 1689351232302,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1598
+  },
+  {
+    "file": {
+      "id": "b68d5ef7-ea56-4874-9394-b278e51dd3f7",
+      "parent": "7bfbc7e9-4e88-4608-9d6e-e45f87fd6951",
+      "name": "id_rsa",
+      "file_type": "Document",
+      "last_modified": 1660843370840,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3005
+  },
+  {
+    "file": {
+      "id": "33f61bf8-2646-4bb1-a73a-10981f315f6a",
+      "parent": "7cfb1d64-70d8-4cb1-9c65-67bbc7cb7879",
+      "name": "individual",
+      "file_type": "Folder",
+      "last_modified": 1689351232305,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "a7686f43-9d19-4a72-bc4f-929535c8abdd",
+      "parent": "e337fc67-737e-4e6b-88be-2eb605dd59ea",
+      "name": "2022.md",
+      "file_type": "Document",
+      "last_modified": 1673649215871,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 12267
+  },
+  {
+    "file": {
+      "id": "d5812afc-9c6f-4060-93b0-7cdc3567f65b",
+      "parent": "fcb95408-0898-4ee4-a20c-4167c305c169",
+      "name": "issues.md",
+      "file_type": "Document",
+      "last_modified": 1697640814985,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1468
+  },
+  {
+    "file": {
+      "id": "6e0d9062-56af-4f33-987d-279ce09c4869",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "new-notebook.md",
+      "file_type": "Document",
+      "last_modified": 1660843372849,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2403
+  },
+  {
+    "file": {
+      "id": "fd97fcaa-78e4-43b6-8d42-eef839897119",
+      "parent": "96e4d00a-428d-46ca-a2fb-8a83ec78dba3",
+      "name": "published",
+      "file_type": "Folder",
+      "last_modified": 1693018226453,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "43a0a9cc-d3af-454a-b53a-a911930ba76b",
+      "parent": "e0813747-5a2d-4a2f-a7a8-a1496a2bec24",
+      "name": "bulk-activetrader.md",
+      "file_type": "Document",
+      "last_modified": 1660843371715,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1749
+  },
+  {
+    "file": {
+      "id": "3a7375f1-c6d8-49d9-b70c-48b0b4dee447",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "imports",
+      "file_type": "Folder",
+      "last_modified": 1715835591996,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "2de8f426-3f64-4784-8861-357b23e6ea7d",
+      "parent": "b987fe7f-8d89-483f-aad7-73aa7ea5a304",
+      "name": "marketing-discussion.md",
+      "file_type": "Document",
+      "last_modified": 1682199005327,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1323
+  },
+  {
+    "file": {
+      "id": "3b1f30e6-00ce-4570-a631-7c8050eec29a",
+      "parent": "aa12d6bf-5c38-4c87-a347-aaa7f2155a7d",
+      "name": "mbp.md",
+      "file_type": "Document",
+      "last_modified": 1660843369647,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 4360
+  },
+  {
+    "file": {
+      "id": "323573ca-f1f6-4d7a-90e8-68eb24a8212e",
+      "parent": "ef2eb950-0d0e-4eab-9c91-8e6b72926aa6",
+      "name": "billing.draw",
+      "file_type": "Document",
+      "last_modified": 1660843370861,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1271763
+  },
+  {
+    "file": {
+      "id": "e337fc67-737e-4e6b-88be-2eb605dd59ea",
+      "parent": "c982ff9f-3441-4ae9-934a-e1bf0d4735af",
+      "name": "journal",
+      "file_type": "Folder",
+      "last_modified": 1660843366814,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "1258966c-7b3f-4be9-a8f1-5d42bdd0d3d5",
+      "parent": "b987fe7f-8d89-483f-aad7-73aa7ea5a304",
+      "name": "film-day-02-25.md",
+      "file_type": "Document",
+      "last_modified": 1708891257179,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3054
+  },
+  {
+    "file": {
+      "id": "45b11e2b-498e-448f-8cf0-eb6450030689",
+      "parent": "1c890596-1df9-4638-b0c1-ec77fdaa7a49",
+      "name": "intro.md",
+      "file_type": "Document",
+      "last_modified": 1709429039365,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3089
+  },
+  {
+    "file": {
+      "id": "96cf4baa-bbbd-4809-af10-461047b467d4",
+      "parent": "84f3d670-2657-42c1-9f14-660066de923b",
+      "name": "fixing-alt-backspace.md",
+      "file_type": "Document",
+      "last_modified": 1697586491541,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2437
+  },
+  {
+    "file": {
+      "id": "3eb954a8-0332-4395-9e57-7845239a9e22",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "bike2.md",
+      "file_type": "Document",
+      "last_modified": 1716327569697,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1610
+  },
+  {
+    "file": {
+      "id": "5f9bd5b2-9c36-4527-a750-31a50b350735",
+      "parent": "f6d30209-2219-4c19-b1ea-1b112be71a7f",
+      "name": "typesafety.md",
+      "file_type": "Document",
+      "last_modified": 1660843369523,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1435
+  },
+  {
+    "file": {
+      "id": "8efa8be3-2669-4cf2-9a0a-8d9dcd1d71b5",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "file-nonexistent.md",
+      "file_type": "Document",
+      "last_modified": 1674190381104,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 6026
+  },
+  {
+    "file": {
+      "id": "55a7549a-db7b-4926-8696-f65cdb7bb3c7",
+      "parent": "8b5f49ee-5c7c-4d30-a739-fbd356de1ddb",
+      "name": "egui-android-editor.md",
+      "file_type": "Document",
+      "last_modified": 1690888387330,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1859
+  },
+  {
+    "file": {
+      "id": "48a1cf46-2cf3-4017-9b53-2b7fa874c4bd",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "eula.md",
+      "file_type": "Document",
+      "last_modified": 1674190380969,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2330
+  },
+  {
+    "file": {
+      "id": "686b4c27-299a-4853-965a-04a5f64f0373",
+      "parent": "cc02c5eb-ed6a-4454-b800-feb60e88e10f",
+      "name": "trip.md",
+      "file_type": "Document",
+      "last_modified": 1660843370328,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2782
+  },
+  {
+    "file": {
+      "id": "cd91c5e6-11d4-4283-a9a2-1039cd3c0cb7",
+      "parent": "a0df9ce0-4c79-41e8-9a32-9e09e8988be4",
+      "name": "what-you-see.md",
+      "file_type": "Document",
+      "last_modified": 1686013596043,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2057
+  },
+  {
+    "file": {
+      "id": "b64713a3-62c5-41b5-b92e-949b42d76f56",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "videos",
+      "file_type": "Folder",
+      "last_modified": 1696637647885,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "11126a42-42c6-4ec5-8859-2780d942551d",
+      "parent": "7fe58537-8b29-46ff-b3d5-6062332b062a",
+      "name": "bitcoin",
+      "file_type": "Folder",
+      "last_modified": 1686013596043,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "8a65112a-af29-4b03-8678-92638b3b9350",
+      "parent": "e337fc67-737e-4e6b-88be-2eb605dd59ea",
+      "name": "2015.md",
+      "file_type": "Document",
+      "last_modified": 1660843370630,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3605
+  },
+  {
+    "file": {
+      "id": "0c650e8d-8501-4d5f-91ea-0c2598f689cf",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "1-1.md",
+      "file_type": "Document",
+      "last_modified": 1660843371692,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1506
+  },
+  {
+    "file": {
+      "id": "9609332f-0698-4b11-9847-2880f4985307",
+      "parent": "7249d168-a2b0-4ec7-a8c3-4915427fbe80",
+      "name": "iced.md",
+      "file_type": "Document",
+      "last_modified": 1674190380366,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1256
+  },
+  {
+    "file": {
+      "id": "de4f7fca-626b-4c50-80b2-9c08b4acc557",
+      "parent": "3755ea90-559c-41e6-9562-72bfb9718391",
+      "name": "obsidian.md",
+      "file_type": "Document",
+      "last_modified": 1690124442237,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1495
+  },
+  {
+    "file": {
+      "id": "7fff7283-96dc-44a9-ae53-e05a9ac79358",
+      "parent": "a499a047-5075-4049-9f9a-249dc775ede4",
+      "name": "midterm-review.md",
+      "file_type": "Document",
+      "last_modified": 1680279534701,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3183
+  },
+  {
+    "file": {
+      "id": "ad7e7911-baec-4aed-b3f8-0159a4142467",
+      "parent": "fc3a4b61-7cdb-4f68-99ef-28ee3391cc8b",
+      "name": "roseengine.watch",
+      "file_type": "Folder",
+      "last_modified": 1686013596041,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "dd54311a-eb08-4d1c-86dd-de69ecdbaf20",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "local-dev.md",
+      "file_type": "Document",
+      "last_modified": 1660843370368,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1435
+  },
+  {
+    "file": {
+      "id": "6c2d3944-b0c5-44c0-af6c-6c082d2b95d0",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "ui-rs.md",
+      "file_type": "Document",
+      "last_modified": 1688674273406,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1462
+  },
+  {
+    "file": {
+      "id": "f631e08f-6e97-4186-9aba-5c0a116a622f",
+      "parent": "985e9b6d-e83c-4419-ad09-fdbedaca4bc7",
+      "name": "links-and-images.md",
+      "file_type": "Document",
+      "last_modified": 1686778631249,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2252
+  },
+  {
+    "file": {
+      "id": "82823f06-c4ad-4bcb-96ad-15a549ae243b",
+      "parent": "ed273968-fd31-4023-92c4-da92b51a6791",
+      "name": "release-videos",
+      "file_type": "Folder",
+      "last_modified": 1701483592819,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "0025bbbb-07b0-41f4-bd62-b8ed2117c245",
+      "parent": "e0813747-5a2d-4a2f-a7a8-a1496a2bec24",
+      "name": "flexa.md",
+      "file_type": "Document",
+      "last_modified": 1660843372933,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1381
+  },
+  {
+    "file": {
+      "id": "bf1284ea-29fa-405d-a115-74a70c7b4819",
+      "parent": "64a1e269-69f7-4453-ac60-e162985afe6f",
+      "name": "diff-merge.md",
+      "file_type": "Document",
+      "last_modified": 1660843369943,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2521
+  },
+  {
+    "file": {
+      "id": "6a4c2cf7-b767-47d8-8725-5428e41f7dc1",
+      "parent": "150089d5-0036-471c-8029-39ef3b126e00",
+      "name": "external-services.md",
+      "file_type": "Document",
+      "last_modified": 1660843370589,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3157
+  },
+  {
+    "file": {
+      "id": "6e181c9c-d92e-44e6-b8ad-a34b62b45d6d",
+      "parent": "7fe58537-8b29-46ff-b3d5-6062332b062a",
+      "name": "microservices-faq.md",
+      "file_type": "Document",
+      "last_modified": 1686013596042,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3190
+  },
+  {
+    "file": {
+      "id": "27ade21f-fcc9-4154-955c-612d0e7ec17d",
+      "parent": "e337fc67-737e-4e6b-88be-2eb605dd59ea",
+      "name": "2024.md",
+      "file_type": "Document",
+      "last_modified": 1716468244870,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 16588
+  },
+  {
+    "file": {
+      "id": "bdd176c2-0558-471d-8475-c8f66f0d044b",
+      "parent": "93b860b1-fd7b-4b9d-8e44-409d48557aa9",
+      "name": "markdown-editor-ideals.md",
+      "file_type": "Document",
+      "last_modified": 1693691661613,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 5023
+  },
+  {
+    "file": {
+      "id": "917d1cbb-c7a1-4d4c-b793-4b9ffb41ae04",
+      "parent": "a0df9ce0-4c79-41e8-9a32-9e09e8988be4",
+      "name": "test-simulator.md",
+      "file_type": "Document",
+      "last_modified": 1693018226453,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 4285
+  },
+  {
+    "file": {
+      "id": "f57d1341-bdbc-4579-a84b-b4cbe03392d4",
+      "parent": "11126a42-42c6-4ec5-8859-2780d942551d",
+      "name": "magical.md",
+      "file_type": "Document",
+      "last_modified": 1660843374592,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 5709
+  },
+  {
+    "file": {
+      "id": "1b75f89a-8129-4ac5-ac47-c32a97e80a6d",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "standups.md",
+      "file_type": "Document",
+      "last_modified": 1660843367863,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1347
+  },
+  {
+    "file": {
+      "id": "ed273968-fd31-4023-92c4-da92b51a6791",
+      "parent": "84f3d670-2657-42c1-9f14-660066de923b",
+      "name": "misc",
+      "file_type": "Folder",
+      "last_modified": 1690888385827,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "e40b32d4-2a3b-445c-8555-4d4304118bd0",
+      "parent": "4edfa086-9735-4176-97d2-3d5a1ed0a2e7",
+      "name": "guns.md",
+      "file_type": "Document",
+      "last_modified": 1660843369420,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3807
+  },
+  {
+    "file": {
+      "id": "e1481e24-d9b6-4a28-b1cf-36e92fde2d3c",
+      "parent": "fcb95408-0898-4ee4-a20c-4167c305c169",
+      "name": "flat-file-philo.md",
+      "file_type": "Document",
+      "last_modified": 1701543509480,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1329
+  },
+  {
+    "file": {
+      "id": "20a1ab69-421d-44e4-b0b8-a2b4b2cce676",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "youtube",
+      "file_type": "Folder",
+      "last_modified": 1660843366841,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "d89d0722-eee8-484c-86a9-120923c33066",
+      "parent": "53d34495-c49c-4ebe-8166-870e429eb36b",
+      "name": "di.md",
+      "file_type": "Document",
+      "last_modified": 1687379577605,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1092
+  },
+  {
+    "file": {
+      "id": "20a28c67-bd48-4925-aeb9-753679dc3f0b",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "jelly.md",
+      "file_type": "Document",
+      "last_modified": 1664903316049,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1100
+  },
+  {
+    "file": {
+      "id": "c000db3f-3bae-4e7c-a118-b6413b7af1d9",
+      "parent": "8b5f49ee-5c7c-4d30-a739-fbd356de1ddb",
+      "name": "incident-report.md",
+      "file_type": "Document",
+      "last_modified": 1690888388052,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2161
+  },
+  {
+    "file": {
+      "id": "84f3d670-2657-42c1-9f14-660066de923b",
+      "parent": "33f61bf8-2646-4bb1-a73a-10981f315f6a",
+      "name": "smail",
+      "file_type": "Folder",
+      "last_modified": 1689351232306,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "8fbced3b-134a-48a4-ae60-ed8f9796c7c8",
+      "parent": "aa12d6bf-5c38-4c87-a347-aaa7f2155a7d",
+      "name": "mac-pro.md",
+      "file_type": "Document",
+      "last_modified": 1660843369668,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 7708
+  },
+  {
+    "file": {
+      "id": "82bc4709-e13b-4973-90ac-938fb2b437df",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "fuse.md",
+      "file_type": "Document",
+      "last_modified": 1674190381328,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1326
+  },
+  {
+    "file": {
+      "id": "1ff81926-fc1a-44d5-a406-39ecf4af3d2a",
+      "parent": "e606e2d2-efee-40ce-b82e-f430e80d14bf",
+      "name": "qa",
+      "file_type": "Folder",
+      "last_modified": 1686778631251,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "96a5f8c6-0018-4657-a8f6-06b00bdc4d2c",
+      "parent": "b987fe7f-8d89-483f-aad7-73aa7ea5a304",
+      "name": "future-integrations.md",
+      "file_type": "Document",
+      "last_modified": 1674190380014,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1183
+  },
+  {
+    "file": {
+      "id": "75d4bdea-da71-45aa-955f-4c11ee22016d",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "security.md",
+      "file_type": "Document",
+      "last_modified": 1660843371929,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1396
+  },
+  {
+    "file": {
+      "id": "5c0534e9-e354-4451-a3a8-ab0f384c5d6d",
+      "parent": "ce5c29b2-62aa-46ca-9c2c-ad9c0e64970e",
+      "name": "macbook-discussion-wasserman.md",
+      "file_type": "Document",
+      "last_modified": 1660843368043,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2616
+  },
+  {
+    "file": {
+      "id": "28907294-3566-4c82-acd2-049b5abb1a47",
+      "parent": "7fe58537-8b29-46ff-b3d5-6062332b062a",
+      "name": "patterns-of-prohibition.md",
+      "file_type": "Document",
+      "last_modified": 1686013596043,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1189
+  },
+  {
+    "file": {
+      "id": "dfc23cc2-7414-484c-b98b-bfe8fccd1e78",
+      "parent": "a0df9ce0-4c79-41e8-9a32-9e09e8988be4",
+      "name": "core.md",
+      "file_type": "Document",
+      "last_modified": 1686013596042,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 5948
+  },
+  {
+    "file": {
+      "id": "238faed5-8123-45f0-a0ff-40b29c3c8bd7",
+      "parent": "7bfbc7e9-4e88-4608-9d6e-e45f87fd6951",
+      "name": "planning.md",
+      "file_type": "Document",
+      "last_modified": 1678137287273,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2750
+  },
+  {
+    "file": {
+      "id": "efc988a3-ffc5-4e92-8742-88f036e03bcb",
+      "parent": "b987fe7f-8d89-483f-aad7-73aa7ea5a304",
+      "name": "communities.md",
+      "file_type": "Document",
+      "last_modified": 1712598022644,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1306
+  },
+  {
+    "file": {
+      "id": "e65dc4b6-763c-405b-96a9-6fb3d207178b",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "docker-service-logs.md",
+      "file_type": "Document",
+      "last_modified": 1660843370303,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1740
+  },
+  {
+    "file": {
+      "id": "d8f4ad0f-01f1-4257-9ba4-b38a43dfc28a",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "atlantis-onboarding.md",
+      "file_type": "Document",
+      "last_modified": 1664821168643,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2214
+  },
+  {
+    "file": {
+      "id": "52d609be-2350-46d7-a467-b36cd6f75e30",
+      "parent": "3a7375f1-c6d8-49d9-b70c-48b0b4dee447",
+      "name": "pasted_image_2024-05-16_04-47-47.png",
+      "file_type": "Document",
+      "last_modified": 1715835592034,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1167648
+  },
+  {
+    "file": {
+      "id": "49e97bd3-fe17-4aa3-b074-d752cdbc02f4",
+      "parent": "fc50112e-5f9d-4ebf-b6a8-023ba619fd0f",
+      "name": "workout.md",
+      "file_type": "Document",
+      "last_modified": 1668130467662,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3738
+  },
+  {
+    "file": {
+      "id": "9a230d90-56d0-4919-a394-960ebd737dc6",
+      "parent": "fc50112e-5f9d-4ebf-b6a8-023ba619fd0f",
+      "name": "olympic-lifting.md",
+      "file_type": "Document",
+      "last_modified": 1660843370683,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1286
+  },
+  {
+    "file": {
+      "id": "3f913289-c4c2-4956-9d9a-90d33b976695",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "ef305d24-b.png",
+      "file_type": "Document",
+      "last_modified": 1700446513902,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 27448
+  },
+  {
+    "file": {
+      "id": "be2d0ef0-f526-43ca-a2e3-0c33e7997611",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "curriculum.md",
+      "file_type": "Document",
+      "last_modified": 1715839103128,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 6732
+  },
+  {
+    "file": {
+      "id": "d352de01-c434-4f03-95c0-f578dd2a2163",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "backpack-weights.numbers",
+      "file_type": "Document",
+      "last_modified": 1710861824589,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 121588
+  },
+  {
+    "file": {
+      "id": "b3f7307c-e724-46dc-b8b4-790b539e2ad2",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "postgres.md",
+      "file_type": "Document",
+      "last_modified": 1660843374556,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2405
+  },
+  {
+    "file": {
+      "id": "67fb3514-adbb-4b55-9e6a-e88ad0afd174",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "standup.md",
+      "file_type": "Document",
+      "last_modified": 1685915723421,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 5030
+  },
+  {
+    "file": {
+      "id": "e52e32b0-b044-4a36-bf04-f2db3bf10e2c",
+      "parent": "fcb95408-0898-4ee4-a20c-4167c305c169",
+      "name": "adam-onboarding.md",
+      "file_type": "Document",
+      "last_modified": 1685909519861,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1295
+  },
+  {
+    "file": {
+      "id": "683e30f7-3e14-4923-9d04-36a562493e5c",
+      "parent": "b987fe7f-8d89-483f-aad7-73aa7ea5a304",
+      "name": "untitled.md",
+      "file_type": "Document",
+      "last_modified": 1708888912860,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2469
+  },
+  {
+    "file": {
+      "id": "37ed2fe6-b5b4-4ef8-9e8e-360b39156ee3",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "tooling.md",
+      "file_type": "Document",
+      "last_modified": 1660843370460,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2024
+  },
+  {
+    "file": {
+      "id": "5761e11a-344a-420e-83b4-8f22dc706fc5",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "s3_boost.md",
+      "file_type": "Document",
+      "last_modified": 1674190381088,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1226
+  },
+  {
+    "file": {
+      "id": "047f5b0e-ef72-484c-bb77-fd3b611e7076",
+      "parent": "3a7375f1-c6d8-49d9-b70c-48b0b4dee447",
+      "name": "pasted_image_2024-05-16_04-32-12.png",
+      "file_type": "Document",
+      "last_modified": 1715835592033,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 696282
+  },
+  {
+    "file": {
+      "id": "b4607fff-37cc-48dd-bae4-841d73c7e577",
+      "parent": "33f61bf8-2646-4bb1-a73a-10981f315f6a",
+      "name": ".DS_Store",
+      "file_type": "Document",
+      "last_modified": 1710862427646,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "70886b04-ef8d-46e2-8d01-05d65eb1c1c2",
+      "parent": "fd97fcaa-78e4-43b6-8d42-eef839897119",
+      "name": "future-race-car.md",
+      "file_type": "Document",
+      "last_modified": 1693018226454,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 4330
+  },
+  {
+    "file": {
+      "id": "50cf1d27-e219-4731-89c9-d900d4ba5522",
+      "parent": "4edfa086-9735-4176-97d2-3d5a1ed0a2e7",
+      "name": "car",
+      "file_type": "Folder",
+      "last_modified": 1688222847288,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "39f7c8a6-2867-432f-93b5-41932f22744c",
+      "parent": "7cfb1d64-70d8-4cb1-9c65-67bbc7cb7879",
+      "name": "common",
+      "file_type": "Folder",
+      "last_modified": 1689351232304,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "0cf4c227-afae-45f8-a319-e978dae3496d",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "smail-security.md",
+      "file_type": "Document",
+      "last_modified": 1674190381072,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1090
+  },
+  {
+    "file": {
+      "id": "f87b9eb9-a763-4305-9c8c-d3a7ea3ac302",
+      "parent": "b6505cef-d870-4051-b1ac-1ebfcf766439",
+      "name": "text-editors.md",
+      "file_type": "Document",
+      "last_modified": 1674190381445,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 6939
+  },
+  {
+    "file": {
+      "id": "e46dfc78-695a-429c-abac-baf0ff6bc86a",
+      "parent": "ad8b9057-6e72-4b7b-8b7c-ca4f3e936320",
+      "name": "egypt.md",
+      "file_type": "Document",
+      "last_modified": 1660843372754,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1120
+  },
+  {
+    "file": {
+      "id": "9196e2d9-8c9c-4a5a-ae25-93e6ddb5c957",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "plan.md",
+      "file_type": "Document",
+      "last_modified": 1702849921951,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3087
+  },
+  {
+    "file": {
+      "id": "a60e9e27-f4df-492b-8052-4bdcb22446f8",
+      "parent": "a0df9ce0-4c79-41e8-9a32-9e09e8988be4",
+      "name": "editor.md",
+      "file_type": "Document",
+      "last_modified": 1687379322285,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3909
+  },
+  {
+    "file": {
+      "id": "f9a2fda0-976f-42cf-9aae-ef6bda3106ba",
+      "parent": "64a1e269-69f7-4453-ac60-e162985afe6f",
+      "name": "building-code.md",
+      "file_type": "Document",
+      "last_modified": 1689710173994,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1053
+  },
+  {
+    "file": {
+      "id": "7c6bf4e9-9dc1-4c54-9294-6e2b86420271",
+      "parent": "7249d168-a2b0-4ec7-a8c3-4915427fbe80",
+      "name": "winstaller.md",
+      "file_type": "Document",
+      "last_modified": 1674190380248,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1102
+  },
+  {
+    "file": {
+      "id": "053a53eb-eb05-4a92-ae2f-ef489ed6d8aa",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "stateless-protocol.md",
+      "file_type": "Document",
+      "last_modified": 1660843367779,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3362
+  },
+  {
+    "file": {
+      "id": "407db73f-2aaf-41ae-b5c1-9d06c74a8785",
+      "parent": "a499a047-5075-4049-9f9a-249dc775ede4",
+      "name": "cpa.draw",
+      "file_type": "Document",
+      "last_modified": 1691362984122,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 729901
+  },
+  {
+    "file": {
+      "id": "c1583653-1562-4440-8d75-93f8c06caa4c",
+      "parent": "e32ac279-d7c8-476f-9908-f493f0664225",
+      "name": "camping-10-14.md",
+      "file_type": {
+        "Link": {
+          "target": "ae9f5d5b-2112-41b9-9c3e-f7e3bb4f4497"
+        }
+      },
+      "last_modified": 1695223170908,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "10951772-90ec-45cb-a885-79f7652f3ed3",
+      "parent": "985e9b6d-e83c-4419-ad09-fdbedaca4bc7",
+      "name": "imports",
+      "file_type": "Folder",
+      "last_modified": 1718837394659,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "77e59cfc-4e46-4b71-a3b1-304967202d3d",
+      "parent": "3755ea90-559c-41e6-9562-72bfb9718391",
+      "name": "notesnook.md",
+      "file_type": "Document",
+      "last_modified": 1674190380591,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1703
+  },
+  {
+    "file": {
+      "id": "05b3a11a-6c39-4c36-9132-e2af05718307",
+      "parent": "84f3d670-2657-42c1-9f14-660066de923b",
+      "name": "vip.md",
+      "file_type": "Document",
+      "last_modified": 1706656351657,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1957
+  },
+  {
+    "file": {
+      "id": "465221d6-e80c-49e9-b133-deec8a98dbca",
+      "parent": "fc50112e-5f9d-4ebf-b6a8-023ba619fd0f",
+      "name": "sleep-log.md",
+      "file_type": "Document",
+      "last_modified": 1717678153403,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 14319
+  },
+  {
+    "file": {
+      "id": "5842ece0-56b8-4606-aa11-3fc0b2f64117",
+      "parent": "b6732972-269a-40e0-be8d-bbec75953d9f",
+      "name": "egui.md",
+      "file_type": "Document",
+      "last_modified": 1683730033635,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2023
+  },
+  {
+    "file": {
+      "id": "3755ea90-559c-41e6-9562-72bfb9718391",
+      "parent": "b987fe7f-8d89-483f-aad7-73aa7ea5a304",
+      "name": "competition",
+      "file_type": "Folder",
+      "last_modified": 1674190379528,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "8c3155c8-5e28-4c80-bbd1-b2fa8e5e827d",
+      "parent": "64a1e269-69f7-4453-ac60-e162985afe6f",
+      "name": "monero-cryptonote.md",
+      "file_type": "Document",
+      "last_modified": 1660843372829,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1091
+  },
+  {
+    "file": {
+      "id": "fcb95408-0898-4ee4-a20c-4167c305c169",
+      "parent": "33f61bf8-2646-4bb1-a73a-10981f315f6a",
+      "name": "adam",
+      "file_type": "Folder",
+      "last_modified": 1689351232304,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "be2c5397-e7fc-4dd9-8131-631100fff87c",
+      "parent": "1dd046da-c570-41c7-8658-3aea51c7d2ba",
+      "name": "neil-overview.md",
+      "file_type": "Document",
+      "last_modified": 1697468528963,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3097
+  },
+  {
+    "file": {
+      "id": "d8e74fb0-3790-424b-b6cf-3a795b820446",
+      "parent": "7249d168-a2b0-4ec7-a8c3-4915427fbe80",
+      "name": "1-1.md",
+      "file_type": "Document",
+      "last_modified": 1682541632836,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1334
+  },
+  {
+    "file": {
+      "id": "7bd6e404-8ee7-47fb-882e-41297e5765f2",
+      "parent": "a6727dfd-74de-4223-a0f6-54b9e1e82fd6",
+      "name": "links.md",
+      "file_type": "Document",
+      "last_modified": 1686679712161,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1288
+  },
+  {
+    "file": {
+      "id": "7640e9df-6197-4560-90fa-174c302ca127",
+      "parent": "f57fac1a-62ce-441b-9d93-e317759c0a26",
+      "name": "windows-frame.md",
+      "file_type": "Document",
+      "last_modified": 1698002749114,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3317
+  },
+  {
+    "file": {
+      "id": "4b782402-1c0e-44ca-9446-38f89b2d2e93",
+      "parent": "b14a66ac-25fc-4c6e-b81c-caff6e27a345",
+      "name": "work-tracking-travis.md",
+      "file_type": "Document",
+      "last_modified": 1712524565284,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1091
+  },
+  {
+    "file": {
+      "id": "dfecde6c-39eb-4623-a8cc-5c127c4dc797",
+      "parent": "ce5c29b2-62aa-46ca-9c2c-ad9c0e64970e",
+      "name": "message-delivery-lib.md",
+      "file_type": "Document",
+      "last_modified": 1660843370548,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1948
+  },
+  {
+    "file": {
+      "id": "ab36b4f0-a109-4a41-ac59-cd0a7d09f444",
+      "parent": "fd97fcaa-78e4-43b6-8d42-eef839897119",
+      "name": "windshield-repair,-faster-wind.md",
+      "file_type": "Document",
+      "last_modified": 1698164154345,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 5383
+  },
+  {
+    "file": {
+      "id": "2193ab7d-5251-46ce-be7e-e0ea357186b1",
+      "parent": "ef2eb950-0d0e-4eab-9c91-8e6b72926aa6",
+      "name": "billing.md",
+      "file_type": "Document",
+      "last_modified": 1660843374152,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1585
+  },
+  {
+    "file": {
+      "id": "7437711f-ca45-4aef-b682-fa76d126cd99",
+      "parent": "aa12d6bf-5c38-4c87-a347-aaa7f2155a7d",
+      "name": "yubikey.md",
+      "file_type": "Document",
+      "last_modified": 1660843374280,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2317
+  },
+  {
+    "file": {
+      "id": "205d5350-b545-45b0-b7ea-69b3af10c625",
+      "parent": "c0d3f25c-d464-4b59-8a67-0b93c4fb5138",
+      "name": "crisis-prep",
+      "file_type": "Folder",
+      "last_modified": 1674190379526,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "6dddc86f-3c1d-4f11-b6a4-3bb4a2a4e3f6",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "todo.md",
+      "file_type": "Document",
+      "last_modified": 1660843367987,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1101
+  },
+  {
+    "file": {
+      "id": "d24cf6c5-3252-450d-b948-45238054c9dd",
+      "parent": "11126a42-42c6-4ec5-8859-2780d942551d",
+      "name": "worried.md",
+      "file_type": "Document",
+      "last_modified": 1660843369239,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 19094
+  },
+  {
+    "file": {
+      "id": "bd682f66-8789-4910-97ed-ddd19f59acbc",
+      "parent": "aa12d6bf-5c38-4c87-a347-aaa7f2155a7d",
+      "name": "knives.md",
+      "file_type": "Document",
+      "last_modified": 1660843370266,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2720
+  },
+  {
+    "file": {
+      "id": "0e35c516-428c-4084-b837-e91577dd5c63",
+      "parent": "fcb95408-0898-4ee4-a20c-4167c305c169",
+      "name": "todo.md",
+      "file_type": "Document",
+      "last_modified": 1713232551021,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1346
+  },
+  {
+    "file": {
+      "id": "ad454cff-d460-4653-8ec9-f040a792cd62",
+      "parent": "e337fc67-737e-4e6b-88be-2eb605dd59ea",
+      "name": "2020.md",
+      "file_type": "Document",
+      "last_modified": 1660843368898,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 35808
+  },
+  {
+    "file": {
+      "id": "f6d30209-2219-4c19-b1ea-1b112be71a7f",
+      "parent": "ce5c29b2-62aa-46ca-9c2c-ad9c0e64970e",
+      "name": "raptor",
+      "file_type": "Folder",
+      "last_modified": 1660843366844,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "8b5f49ee-5c7c-4d30-a739-fbd356de1ddb",
+      "parent": "84f3d670-2657-42c1-9f14-660066de923b",
+      "name": "android",
+      "file_type": "Folder",
+      "last_modified": 1674190379526,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "96e4d00a-428d-46ca-a2fb-8a83ec78dba3",
+      "parent": "fc3a4b61-7cdb-4f68-99ef-28ee3391cc8b",
+      "name": "miata.blog",
+      "file_type": "Folder",
+      "last_modified": 1694793685913,
+      "last_modified_by": "parth",
+      "shares": [
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "rahul"
+        }
+      ]
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "c8998273-8a0d-42a8-afce-ff4d0d7bd05d",
+      "parent": "b6505cef-d870-4051-b1ac-1ebfcf766439",
+      "name": "content-pane.md",
+      "file_type": "Document",
+      "last_modified": 1689359959186,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1209
+  },
+  {
+    "file": {
+      "id": "183f496e-e843-406a-ab55-f4021ee935dd",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "anthos.md",
+      "file_type": "Document",
+      "last_modified": 1660843374214,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1721
+  },
+  {
+    "file": {
+      "id": "52bd462b-9ac6-4b99-87ce-913ce046aab6",
+      "parent": "aa12d6bf-5c38-4c87-a347-aaa7f2155a7d",
+      "name": "cars",
+      "file_type": "Folder",
+      "last_modified": 1688581019024,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "8f40124e-bf14-4b18-bec8-d403e13c7309",
+      "parent": "bde71547-49c4-4a45-9866-1e5ad7e0dab4",
+      "name": "research.md",
+      "file_type": "Document",
+      "last_modified": 1685313225710,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3724
+  },
+  {
+    "file": {
+      "id": "4252812a-0fa6-422d-9b87-3e02d9c82f20",
+      "parent": "64a1e269-69f7-4453-ac60-e162985afe6f",
+      "name": "red-queen.md",
+      "file_type": "Document",
+      "last_modified": 1660843369357,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1420
+  },
+  {
+    "file": {
+      "id": "65500cc7-5935-49be-ba57-24d4a158ea36",
+      "parent": "e337fc67-737e-4e6b-88be-2eb605dd59ea",
+      "name": "2021.md",
+      "file_type": "Document",
+      "last_modified": 1660843369466,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 30338
+  },
+  {
+    "file": {
+      "id": "e32ac279-d7c8-476f-9908-f493f0664225",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "shared",
+      "file_type": "Folder",
+      "last_modified": 1685289913877,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "4621df44-eff5-4df5-8d87-4a3b146205a0",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "network.md",
+      "file_type": "Document",
+      "last_modified": 1709905787653,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1867
+  },
+  {
+    "file": {
+      "id": "78564706-4165-4852-8948-147dc9295eac",
+      "parent": "a0df9ce0-4c79-41e8-9a32-9e09e8988be4",
+      "name": "db-rs.md",
+      "file_type": "Document",
+      "last_modified": 1686256835513,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 10752
+  },
+  {
+    "file": {
+      "id": "2b0fa766-a1c0-4af9-bb7d-342977aca2d2",
+      "parent": "e337fc67-737e-4e6b-88be-2eb605dd59ea",
+      "name": "2014.md",
+      "file_type": "Document",
+      "last_modified": 1660843371621,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 41565
+  },
+  {
+    "file": {
+      "id": "07541cb2-0fe4-4837-8ab8-e89d23d1c0f4",
+      "parent": "173063cb-702d-4a3f-8444-d3012996c754",
+      "name": "miata-powertrain-trace.md",
+      "file_type": "Document",
+      "last_modified": 1694922438821,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 7473
+  },
+  {
+    "file": {
+      "id": "dd8e68af-69b0-4f78-a8f8-9f886e040f9b",
+      "parent": "a0df9ce0-4c79-41e8-9a32-9e09e8988be4",
+      "name": "introducing-lockbook.md",
+      "file_type": "Document",
+      "last_modified": 1686013596042,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3434
+  },
+  {
+    "file": {
+      "id": "d6abcf21-aba2-427a-a309-7e3be60b9614",
+      "parent": "7fe58537-8b29-46ff-b3d5-6062332b062a",
+      "name": "peace.md",
+      "file_type": "Document",
+      "last_modified": 1686013596043,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1878
+  },
+  {
+    "file": {
+      "id": "68bb2c5e-5545-4e62-b894-3172a3a6e2eb",
+      "parent": "b6505cef-d870-4051-b1ac-1ebfcf766439",
+      "name": "swiftui-annotations.md",
+      "file_type": "Document",
+      "last_modified": 1674190381297,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1316
+  },
+  {
+    "file": {
+      "id": "842f1514-1e4d-4a98-a295-eb4f88b1d75e",
+      "parent": "84f3d670-2657-42c1-9f14-660066de923b",
+      "name": "apple-memory-leaks.md",
+      "file_type": "Document",
+      "last_modified": 1717428520386,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1364
+  },
+  {
+    "file": {
+      "id": "1744c39d-c949-435e-82d9-c8a43013867e",
+      "parent": "b987fe7f-8d89-483f-aad7-73aa7ea5a304",
+      "name": "case-studies.md",
+      "file_type": "Document",
+      "last_modified": 1674190379592,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2078
+  },
+  {
+    "file": {
+      "id": "cdc94ec5-cffe-449f-a799-bb52d678f7f3",
+      "parent": "64a1e269-69f7-4453-ac60-e162985afe6f",
+      "name": "genghis-khan.md",
+      "file_type": "Document",
+      "last_modified": 1660843368006,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2724
+  },
+  {
+    "file": {
+      "id": "985d4f65-777a-47ef-9780-dd1983a51bef",
+      "parent": "de32cca9-90c4-4e7c-81fb-1fc1d1d48299",
+      "name": "pasted_image_1709219088533469.png",
+      "file_type": "Document",
+      "last_modified": 1709219248133,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 29973
+  },
+  {
+    "file": {
+      "id": "7bfbc7e9-4e88-4608-9d6e-e45f87fd6951",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "archive",
+      "file_type": "Folder",
+      "last_modified": 1660843366843,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "a3ee55ea-b016-406a-96a2-b3dda874adba",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "pace-budget.md",
+      "file_type": "Document",
+      "last_modified": 1718642281199,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1629
+  },
+  {
+    "file": {
+      "id": "5d5f8a91-284c-44bc-bb5c-a099642bda76",
+      "parent": "11126a42-42c6-4ec5-8859-2780d942551d",
+      "name": "decentralization.md",
+      "file_type": "Document",
+      "last_modified": 1660843374388,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2672
+  },
+  {
+    "file": {
+      "id": "4edfa086-9735-4176-97d2-3d5a1ed0a2e7",
+      "parent": "c982ff9f-3441-4ae9-934a-e1bf0d4735af",
+      "name": "hobbies",
+      "file_type": "Folder",
+      "last_modified": 1660843366833,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "9009a696-9467-4438-b2c5-eed5739f1b1a",
+      "parent": "ad8b9057-6e72-4b7b-8b7c-ca4f3e936320",
+      "name": "btc-lows2.md",
+      "file_type": "Document",
+      "last_modified": 1701525288001,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1109
+  },
+  {
+    "file": {
+      "id": "a258b901-924c-4e71-ad6b-1505658f7c71",
+      "parent": "ce5c29b2-62aa-46ca-9c2c-ad9c0e64970e",
+      "name": "meetings",
+      "file_type": "Folder",
+      "last_modified": 1660843366816,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "e8540c40-5d71-48eb-8e35-24b4bf97cedc",
+      "parent": "e32ac279-d7c8-476f-9908-f493f0664225",
+      "name": "trips",
+      "file_type": "Folder",
+      "last_modified": 1709219248133,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "810fa655-a8c0-4991-8494-2c1d0388b664",
+      "parent": "fd97fcaa-78e4-43b6-8d42-eef839897119",
+      "name": "updating-the-interior.md",
+      "file_type": "Document",
+      "last_modified": 1698164154345,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 5057
+  },
+  {
+    "file": {
+      "id": "4282b87d-c12b-4fca-b64c-153f73eb353b",
+      "parent": "4edfa086-9735-4176-97d2-3d5a1ed0a2e7",
+      "name": "camera.md",
+      "file_type": "Document",
+      "last_modified": 1698185468543,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 4146
+  },
+  {
+    "file": {
+      "id": "9c3ddace-2c50-44ca-aadc-544297335bf3",
+      "parent": "39f7c8a6-2867-432f-93b5-41932f22744c",
+      "name": "design-discussions",
+      "file_type": "Folder",
+      "last_modified": 1697495123739,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "f68c4085-2737-44bf-8a31-7a0744167fdf",
+      "parent": "cc02c5eb-ed6a-4454-b800-feb60e88e10f",
+      "name": "trip2.draw",
+      "file_type": "Document",
+      "last_modified": 1660843368062,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1810050
+  },
+  {
+    "file": {
+      "id": "d981edd3-5d3f-4a47-b7fc-4b12002105e4",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "content-pane.md",
+      "file_type": "Document",
+      "last_modified": 1689720680761,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2060
+  },
+  {
+    "file": {
+      "id": "173063cb-702d-4a3f-8444-d3012996c754",
+      "parent": "96e4d00a-428d-46ca-a2fb-8a83ec78dba3",
+      "name": "drafts",
+      "file_type": "Folder",
+      "last_modified": 1693018226454,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "c6ee4855-1953-45cd-a36d-fbb5acf86aa8",
+      "parent": "7249d168-a2b0-4ec7-a8c3-4915427fbe80",
+      "name": "cli2.md",
+      "file_type": "Document",
+      "last_modified": 1674673400896,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1702
+  },
+  {
+    "file": {
+      "id": "b29177ab-b6e8-4f84-86f7-73a9298c646b",
+      "parent": "99d1f3de-1cc6-4c38-abbb-a0f7ec93903c",
+      "name": "todo.md",
+      "file_type": "Document",
+      "last_modified": 1686013596096,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1093
+  },
+  {
+    "file": {
+      "id": "ac9b0814-458c-486f-9f91-236fb7d69ba3",
+      "parent": "ed273968-fd31-4023-92c4-da92b51a6791",
+      "name": "how-subscriptions-work.md",
+      "file_type": "Document",
+      "last_modified": 1690888385826,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3059
+  },
+  {
+    "file": {
+      "id": "d28710d7-3471-4dfc-86bb-5f5ca982dc27",
+      "parent": "fc7833d8-5d44-4f35-a2ef-9ff9ea66516c",
+      "name": "parking.md",
+      "file_type": "Document",
+      "last_modified": 1660843367798,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1075
+  },
+  {
+    "file": {
+      "id": "e9ee8e14-dcb3-49b1-8fd2-5f0ae899235a",
+      "parent": "7cfb1d64-70d8-4cb1-9c65-67bbc7cb7879",
+      "name": "team-info.md",
+      "file_type": "Document",
+      "last_modified": 1686778631250,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1501
+  },
+  {
+    "file": {
+      "id": "5a1fb00d-04db-4aec-b7c7-162de4702cf4",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "untitled.md",
+      "file_type": "Document",
+      "last_modified": 1718815375136,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "de32cca9-90c4-4e7c-81fb-1fc1d1d48299",
+      "parent": "e8540c40-5d71-48eb-8e35-24b4bf97cedc",
+      "name": "tremblant",
+      "file_type": "Folder",
+      "last_modified": 1709227835129,
+      "last_modified_by": "parth",
+      "shares": [
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "adam"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "travis"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "smail"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "krishma"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "maha"
+        },
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "krish"
+        }
+      ]
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "775a14ab-3de6-4bc1-a128-2c6ebdb555a2",
+      "parent": "ed273968-fd31-4023-92c4-da92b51a6791",
+      "name": "adam-interview-feedback.md",
+      "file_type": "Document",
+      "last_modified": 1690888385827,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2090
+  },
+  {
+    "file": {
+      "id": "26cec9e9-c878-4373-9461-e3cd1fee9d45",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "seg-missing.md",
+      "file_type": "Document",
+      "last_modified": 1677003664548,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1109
+  },
+  {
+    "file": {
+      "id": "51698999-e479-461f-aeb1-1f1d305b5672",
+      "parent": "b6505cef-d870-4051-b1ac-1ebfcf766439",
+      "name": "swiftui-representable.draw",
+      "file_type": "Document",
+      "last_modified": 1674190380607,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1824336
+  },
+  {
+    "file": {
+      "id": "c0d3f25c-d464-4b59-8a67-0b93c4fb5138",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "catalog",
+      "file_type": "Folder",
+      "last_modified": 1660843366842,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "45c5c2c1-afb4-4da7-8fe2-01cf3c5e36ee",
+      "parent": "f6d30209-2219-4c19-b1ea-1b112be71a7f",
+      "name": "funding-messages.md",
+      "file_type": "Document",
+      "last_modified": 1660843369830,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2608
+  },
+  {
+    "file": {
+      "id": "2921515a-ad5d-4aa6-874f-5964ecc3536a",
+      "parent": "fcb95408-0898-4ee4-a20c-4167c305c169",
+      "name": "svg_editor_parth_feedback.md",
+      "file_type": "Document",
+      "last_modified": 1705256062424,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 4809
+  },
+  {
+    "file": {
+      "id": "b6505cef-d870-4051-b1ac-1ebfcf766439",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "notes",
+      "file_type": "Folder",
+      "last_modified": 1674190379531,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "ef85879b-f3d8-4755-9066-04a0a4ba8c89",
+      "parent": "a0df9ce0-4c79-41e8-9a32-9e09e8988be4",
+      "name": "system-design.md",
+      "file_type": "Document",
+      "last_modified": 1686013596044,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 5272
+  },
+  {
+    "file": {
+      "id": "ea31258b-55a7-4626-94c1-693f6af2d685",
+      "parent": "e0813747-5a2d-4a2f-a7a8-a1496a2bec24",
+      "name": "rules-engine.md",
+      "file_type": "Document",
+      "last_modified": 1660843366973,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1287
+  },
+  {
+    "file": {
+      "id": "9abc99b3-fd72-49c6-aceb-4987d1c133f1",
+      "parent": "a258b901-924c-4e71-ad6b-1505658f7c71",
+      "name": "phase2.md",
+      "file_type": "Document",
+      "last_modified": 1660843369926,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1520
+  },
+  {
+    "file": {
+      "id": "01d6a63e-b2b7-44a6-b6d6-79cfd496de78",
+      "parent": "e337fc67-737e-4e6b-88be-2eb605dd59ea",
+      "name": "2018.md",
+      "file_type": "Document",
+      "last_modified": 1660843367670,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 19815
+  },
+  {
+    "file": {
+      "id": "1dd046da-c570-41c7-8658-3aea51c7d2ba",
+      "parent": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "name": "rtb",
+      "file_type": "Folder",
+      "last_modified": 1697239891170,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "62b9accf-e9dd-4fac-9a1e-6b51fd91d61c",
+      "parent": "b987fe7f-8d89-483f-aad7-73aa7ea5a304",
+      "name": "social-media-accounts.md",
+      "file_type": "Document",
+      "last_modified": 1693838938915,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1444
+  },
+  {
+    "file": {
+      "id": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "parent": "33f61bf8-2646-4bb1-a73a-10981f315f6a",
+      "name": "parth",
+      "file_type": "Folder",
+      "last_modified": 1689351232304,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "b30c0ee8-8851-45d4-a56e-7ea9db384589",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "build-something-together.md",
+      "file_type": "Document",
+      "last_modified": 1660843370781,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1634
+  },
+  {
+    "file": {
+      "id": "fffd0c9d-dbd3-4c54-890f-ef2a472823de",
+      "parent": "e0813747-5a2d-4a2f-a7a8-a1496a2bec24",
+      "name": "device-attestation.md",
+      "file_type": "Document",
+      "last_modified": 1660843369733,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1946
+  },
+  {
+    "file": {
+      "id": "ce5c29b2-62aa-46ca-9c2c-ad9c0e64970e",
+      "parent": "7bfbc7e9-4e88-4608-9d6e-e45f87fd6951",
+      "name": "gemini",
+      "file_type": "Folder",
+      "last_modified": 1660843366814,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "6916934d-c154-4d97-b862-df0a2efa3b8e",
+      "parent": "3cd72d37-aff4-4d49-9237-e6d9b2e64bac",
+      "name": "CARFAX.pdf",
+      "file_type": "Document",
+      "last_modified": 1693530123936,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 490929
+  },
+  {
+    "file": {
+      "id": "8c4dcf8e-29c7-474c-a9e2-aa9e71b91def",
+      "parent": "c0d3f25c-d464-4b59-8a67-0b93c4fb5138",
+      "name": "to-read.md",
+      "file_type": "Document",
+      "last_modified": 1687654507673,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3395
+  },
+  {
+    "file": {
+      "id": "ace508f8-3754-4a8c-866c-2c02c6e5c365",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "scratch.md",
+      "file_type": "Document",
+      "last_modified": 1674190381002,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1150
+  },
+  {
+    "file": {
+      "id": "86f961b3-0e56-49ad-bab1-b511566d4252",
+      "parent": "b6505cef-d870-4051-b1ac-1ebfcf766439",
+      "name": "release-notes-intro.md",
+      "file_type": "Document",
+      "last_modified": 1693345928872,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1774
+  },
+  {
+    "file": {
+      "id": "6c887faf-c83a-4444-8a91-1daca7ee887c",
+      "parent": "10951772-90ec-45cb-a885-79f7652f3ed3",
+      "name": "pasted_image_2024-06-19_22-49-50.png",
+      "file_type": "Document",
+      "last_modified": 1718837394801,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1470830
+  },
+  {
+    "file": {
+      "id": "b3fdfa4e-ca74-4a75-9633-3e45f1a81669",
+      "parent": "fcb95408-0898-4ee4-a20c-4167c305c169",
+      "name": "1-1.md",
+      "file_type": "Document",
+      "last_modified": 1709071202796,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 5350
+  },
+  {
+    "file": {
+      "id": "b987fe7f-8d89-483f-aad7-73aa7ea5a304",
+      "parent": "39f7c8a6-2867-432f-93b5-41932f22744c",
+      "name": "marketing",
+      "file_type": "Folder",
+      "last_modified": 1689351232304,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "e6f5e89b-8572-4eac-b4ff-7c7a993bdedb",
+      "parent": "7bfbc7e9-4e88-4608-9d6e-e45f87fd6951",
+      "name": "untitled-0.svg",
+      "file_type": "Document",
+      "last_modified": 1707605103609,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "6c1cb978-7c4e-4d83-825a-477287f89c69",
+      "parent": "33f61bf8-2646-4bb1-a73a-10981f315f6a",
+      "name": "travis",
+      "file_type": "Folder",
+      "last_modified": 1689351232305,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "2dafa7d6-1819-4743-a198-336e165b4616",
+      "parent": "6c1cb978-7c4e-4d83-825a-477287f89c69",
+      "name": "1-1.md",
+      "file_type": "Document",
+      "last_modified": 1699143757065,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1266
+  },
+  {
+    "file": {
+      "id": "9eaaad4b-28db-4615-a792-8bfd37a97327",
+      "parent": "b6505cef-d870-4051-b1ac-1ebfcf766439",
+      "name": "cli-rs.md",
+      "file_type": "Document",
+      "last_modified": 1689949981493,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1664
+  },
+  {
+    "file": {
+      "id": "606236e6-fcd3-43bf-930f-d2ebf7371352",
+      "parent": "fcb95408-0898-4ee4-a20c-4167c305c169",
+      "name": "links.draw",
+      "file_type": "Document",
+      "last_modified": 1699196309200,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 598347
+  },
+  {
+    "file": {
+      "id": "6362d9f6-6378-4924-90ad-49bce631dcbb",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "wearable.md",
+      "file_type": "Document",
+      "last_modified": 1660843370743,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1078
+  },
+  {
+    "file": {
+      "id": "6c7b8ad6-ad26-4185-9b63-f7d324f068b9",
+      "parent": "4edfa086-9735-4176-97d2-3d5a1ed0a2e7",
+      "name": "guitar.md",
+      "file_type": "Document",
+      "last_modified": 1703217835519,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3700
+  },
+  {
+    "file": {
+      "id": "bb85d882-8e01-413e-8565-e819dff7ecfa",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "env-var-viewer.md",
+      "file_type": "Document",
+      "last_modified": 1660843369752,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1247
+  },
+  {
+    "file": {
+      "id": "a499a047-5075-4049-9f9a-249dc775ede4",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "meetings",
+      "file_type": "Folder",
+      "last_modified": 1674190379527,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "cc2dba68-5828-4049-ae00-0b0027ea0978",
+      "parent": "b6505cef-d870-4051-b1ac-1ebfcf766439",
+      "name": "editor_status.draw",
+      "file_type": "Document",
+      "last_modified": 1695016032084,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 971783
+  },
+  {
+    "file": {
+      "id": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "parent": "e884f84a-e31d-4aae-a048-1ae1b68b3f28",
+      "name": "future-projects",
+      "file_type": "Folder",
+      "last_modified": 1660843366819,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "8aebe4bb-16d4-496d-abf8-b655033c787b",
+      "parent": "84f3d670-2657-42c1-9f14-660066de923b",
+      "name": "android-editor-wrapper.md",
+      "file_type": "Document",
+      "last_modified": 1715318183149,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2671
+  },
+  {
+    "file": {
+      "id": "02f3ce87-d129-460b-8ea7-3238e5c37549",
+      "parent": "fcb95408-0898-4ee4-a20c-4167c305c169",
+      "name": "test.md",
+      "file_type": "Document",
+      "last_modified": 1715097066205,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1096
+  },
+  {
+    "file": {
+      "id": "da06d432-8f36-40ce-83a5-03e1d2fd9b35",
+      "parent": "64a1e269-69f7-4453-ac60-e162985afe6f",
+      "name": "zenmotorcycle.md",
+      "file_type": "Document",
+      "last_modified": 1660843369309,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3132
+  },
+  {
+    "file": {
+      "id": "df3e49f2-73b2-4d2c-9fba-41ad7a3e7f44",
+      "parent": "7249d168-a2b0-4ec7-a8c3-4915427fbe80",
+      "name": "egui-client-auto-sync-and-save.md",
+      "file_type": "Document",
+      "last_modified": 1686778631250,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1428
+  },
+  {
+    "file": {
+      "id": "354aea62-a88e-4839-a57e-23ea2621315f",
+      "parent": "7bfbc7e9-4e88-4608-9d6e-e45f87fd6951",
+      "name": "elliptic-curve.md",
+      "file_type": "Document",
+      "last_modified": 1660843370249,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1993
+  },
+  {
+    "file": {
+      "id": "99c2268c-3ac9-4a33-8ff0-f58fabedf2ee",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "c-notes.md",
+      "file_type": "Document",
+      "last_modified": 1705520233599,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1043
+  },
+  {
+    "file": {
+      "id": "ec875a1e-85b9-4ef0-8417-d6f55c8757a3",
+      "parent": "7fe58537-8b29-46ff-b3d5-6062332b062a",
+      "name": "dbs.md",
+      "file_type": "Document",
+      "last_modified": 1686013596043,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 4711
+  },
+  {
+    "file": {
+      "id": "851e3415-d9e5-4459-9e47-51f2ddb2498b",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "TSI.md",
+      "file_type": "Document",
+      "last_modified": 1685910772659,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2207
+  },
+  {
+    "file": {
+      "id": "7148c6e2-ac90-4f95-bec9-6b9a800e1a8d",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "rush.md",
+      "file_type": "Document",
+      "last_modified": 1705801741618,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1720
+  },
+  {
+    "file": {
+      "id": "24182215-61f8-4628-b026-ed3eed24b9b4",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "Tasks.md",
+      "file_type": {
+        "Link": {
+          "target": "966bac23-22ad-4de7-aea3-09b40d00575d"
+        }
+      },
+      "last_modified": 1713298745642,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "8686fad6-1225-40a9-8bcf-5aa09ba420ee",
+      "parent": "ad8b9057-6e72-4b7b-8b7c-ca4f3e936320",
+      "name": "politics.md",
+      "file_type": "Document",
+      "last_modified": 1660843370762,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2608
+  },
+  {
+    "file": {
+      "id": "0de576bf-a9bb-4d03-a49c-ba87e9d191c7",
+      "parent": "b6732972-269a-40e0-be8d-bbec75953d9f",
+      "name": "Notify.md",
+      "file_type": "Document",
+      "last_modified": 1689351232302,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1791
+  },
+  {
+    "file": {
+      "id": "3cd72d37-aff4-4d49-9237-e6d9b2e64bac",
+      "parent": "96e4d00a-428d-46ca-a2fb-8a83ec78dba3",
+      "name": "documents",
+      "file_type": "Folder",
+      "last_modified": 1693530123898,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "46d94640-2752-4a20-b7d3-7418d2000c5a",
+      "parent": "de32cca9-90c4-4e7c-81fb-1fc1d1d48299",
+      "name": "tremblant.md",
+      "file_type": "Document",
+      "last_modified": 1709567949115,
+      "last_modified_by": "parth",
+      "shares": [
+        {
+          "mode": "Write",
+          "shared_by": "parth",
+          "shared_with": "adam"
+        }
+      ]
+    },
+    "size": 2532
+  },
+  {
+    "file": {
+      "id": "ffd903f5-2acd-4f47-9507-1849c3fb0e61",
+      "parent": "3755ea90-559c-41e6-9562-72bfb9718391",
+      "name": "proton-drive.md",
+      "file_type": "Document",
+      "last_modified": 1674190380267,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1404
+  },
+  {
+    "file": {
+      "id": "7f677b41-2b52-4ba6-8e48-10c58d8e609c",
+      "parent": "fcb95408-0898-4ee4-a20c-4167c305c169",
+      "name": "untitled-1.svg",
+      "file_type": "Document",
+      "last_modified": 1708902994209,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 6812
+  },
+  {
+    "file": {
+      "id": "49b75c5d-5a84-4142-96b1-1c8095afc739",
+      "parent": "e0813747-5a2d-4a2f-a7a8-a1496a2bec24",
+      "name": "finscan-client.md",
+      "file_type": "Document",
+      "last_modified": 1660843372893,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3547
+  },
+  {
+    "file": {
+      "id": "e606e2d2-efee-40ce-b82e-f430e80d14bf",
+      "parent": "39f7c8a6-2867-432f-93b5-41932f22744c",
+      "name": "ops",
+      "file_type": "Folder",
+      "last_modified": 1689351232305,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "0b6cf021-b9f8-448f-8378-a00f65d27e19",
+      "parent": "985e9b6d-e83c-4419-ad09-fdbedaca4bc7",
+      "name": "document-management.md",
+      "file_type": "Document",
+      "last_modified": 1686778631249,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1854
+  },
+  {
+    "file": {
+      "id": "a4b23c1e-fbeb-417d-bad5-dfba186babde",
+      "parent": "ad8b9057-6e72-4b7b-8b7c-ca4f3e936320",
+      "name": "rahul.md",
+      "file_type": "Document",
+      "last_modified": 1660843374236,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1207
+  },
+  {
+    "file": {
+      "id": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "parth",
+      "file_type": "Folder",
+      "last_modified": 1660843346470,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "b6732972-269a-40e0-be8d-bbec75953d9f",
+      "parent": "39f7c8a6-2867-432f-93b5-41932f22744c",
+      "name": "grievances",
+      "file_type": "Folder",
+      "last_modified": 1689351232304,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "7249d168-a2b0-4ec7-a8c3-4915427fbe80",
+      "parent": "33f61bf8-2646-4bb1-a73a-10981f315f6a",
+      "name": "steve",
+      "file_type": "Folder",
+      "last_modified": 1689351232303,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "6e5e8caf-4947-4888-8786-449cd6cc9fe4",
+      "parent": "3a7375f1-c6d8-49d9-b70c-48b0b4dee447",
+      "name": "pasted_image_2024-05-16_04-16-50.png",
+      "file_type": "Document",
+      "last_modified": 1715835592034,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2354125
+  },
+  {
+    "file": {
+      "id": "6e02ea65-a350-4e63-b395-4016011ce7cb",
+      "parent": "3a7375f1-c6d8-49d9-b70c-48b0b4dee447",
+      "name": "pasted_image_2024-05-16_04-14-52.png",
+      "file_type": "Document",
+      "last_modified": 1715835592033,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 398311
+  },
+  {
+    "file": {
+      "id": "b1692cd8-9b6c-4efb-93a7-817a183038ac",
+      "parent": "c0d3f25c-d464-4b59-8a67-0b93c4fb5138",
+      "name": "to-watch.md",
+      "file_type": "Document",
+      "last_modified": 1713405825280,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1454
+  },
+  {
+    "file": {
+      "id": "f57fac1a-62ce-441b-9d93-e317759c0a26",
+      "parent": "6c1cb978-7c4e-4d83-825a-477287f89c69",
+      "name": "dev-journal",
+      "file_type": "Folder",
+      "last_modified": 1697231327288,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "3a6a7290-3178-4293-864e-b860b6fe0c00",
+      "parent": "7cfb1d64-70d8-4cb1-9c65-67bbc7cb7879",
+      "name": "contrib.md",
+      "file_type": "Document",
+      "last_modified": 1692998145459,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1092
+  },
+  {
+    "file": {
+      "id": "fe777276-381f-408b-b41a-bac9b302b9cc",
+      "parent": "985e9b6d-e83c-4419-ad09-fdbedaca4bc7",
+      "name": "editor.md",
+      "file_type": "Document",
+      "last_modified": 1686778631249,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1398
+  },
+  {
+    "file": {
+      "id": "1411dd30-08b0-478a-b705-30b4c9fbf8a6",
+      "parent": "fcb95408-0898-4ee4-a20c-4167c305c169",
+      "name": "cli-completions.md",
+      "file_type": "Document",
+      "last_modified": 1697640724966,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1437
+  },
+  {
+    "file": {
+      "id": "cf75306b-77a5-47fa-9803-dd7b7da6e417",
+      "parent": "64a1e269-69f7-4453-ac60-e162985afe6f",
+      "name": "rust-book.md",
+      "file_type": "Document",
+      "last_modified": 1660843371888,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 3848
+  },
+  {
+    "file": {
+      "id": "4d308c67-ed93-4511-8155-f811e3a7a35d",
+      "parent": "e0813747-5a2d-4a2f-a7a8-a1496a2bec24",
+      "name": "engine-team.md",
+      "file_type": "Document",
+      "last_modified": 1660843374413,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2751
+  },
+  {
+    "file": {
+      "id": "c982ff9f-3441-4ae9-934a-e1bf0d4735af",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "thoughts",
+      "file_type": "Folder",
+      "last_modified": 1660843366815,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "219df288-f08b-422b-adf6-59534df7ee91",
+      "parent": "e337fc67-737e-4e6b-88be-2eb605dd59ea",
+      "name": "2019.md",
+      "file_type": "Document",
+      "last_modified": 1660843374079,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 22949
+  },
+  {
+    "file": {
+      "id": "72407bd3-dc56-44e6-a756-ecd2fdb901cd",
+      "parent": "8b5f49ee-5c7c-4d30-a739-fbd356de1ddb",
+      "name": "keystore-details.md",
+      "file_type": "Document",
+      "last_modified": 1674190380230,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1487
+  },
+  {
+    "file": {
+      "id": "dad4a1d9-5f2f-4881-90ff-2778a9abb708",
+      "parent": "b6505cef-d870-4051-b1ac-1ebfcf766439",
+      "name": "https.md",
+      "file_type": "Document",
+      "last_modified": 1674190380912,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1333
+  },
+  {
+    "file": {
+      "id": "77253d28-2401-40bb-b6dd-af72fb83ab47",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "homestead.md",
+      "file_type": "Document",
+      "last_modified": 1660843368953,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 2016
+  },
+  {
+    "file": {
+      "id": "33daff4f-f744-42f1-b889-e20e8971deac",
+      "parent": "34634f35-7bdb-451b-b9ac-1aed7cc32458",
+      "name": "phone-keyboard.md",
+      "file_type": "Document",
+      "last_modified": 1660843369907,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1243
+  },
+  {
+    "file": {
+      "id": "295d7909-87b9-4285-877c-dede86463f00",
+      "parent": "3a7375f1-c6d8-49d9-b70c-48b0b4dee447",
+      "name": "pasted_image_2024-05-16_05-00-15.png",
+      "file_type": "Document",
+      "last_modified": 1715839103128,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1127982
+  },
+  {
+    "file": {
+      "id": "85328f12-879a-4092-9442-c8a628db6af1",
+      "parent": "a2b2f0e5-14ef-442a-b5ef-e4ac985ef277",
+      "name": "ui-rs.md",
+      "file_type": "Document",
+      "last_modified": 1701334211371,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 9251
+  },
+  {
+    "file": {
+      "id": "6dd0619b-2d7a-4e78-b395-15fb960e4bad",
+      "parent": "08bcd2b2-568c-4d28-9a09-257fed24c494",
+      "name": "67b2ccb4-0.png",
+      "file_type": "Document",
+      "last_modified": 1700485683603,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 151510
+  },
+  {
+    "file": {
+      "id": "cd3240c1-ba71-4a88-9f99-1fde233ae052",
+      "parent": "7bfbc7e9-4e88-4608-9d6e-e45f87fd6951",
+      "name": "id_rsa.pub",
+      "file_type": "Document",
+      "last_modified": 1660843370569,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1501
+  },
+  {
+    "file": {
+      "id": "fc50112e-5f9d-4ebf-b6a8-023ba619fd0f",
+      "parent": "201a4ace-8c36-4eae-b982-181816a24b5d",
+      "name": "health",
+      "file_type": "Folder",
+      "last_modified": 1660843366810,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "feb49480-25e5-43f9-bcda-cf42478b6fa7",
+      "parent": "e884f84a-e31d-4aae-a048-1ae1b68b3f28",
+      "name": "madhive",
+      "file_type": "Folder",
+      "last_modified": 1664301544109,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  },
+  {
+    "file": {
+      "id": "9b052bca-50b4-47b1-8f6a-8a51e3310d86",
+      "parent": "e32ac279-d7c8-476f-9908-f493f0664225",
+      "name": "Steve",
+      "file_type": {
+        "Link": {
+          "target": "02abe335-8ea9-479e-acb9-191ee010a928"
+        }
+      },
+      "last_modified": 1685291090757,
+      "last_modified_by": "parth",
+      "shares": []
+    },
+    "size": 1000
+  }
+]
