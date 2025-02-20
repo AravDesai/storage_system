@@ -175,18 +175,8 @@ mod test {
 
     use super::Data;
 
-    //Test init: Root and two files. Verify order of files
-    //Test get_children(): Root and two files
-    //another variant of both of the above with a deeply nested folder structure
-
-    //How should my program handle these? A current_root must always exist and only folders will be interactable
-    //empty list
-    //only one file
-    //root missing
-
-    #[test]
-    fn init_root_checker() {
-        let data: Vec<FileRow> = vec![
+    fn get_root_two_files()->Vec<FileRow>{
+        return vec![
             FileRow {
                 file: File {
                     id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
@@ -224,7 +214,11 @@ mod test {
                 size: 600,
             },
         ];
-        let hold = Data::init(data);
+    }
+
+    #[test]
+    fn init_root_checker() {
+        let hold = Data::init(get_root_two_files());
         let expected_root = Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap();
         assert_eq!(hold.current_root, expected_root);
         let root_size = (hold.folder_sizes.get(&expected_root)).unwrap().clone();
@@ -234,45 +228,7 @@ mod test {
     //this test sometimes outputs in different orders
     #[test]
     fn get_children_root_two_files() {
-        let data: Vec<FileRow> = vec![
-            FileRow {
-                file: File {
-                    id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
-                    parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
-                    name: "Root".to_string(),
-                    file_type: lb_rs::FileType::Folder,
-                    last_modified: 1693063210788,
-                    last_modified_by: "parth".to_string(),
-                    shares: [].to_vec(),
-                },
-                size: 1000,
-            },
-            FileRow {
-                file: File {
-                    id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
-                    parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
-                    name: "file1".to_string(),
-                    file_type: lb_rs::FileType::Document,
-                    last_modified: 1693063210788,
-                    last_modified_by: "parth".to_string(),
-                    shares: [].to_vec(),
-                },
-                size: 800,
-            },
-            FileRow {
-                file: File {
-                    id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
-                    parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
-                    name: "file2".to_string(),
-                    file_type: lb_rs::FileType::Document,
-                    last_modified: 1693063210788,
-                    last_modified_by: "parth".to_string(),
-                    shares: [].to_vec(),
-                },
-                size: 600,
-            },
-        ];
-        let hold = Data::init(data);
+        let hold = Data::init(get_root_two_files());
         let actual_children = Data::get_children(&hold, &hold.current_root);
         let expected_children = vec![
             Node {
