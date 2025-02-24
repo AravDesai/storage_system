@@ -1,6 +1,6 @@
 use data::NodeLayer;
 use eframe::egui::{
-    self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2, Rect, Rounding, Stroke, Ui
+    self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, PointerState, Pos2, Rect, Rounding, Sense, Stroke, Ui
 };
 use eframe::epaint::{PathShape, PathStroke};
 //use lb_rs::model::file_metadata::FileType;
@@ -20,6 +20,11 @@ struct HashData {
     name: String,
     file_type: FileType,
     size: u64,
+}
+
+struct DrawHelper{
+    id: Uuid,
+    starting_position: f32,
 }
 
 #[derive(PartialEq, Clone, Copy)]
@@ -111,6 +116,12 @@ impl MyApp {
     }
 
     pub fn follow_paint_order(&mut self, ui: &mut Ui, root_anchor: Rect) -> Option<Uuid>{
+        //To fix unaligned folders, I can cache the current parent with its ID and position
+        //Would need a vector of all folder IDs and their starting spots for this to work, could populate it when paint orders are followed
+        //If the parent of the current item is not cached_parent, takes from cached_folders to get the starting pos
+        //Will reset this vector whenever roots are moved 
+
+
         let mut root_status: Option<Uuid> = None;
         let mut current_layer = 0;
         let mut current_position = 0.0;
@@ -142,11 +153,12 @@ impl MyApp {
                             color: Color32::BLACK,
                         },
                     );
+
                     ui.allocate_ui_at_rect(paint_rect, |ui| {
                         ui.with_layer_id(
                             LayerId {
                                 order: eframe::egui::Order::Foreground,
-                                id: Id::new(1),
+                                id: Id::new(3),
                             },
                             |ui| {
                                 if ui.colored_label(Color32::WHITE, ".").on_hover_text("Name:\n".to_owned()+
@@ -157,7 +169,7 @@ impl MyApp {
                                         .file
                                         .name
                                         .to_string()
-                                        +"\n Size:\n"
+                                        +"\nSize:\n"
                                         + &(item.portion * (*self.data.folder_sizes.get(&self.data.current_root).unwrap() as f32)).to_string()
                                         + "\nParent:\n"
                                         + &self
@@ -222,108 +234,6 @@ impl MyApp {
         }
         return root_status;
     }
-
-    //Comments will be deleted when circle logic is put in
-
-    // pub fn file_recurser(
-    //     &self,
-    //     ui: &mut Ui,
-    //     layer_id: i32,
-    //     parent: HashData,
-    //     radius: f32,
-    //     mut inner_bound: f32,
-    //     outer_bound: u64,
-    //     center: Rect,
-    //     view_type: ViewType,
-    //     mut general_color: usize,
-    //     specific_color: usize,
-    // ) -> Option<HashData> {
-    //     let potential_children = self.folder_table.get(&parent);
-    //     match potential_children {
-    //         Some(children) => {
-    //             for child in children {
-    //                 let child_length =
-    //                     (child.size as f32 / parent.size as f32) * outer_bound as f32;
-    //                 let trim = CircleTrim {
-    //                     color: Self::get_color(general_color, specific_color),
-    //                     inner_radius: radius,
-    //                     start_angle: inner_bound,
-    //                     end_angle: inner_bound + child_length,
-    //                     center,
-    //                     layer_id: LayerId {
-    //                         order: Order::PanelResizeLine,
-    //                         id: Id::new(layer_id),
-    //                     },
-    //                     button_pressed: false,
-    //                     view_type,
-    //                 };
-    //                 CircleTrim::paint_annulus_sector(&trim, ui);
-    //                 if child.file_type == FileType::Folder {
-    //                     ui.with_layer_id(
-    //                         LayerId {
-    //                             order: eframe::egui::Order::Foreground,
-    //                             id: Id::new(1),
-    //                         },
-    //                         |ui| {
-    //                             ui.allocate_ui_at_rect(trim.get_center_rect(), |ui| {
-    //                                 let mut checker = false;
-    //                                 if ui
-    //                                     .add(
-    //                                         Button::new("")
-    //                                             .fill(Color32::WHITE)
-    //                                             .rounding(100.0)
-    //                                             .small(),
-    //                                     )
-    //                                     .on_hover_text(child.name.clone())
-    //                                     .clicked()
-    //                                 {
-    //                                     println!("Name: {}", child.name);
-    //                                     println!("Parent: {}", child.parent);
-    //                                     println!("Size: {}", child.size);
-    //                                     println!("Radius: {}", radius);
-    //                                     println!("Layer: {}", layer_id);
-    //                                     println!(
-    //                                         "Color: {:?}",
-    //                                         Self::get_color(general_color, specific_color)
-    //                                     );
-    //                                     println!("Rect: {}", trim.get_center_rect());
-    //                                     println!("Child Length: {}", child_length);
-    //                                     println!("Out: {}", outer_bound);
-    //                                     println!("");
-    //                                     checker = true;
-    //                                     //return Some(child);
-    //                                 }
-    //                                 if checker {
-    //                                     println!("Inside if");
-    //                                     println!("{:?}", Some(child));
-    //                                     return Some(child);
-    //                                 } else {
-    //                                     return None;
-    //                                 }
-    //                             })
-    //                         },
-    //                     );
-    //                     self.file_recurser(
-    //                         ui,
-    //                         layer_id + 9,
-    //                         child.clone(),
-    //                         radius + 20.0,
-    //                         inner_bound,
-    //                         (child_length) as u64,
-    //                         center,
-    //                         view_type,
-    //                         general_color,
-    //                         specific_color + 1,
-    //                     );
-    //                 }
-    //                 inner_bound += child_length;
-    //                 general_color += 1;
-    //             }
-    //             return None;
-    //         }
-    //         None => return None,
-    //     }
-    // }
 }
 
 impl eframe::App for MyApp {

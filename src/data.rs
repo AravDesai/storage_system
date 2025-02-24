@@ -106,6 +106,7 @@ impl Data {
         for child in children.into_iter() {
             gathered_children.push(child);
         }
+        gathered_children.sort_by(|a, b| b.children.iter().count().cmp(&a.children.iter().count()));
         return gathered_children;
     }
 
