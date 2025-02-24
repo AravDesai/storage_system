@@ -1,15 +1,12 @@
-use data::{FileRow, NodeLayer};
+use data::NodeLayer;
 use eframe::egui::{
-    self, Align2, Button, Color32, Context, FontFamily, FontId, Id, LayerId, Order, Pos2, Rect,
-    Rounding, Stroke, TextBuffer, TextWrapMode, Ui, Vec2,
+    self, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2, Rect,
+    Rounding, Stroke, Ui,
 };
-use egui_circle_trim::egui_circle_trim::{CircleResponse, CircleTrim};
 //use lb_rs::model::file_metadata::FileType;
 use lb_rs::shared::file_metadata::FileType;
 use lb_rs::Uuid;
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
-use std::fs::{self};
+use serde::Deserialize;
 use std::hash::Hash;
 
 mod data;
@@ -50,7 +47,7 @@ struct MyApp {
 }
 
 impl MyApp {
-    fn init(ctx: Context) -> Self {
+    fn init(_ctx: Context) -> Self {
         // let json_info = fs::read_to_string("parth-doc-data.json").expect("Couldn't read file");
         // let raw_data: Vec<FileRow> = serde_json::from_str(&json_info).expect("Json not formatted well");
 
@@ -135,7 +132,6 @@ impl MyApp {
                             y: bottom.min.y - ((current_layer - 1) as f32) * self.layer_height,
                         },
                     };
-                    paint_rect.center();                    
                     painter.clone().rect(
                         paint_rect,
                         Rounding::ZERO,
@@ -188,7 +184,7 @@ impl MyApp {
                 }
                 ViewType::Circular => return root_status, //will fill in logic here soon
             }
-            current_position += (item.portion * bottom.max.x);
+            current_position += item.portion * bottom.max.x;
             general_counter += 1;
         }
         return root_status;
