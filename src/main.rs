@@ -102,7 +102,18 @@ impl MyApp {
         return colors[general][specific];
     }
 
-    pub fn follow_paint_order(&self, ui: &mut Ui, bottom: Rect) {
+    pub fn change_root(&mut self, new_root: Uuid){
+        self.data.current_root = new_root;
+        self.paint_order = vec![];
+    }
+
+    pub fn reset_root(&mut self){
+        self.data.current_root = self.data.overall_root;
+        self.paint_order = vec![];
+    }
+
+    pub fn follow_paint_order(&mut self, ui: &mut Ui, bottom: Rect) -> Option<Uuid>{
+        let mut root_status: Option<Uuid> = None;
         let mut current_layer = 0;
         let mut current_position = 0.0;
         let mut general_counter = 1;
@@ -124,7 +135,7 @@ impl MyApp {
                             y: bottom.min.y - ((current_layer - 1) as f32) * self.layer_height,
                         },
                     };
-                    paint_rect.center();
+                    paint_rect.center();                    
                     painter.clone().rect(
                         paint_rect,
                         Rounding::ZERO,
@@ -137,11 +148,11 @@ impl MyApp {
                     ui.allocate_ui_at_rect(paint_rect, |ui| {
                         ui.with_layer_id(
                             LayerId {
-                                order: eframe::egui::Order::Debug,
+                                order: eframe::egui::Order::Foreground,
                                 id: Id::new(1),
                             },
                             |ui| {
-                                ui.colored_label(Color32::WHITE, ".").on_hover_text(
+                                if ui.colored_label(Color32::WHITE, ".").on_hover_text(
                                     self.data
                                         .all_files
                                         .get(&item.id)
@@ -166,16 +177,21 @@ impl MyApp {
                                             .file
                                             .name
                                             .to_string(),
-                                );
+                                ).clicked()  {
+                                    if self.data.all_files.get(&item.id).unwrap().file.is_folder(){
+                                        root_status = Some(item.id.clone());
+                                    }
+                                }
                             },
                         )
                     });
                 }
-                ViewType::Circular => return, //will fill in logic here soon
+                ViewType::Circular => return root_status, //will fill in logic here soon
             }
             current_position += (item.portion * bottom.max.x);
             general_counter += 1;
         }
+        return root_status;
     }
 
     //Comments will be deleted when circle logic is put in
@@ -304,7 +320,7 @@ impl eframe::App for MyApp {
 
             ui.menu_button("Reset Root", |ui| {
                 if ui.button("Confirm Reset").clicked() {
-                    self.data.reset_root();
+                    self.reset_root();
                     self.paint_order = vec![];
                 }
             });
@@ -320,7 +336,7 @@ impl eframe::App for MyApp {
             
             match self.view_type {
                 ViewType::Circular => {
-                    let center = Rect {
+                    root_draw_anchor = Rect {
                         min: window_size.max / 2.0,
                         max: window_size.max,
                     };
@@ -333,7 +349,7 @@ impl eframe::App for MyApp {
                         max: window_size.max,
                     };
 
-                    ui.allocate_ui_at_rect(center, |ui| {
+                    ui.allocate_ui_at_rect(root_draw_anchor, |ui| {
                         let painter = ui.painter();
                         painter
                             .clone()
@@ -358,7 +374,7 @@ impl eframe::App for MyApp {
                                 id: Id::new(1),
                             })
                             .text(
-                                center.min,
+                                root_draw_anchor.min,
                                 Align2::CENTER_CENTER,
                                 self.data
                                     .folder_sizes
@@ -395,7 +411,7 @@ impl eframe::App for MyApp {
                     });
                 }
                 ViewType::Rectangular => {
-                    let bottom = Rect {
+                    root_draw_anchor = Rect {
                         min: Pos2 {
                             x: 0.0,
                             y: window_size.max.y - 40.0,
@@ -405,13 +421,12 @@ impl eframe::App for MyApp {
 
                     let bottom_text = Rect {
                         min: Pos2 {
-                            x: bottom.max.x / 2.0,
-                            y: bottom.max.y - 15.0,
+                            x: root_draw_anchor.max.x / 2.0,
+                            y: root_draw_anchor.max.y - 15.0,
                         },
                         max: window_size.max,
                     };
 
-                    self.follow_paint_order(ui, bottom);
                     let painter = ui.painter();
                     painter
                         .clone()
@@ -419,7 +434,7 @@ impl eframe::App for MyApp {
                             order: egui::Order::Foreground,
                             id: Id::new(1),
                         })
-                        .rect_filled(bottom, 0.0, Color32::WHITE);
+                        .rect_filled(root_draw_anchor, 0.0, Color32::WHITE);
 
                     painter
                         .clone()
@@ -471,6 +486,11 @@ impl eframe::App for MyApp {
                         },
                     );
                 }
+            }
+            let potential_new_root = self.follow_paint_order(ui, root_draw_anchor);
+            match potential_new_root {
+                Some(_) => self.change_root(potential_new_root.unwrap()),
+                None => (),
             }
         });
     }

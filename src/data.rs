@@ -109,10 +109,6 @@ impl Data {
         return gathered_children;
     }
 
-    pub fn reset_root(&mut self) {
-        self.current_root = self.overall_root;
-    }
-
     fn set_layers(
         tree: &Vec<Node>,
         current_layer: u64,
@@ -143,18 +139,6 @@ impl Data {
 
         let tree = self.get_children(&self.current_root);
         let mut paint_order_vec = Data::set_layers(&tree, 1, vec![]);
-        // paint_order_vec.push(NodeLayer {
-        //     id: self.current_root,
-        //     name: self
-        //         .all_files
-        //         .get(&self.current_root)
-        //         .unwrap()
-        //         .file
-        //         .name
-        //         .clone(),
-        //     portion: 1.0,
-        //     layer: 0,
-        // });
         paint_order_vec.sort_by(|a, b| b.layer.cmp(&a.layer));
         return paint_order_vec;
     }
