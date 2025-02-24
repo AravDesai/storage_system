@@ -117,18 +117,18 @@ impl MyApp {
                     let paint_rect = Rect {
                         min: Pos2 {
                             x: current_position,
-                            y: bottom.min.y - ((current_layer + 1) as f32) * self.layer_height,
+                            y: bottom.min.y - (current_layer as f32) * self.layer_height,
                         },
                         max: Pos2 {
                             x: current_position + (item.portion * bottom.max.x),
-                            y: bottom.min.y - (current_layer as f32) * self.layer_height,
+                            y: bottom.min.y - ((current_layer - 1) as f32) * self.layer_height,
                         },
                     };
                     paint_rect.center();
                     painter.clone().rect(
                         paint_rect,
                         Rounding::ZERO,
-                        MyApp::get_color(general_counter, current_layer as usize), //Ill make this look nicer soon,
+                        MyApp::get_color(general_counter, current_layer as usize), //I'll make this look nicer soon,
                         Stroke {
                             width: 0.5,
                             color: Color32::BLACK,
@@ -141,7 +141,32 @@ impl MyApp {
                                 id: Id::new(1),
                             },
                             |ui| {
-                                ui.label(".").on_hover_text(self.data.all_files.get(&item.id).unwrap().file.name.to_string());
+                                ui.colored_label(Color32::WHITE, ".").on_hover_text(
+                                    self.data
+                                        .all_files
+                                        .get(&item.id)
+                                        .unwrap()
+                                        .file
+                                        .name
+                                        .to_string()
+                                        + "\nParent:\n"
+                                        + &self
+                                            .data
+                                            .all_files
+                                            .get(
+                                                &self
+                                                    .data
+                                                    .all_files
+                                                    .get(&item.id)
+                                                    .unwrap()
+                                                    .file
+                                                    .parent,
+                                            )
+                                            .unwrap()
+                                            .file
+                                            .name
+                                            .to_string(),
+                                );
                             },
                         )
                     });
@@ -152,6 +177,8 @@ impl MyApp {
             general_counter += 1;
         }
     }
+
+    //Comments will be deleted when circle logic is put in
 
     // pub fn file_recurser(
     //     &self,
@@ -282,11 +309,15 @@ impl eframe::App for MyApp {
                 }
             });
 
-            //Start of UI
             ui.heading("Storage Viewer");
 
-            //Insert logic for painting everything but root here or in each match before roots are painted
+            //Root drawing logic
 
+            let mut root_draw_anchor = Rect{
+                min: Pos2 { x: 0.0, y: 0.0 },
+                max: Pos2 { x: 0.0, y: 0.0 },
+            };
+            
             match self.view_type {
                 ViewType::Circular => {
                     let center = Rect {
@@ -362,19 +393,6 @@ impl eframe::App for MyApp {
                             );
                         });
                     });
-
-                    // self.file_recurser(
-                    //     ui,
-                    //     1,
-                    //     self.current_root.clone(),
-                    //     self.inner_radius,
-                    //     0.0,
-                    //     360,
-                    //     center,
-                    //     self.view_type,
-                    //     0,
-                    //     0,
-                    // );
                 }
                 ViewType::Rectangular => {
                     let bottom = Rect {
@@ -452,27 +470,6 @@ impl eframe::App for MyApp {
                             );
                         },
                     );
-
-                    // match self.file_recurser(
-                    //     ui,
-                    //     1,
-                    //     self.current_root.clone(),
-                    //     self.inner_radius,
-                    //     0.0,
-                    //     bottom.max.x as u64,
-                    //     bottom,
-                    //     self.view_type,
-                    //     0,
-                    //     0,
-                    // ) {
-                    //     Some(root) => {
-                    //         println!("In the match!");
-                    //         self.current_root = root;
-                    //     }
-                    //     None => {
-                    //         return;
-                    //     }
-                    // }
                 }
             }
         });
