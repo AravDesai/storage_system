@@ -1,13 +1,14 @@
 use data::NodeLayer;
 use eframe::egui::{
-    self, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2, Rect,
-    Rounding, Stroke, Ui,
+    self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2, Rect, Rounding, Stroke, Ui
 };
+use eframe::epaint::{PathShape, PathStroke};
 //use lb_rs::model::file_metadata::FileType;
 use lb_rs::shared::file_metadata::FileType;
 use lb_rs::Uuid;
 use serde::Deserialize;
 use std::hash::Hash;
+use std::f32::consts::PI;
 
 mod data;
 pub mod egui_circle_trim;
@@ -109,7 +110,7 @@ impl MyApp {
         self.paint_order = vec![];
     }
 
-    pub fn follow_paint_order(&mut self, ui: &mut Ui, bottom: Rect) -> Option<Uuid>{
+    pub fn follow_paint_order(&mut self, ui: &mut Ui, root_anchor: Rect) -> Option<Uuid>{
         let mut root_status: Option<Uuid> = None;
         let mut current_layer = 0;
         let mut current_position = 0.0;
@@ -125,11 +126,11 @@ impl MyApp {
                     let paint_rect = Rect {
                         min: Pos2 {
                             x: current_position,
-                            y: bottom.min.y - (current_layer as f32) * self.layer_height,
+                            y: root_anchor.min.y - (current_layer as f32) * self.layer_height,
                         },
                         max: Pos2 {
-                            x: current_position + (item.portion * bottom.max.x),
-                            y: bottom.min.y - ((current_layer - 1) as f32) * self.layer_height,
+                            x: current_position + (item.portion * root_anchor.max.x),
+                            y: root_anchor.min.y - ((current_layer - 1) as f32) * self.layer_height,
                         },
                     };
                     painter.clone().rect(
@@ -148,14 +149,16 @@ impl MyApp {
                                 id: Id::new(1),
                             },
                             |ui| {
-                                if ui.colored_label(Color32::WHITE, ".").on_hover_text(
-                                    self.data
+                                if ui.colored_label(Color32::WHITE, ".").on_hover_text("Name:\n".to_owned()+
+                                    &self.data
                                         .all_files
                                         .get(&item.id)
                                         .unwrap()
                                         .file
                                         .name
                                         .to_string()
+                                        +"\n Size:\n"
+                                        + &(item.portion * (*self.data.folder_sizes.get(&self.data.current_root).unwrap() as f32)).to_string()
                                         + "\nParent:\n"
                                         + &self
                                             .data
@@ -172,7 +175,7 @@ impl MyApp {
                                             .unwrap()
                                             .file
                                             .name
-                                            .to_string(),
+                                            .to_string()
                                 ).clicked()  {
                                     if self.data.all_files.get(&item.id).unwrap().file.is_folder(){
                                         root_status = Some(item.id.clone());
@@ -181,10 +184,40 @@ impl MyApp {
                             },
                         )
                     });
+                    current_position += item.portion * root_anchor.max.x;
                 }
-                ViewType::Circular => return root_status, //will fill in logic here soon
+                ViewType::Circular => {
+                    let painter = ui.painter();
+                    let mut path_points = vec![];
+                    let start_angle = (current_position * 360.0) as u32;
+                    let end_angle = (((current_position + item.portion) * 360.0).ceil()) as u32;
+                    for i in start_angle ..end_angle {
+                        let angle = (i as f32 * PI) / 180.0;
+                        path_points.push(Pos2 {
+                            x: root_anchor.min.x + (self.layer_height*((current_layer-1) as f32) * angle.sin()),
+                            y: root_anchor.min.y + (self.layer_height*((current_layer-1) as f32) * angle.cos()),
+                        });
+                    }
+    
+                    for i in (start_angle as u32..end_angle as u32).rev() {
+                        let angle = (i as f32 * PI) / 180.0;
+                        path_points.push(Pos2 {
+                            x: root_anchor.min.x + (self.layer_height*(current_layer as f32) * angle.sin()),
+                            y: root_anchor.min.x + (self.layer_height*(current_layer as f32) * angle.cos()),
+                        });
+                    }
+                    println!("\nStart:\n {:?}", path_points);
+                    painter.clone().add(PathShape {
+                        points: path_points,
+                        closed: true,
+                        fill: MyApp::get_color(general_counter, current_layer as usize),
+                        stroke: PathStroke {
+                            width: 1.0,
+                            color: eframe::epaint::ColorMode::Solid(MyApp::get_color(general_counter, current_layer as usize)),
+                        },
+                    });
+                }
             }
-            current_position += item.portion * bottom.max.x;
             general_counter += 1;
         }
         return root_status;
@@ -305,23 +338,31 @@ impl eframe::App for MyApp {
             let window_size = ctx.input(|i: &egui::InputState| i.screen_rect());
 
             //Top buttons
-            ui.menu_button("View Type", |ui| {
-                if ui.button("Rectangular").clicked() {
-                    self.view_type = ViewType::Rectangular;
-                }
-                if ui.button("Circular").clicked() {
-                    self.view_type = ViewType::Circular;
-                }
-            });
 
-            ui.menu_button("Reset Root", |ui| {
-                if ui.button("Confirm Reset").clicked() {
-                    self.reset_root();
-                    self.paint_order = vec![];
-                }
+            ui.with_layer_id(LayerId {
+                order: egui::Order::Debug,
+                id: Id::new(1),
+            }, |ui|{
+                menu::bar(ui, |ui|{
+                    ui.menu_button("View Type", |ui| {
+                        if ui.button("Rectangular").clicked() {
+                            self.view_type = ViewType::Rectangular;
+                        }
+                        if ui.button("Circular").clicked() {
+                            self.view_type = ViewType::Circular;
+                        }
+                    });
+        
+                    if ui.button("Reset Root").clicked() {
+                        self.reset_root();
+                            self.paint_order = vec![];
+                    }
+    
+                    ui.menu_button("Layer Size", |ui| {
+                        ui.add(egui::Slider::new(&mut self.layer_height, 1.0..=100.0));
+                    });
+                });
             });
-
-            ui.heading("Storage Viewer");
 
             //Root drawing logic
 
