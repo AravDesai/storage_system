@@ -178,9 +178,9 @@ impl MyApp {
                     );
 
                     let display_size = if item_filerow.file.is_folder() {
-                        self.data.folder_sizes.get(&item.id).unwrap().clone()
+                        self.data.folder_sizes.get(&item.id).unwrap().clone().to_string()
                     } else {
-                        item_filerow.size
+                        item_filerow.size.to_string()
                     };
 
                     ui.allocate_ui_at_rect(paint_rect, |ui| {
@@ -203,14 +203,7 @@ impl MyApp {
                                                 .name
                                                 .to_string()
                                             + "\nSize:\n"
-                                            + &(item.portion
-                                                * (*self
-                                                    .data
-                                                    .folder_sizes
-                                                    .get(&self.data.current_root)
-                                                    .unwrap()
-                                                    as f32))
-                                                .to_string()
+                                            + &display_size
                                             + "\nParent:\n"
                                             + &self
                                                 .data
