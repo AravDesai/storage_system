@@ -52,7 +52,7 @@ impl Data {
         //Initial for loop for folders is necessary to give folders starting value as we need to go over folders again to update sizes
         for datum in data.clone() {
             if datum.file.is_folder() {
-                folder_sizes.insert(datum.file.id, 0); //change to datum.size when metadata is accounted for
+                folder_sizes.insert(datum.file.id, datum.size); //change to datum.size when metadata is accounted for
             }
         }
         for datum in data {
@@ -140,7 +140,7 @@ impl Data {
 
         let tree = self.get_children(&self.current_root);
         let mut paint_order_vec = Data::set_layers(&tree, 1, vec![]);
-        paint_order_vec.sort_by(|a, b| b.layer.cmp(&a.layer));
+        paint_order_vec.sort_by(|a, b| a.layer.cmp(&b.layer));
         return paint_order_vec;
     }
 }

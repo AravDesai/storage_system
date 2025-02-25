@@ -1,14 +1,15 @@
 use data::NodeLayer;
 use eframe::egui::{
-    self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, PointerState, Pos2, Rect, Rounding, Sense, Stroke, Ui
+    self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, PointerState, Pos2,
+    Rect, Rounding, Sense, Stroke, Ui,
 };
 use eframe::epaint::{PathShape, PathStroke};
 //use lb_rs::model::file_metadata::FileType;
 use lb_rs::shared::file_metadata::FileType;
 use lb_rs::Uuid;
 use serde::Deserialize;
-use std::hash::Hash;
 use std::f32::consts::PI;
+use std::hash::Hash;
 
 mod data;
 pub mod egui_circle_trim;
@@ -22,7 +23,8 @@ struct HashData {
     size: u64,
 }
 
-struct DrawHelper{
+#[derive(Debug)]
+struct DrawHelper {
     id: Uuid,
     starting_position: f32,
 }
@@ -68,6 +70,7 @@ impl MyApp {
     }
 
     pub fn get_color(mut general: usize, mut specific: usize) -> Color32 {
+        //Need to change this so it becomes more consistent when clicking through different roots
         let colors = vec![
             [
                 Color32::RED,
@@ -105,31 +108,51 @@ impl MyApp {
         return colors[general][specific];
     }
 
-    pub fn change_root(&mut self, new_root: Uuid){
+    pub fn change_root(&mut self, new_root: Uuid) {
         self.data.current_root = new_root;
         self.paint_order = vec![];
     }
 
-    pub fn reset_root(&mut self){
+    pub fn reset_root(&mut self) {
         self.data.current_root = self.data.overall_root;
         self.paint_order = vec![];
     }
 
-    pub fn follow_paint_order(&mut self, ui: &mut Ui, root_anchor: Rect) -> Option<Uuid>{
-        //To fix unaligned folders, I can cache the current parent with its ID and position
-        //Would need a vector of all folder IDs and their starting spots for this to work, could populate it when paint orders are followed
-        //If the parent of the current item is not cached_parent, takes from cached_folders to get the starting pos
-        //Will reset this vector whenever roots are moved 
-
-
+    pub fn follow_paint_order(&mut self, ui: &mut Ui, root_anchor: Rect) -> Option<Uuid> {
         let mut root_status: Option<Uuid> = None;
         let mut current_layer = 0;
         let mut current_position = 0.0;
         let mut general_counter = 1;
+        let mut visited_folders: Vec<DrawHelper> = vec![];
+        let mut current_parent = DrawHelper {
+            id: self.data.current_root,
+            starting_position: 0.0,
+        };
         for item in &self.paint_order {
+            let item_filerow = self.data.all_files.get(&item.id).unwrap();
+
             if current_layer != item.layer {
                 current_position = 0.0;
                 current_layer = item.layer;
+            }
+
+            if item_filerow.file.parent != current_parent.id {
+                current_position = visited_folders
+                    .iter()
+                    .find(|parent| parent.id == item_filerow.file.parent)
+                    .unwrap()
+                    .starting_position;
+                current_parent = DrawHelper {
+                    id: self
+                        .data
+                        .all_files
+                        .get(&item.id)
+                        .unwrap()
+                        .file
+                        .parent
+                        .clone(),
+                    starting_position: current_position.clone(),
+                };
             }
             match self.view_type {
                 ViewType::Rectangular => {
@@ -154,6 +177,12 @@ impl MyApp {
                         },
                     );
 
+                    let display_size = if item_filerow.file.is_folder() {
+                        self.data.folder_sizes.get(&item.id).unwrap().clone()
+                    } else {
+                        item_filerow.size
+                    };
+
                     ui.allocate_ui_at_rect(paint_rect, |ui| {
                         ui.with_layer_id(
                             LayerId {
@@ -161,41 +190,60 @@ impl MyApp {
                                 id: Id::new(3),
                             },
                             |ui| {
-                                if ui.colored_label(Color32::WHITE, ".").on_hover_text("Name:\n".to_owned()+
-                                    &self.data
-                                        .all_files
-                                        .get(&item.id)
-                                        .unwrap()
-                                        .file
-                                        .name
-                                        .to_string()
-                                        +"\nSize:\n"
-                                        + &(item.portion * (*self.data.folder_sizes.get(&self.data.current_root).unwrap() as f32)).to_string()
-                                        + "\nParent:\n"
-                                        + &self
-                                            .data
-                                            .all_files
-                                            .get(
-                                                &self
+                                if ui
+                                    .colored_label(Color32::WHITE, ".")
+                                    .on_hover_text(
+                                        "Name:\n".to_owned()
+                                            + &self
+                                                .data
+                                                .all_files
+                                                .get(&item.id)
+                                                .unwrap()
+                                                .file
+                                                .name
+                                                .to_string()
+                                            + "\nSize:\n"
+                                            + &(item.portion
+                                                * (*self
                                                     .data
-                                                    .all_files
-                                                    .get(&item.id)
+                                                    .folder_sizes
+                                                    .get(&self.data.current_root)
                                                     .unwrap()
-                                                    .file
-                                                    .parent,
-                                            )
-                                            .unwrap()
-                                            .file
-                                            .name
-                                            .to_string()
-                                ).clicked()  {
-                                    if self.data.all_files.get(&item.id).unwrap().file.is_folder(){
+                                                    as f32))
+                                                .to_string()
+                                            + "\nParent:\n"
+                                            + &self
+                                                .data
+                                                .all_files
+                                                .get(
+                                                    &self
+                                                        .data
+                                                        .all_files
+                                                        .get(&item.id)
+                                                        .unwrap()
+                                                        .file
+                                                        .parent,
+                                                )
+                                                .unwrap()
+                                                .file
+                                                .name
+                                                .to_string(),
+                                    )
+                                    .clicked()
+                                {
+                                    if item_filerow.file.is_folder() {
                                         root_status = Some(item.id.clone());
                                     }
                                 }
                             },
                         )
                     });
+                    if item_filerow.file.is_folder() {
+                        visited_folders.push(DrawHelper {
+                            id: item.id.clone(),
+                            starting_position: current_position.clone(),
+                        });
+                    }
                     current_position += item.portion * root_anchor.max.x;
                 }
                 ViewType::Circular => {
@@ -203,29 +251,35 @@ impl MyApp {
                     let mut path_points = vec![];
                     let start_angle = (current_position * 360.0) as u32;
                     let end_angle = (((current_position + item.portion) * 360.0).ceil()) as u32;
-                    for i in start_angle ..end_angle {
+                    for i in start_angle..end_angle {
                         let angle = (i as f32 * PI) / 180.0;
                         path_points.push(Pos2 {
-                            x: root_anchor.min.x + (self.layer_height*((current_layer-1) as f32) * angle.sin()),
-                            y: root_anchor.min.y + (self.layer_height*((current_layer-1) as f32) * angle.cos()),
+                            x: root_anchor.min.x
+                                + (self.layer_height * ((current_layer - 1) as f32) * angle.sin()),
+                            y: root_anchor.min.y
+                                + (self.layer_height * ((current_layer - 1) as f32) * angle.cos()),
                         });
                     }
-    
+
                     for i in (start_angle as u32..end_angle as u32).rev() {
                         let angle = (i as f32 * PI) / 180.0;
                         path_points.push(Pos2 {
-                            x: root_anchor.min.x + (self.layer_height*(current_layer as f32) * angle.sin()),
-                            y: root_anchor.min.x + (self.layer_height*(current_layer as f32) * angle.cos()),
+                            x: root_anchor.min.x
+                                + (self.layer_height * (current_layer as f32) * angle.sin()),
+                            y: root_anchor.min.x
+                                + (self.layer_height * (current_layer as f32) * angle.cos()),
                         });
                     }
-                    println!("\nStart:\n {:?}", path_points);
                     painter.clone().add(PathShape {
                         points: path_points,
                         closed: true,
                         fill: MyApp::get_color(general_counter, current_layer as usize),
                         stroke: PathStroke {
                             width: 1.0,
-                            color: eframe::epaint::ColorMode::Solid(MyApp::get_color(general_counter, current_layer as usize)),
+                            color: eframe::epaint::ColorMode::Solid(MyApp::get_color(
+                                general_counter,
+                                current_layer as usize,
+                            )),
                         },
                     });
                 }
@@ -249,38 +303,41 @@ impl eframe::App for MyApp {
 
             //Top buttons
 
-            ui.with_layer_id(LayerId {
-                order: egui::Order::Debug,
-                id: Id::new(1),
-            }, |ui|{
-                menu::bar(ui, |ui|{
-                    ui.menu_button("View Type", |ui| {
-                        if ui.button("Rectangular").clicked() {
-                            self.view_type = ViewType::Rectangular;
-                        }
-                        if ui.button("Circular").clicked() {
-                            self.view_type = ViewType::Circular;
-                        }
-                    });
-        
-                    if ui.button("Reset Root").clicked() {
-                        self.reset_root();
+            ui.with_layer_id(
+                LayerId {
+                    order: egui::Order::Debug,
+                    id: Id::new(1),
+                },
+                |ui| {
+                    menu::bar(ui, |ui| {
+                        ui.menu_button("View Type", |ui| {
+                            if ui.button("Rectangular").clicked() {
+                                self.view_type = ViewType::Rectangular;
+                            }
+                            if ui.button("Circular").clicked() {
+                                self.view_type = ViewType::Circular;
+                            }
+                        });
+
+                        if ui.button("Reset Root").clicked() {
+                            self.reset_root();
                             self.paint_order = vec![];
-                    }
-    
-                    ui.menu_button("Layer Size", |ui| {
-                        ui.add(egui::Slider::new(&mut self.layer_height, 1.0..=100.0));
+                        }
+
+                        ui.menu_button("Layer Size", |ui| {
+                            ui.add(egui::Slider::new(&mut self.layer_height, 1.0..=100.0));
+                        });
                     });
-                });
-            });
+                },
+            );
 
             //Root drawing logic
 
-            let mut root_draw_anchor = Rect{
+            let mut root_draw_anchor = Rect {
                 min: Pos2 { x: 0.0, y: 0.0 },
                 max: Pos2 { x: 0.0, y: 0.0 },
             };
-            
+
             match self.view_type {
                 ViewType::Circular => {
                     root_draw_anchor = Rect {
