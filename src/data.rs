@@ -1,4 +1,5 @@
-use lb_rs::{shared::file::File, Uuid};
+use lb_rs::model::file::File;
+use lb_rs::Uuid;
 use serde::Deserialize;
 use std::{collections::HashMap, fs};
 
@@ -145,11 +146,14 @@ impl Data {
     }
 }
 
+//Some of these tests may not work due to change in logic - will be fixed soon
 #[cfg(test)]
 mod test {
     use super::Data;
     use crate::data::{FileRow, Node, NodeLayer};
-    use lb_rs::{File, Uuid};
+    use lb_rs::model::file::File;
+    use lb_rs::model::file_metadata::FileType;
+    use lb_rs::Uuid;
 
     fn get_root_two_files() -> Vec<FileRow> {
         return vec![
@@ -158,7 +162,7 @@ mod test {
                     id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "Root".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -170,7 +174,7 @@ mod test {
                     id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "file1".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -182,7 +186,7 @@ mod test {
                     id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "file2".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -231,7 +235,7 @@ mod test {
                     id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "Root".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -243,7 +247,7 @@ mod test {
                     id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "Layer1".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -255,7 +259,7 @@ mod test {
                     id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                     parent: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                     name: "Layer2".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -267,7 +271,7 @@ mod test {
                     id: Uuid::parse_str("fc50112e-5f9d-4ebf-b6a8-023ba619fd0f").unwrap(),
                     parent: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                     name: "file".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -304,7 +308,7 @@ mod test {
                     id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "Root".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -316,7 +320,7 @@ mod test {
                     id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "leftlayer1".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -328,7 +332,7 @@ mod test {
                     id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                     parent: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                     name: "leftlayer2file".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -340,7 +344,7 @@ mod test {
                     id: Uuid::parse_str("219df288-f08b-422b-adf6-59534df7ee91").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "rightlayer1".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -352,7 +356,7 @@ mod test {
                     id: Uuid::parse_str("f2c90c41-4aea-44be-a79d-caea3f0306aa").unwrap(),
                     parent: Uuid::parse_str("219df288-f08b-422b-adf6-59534df7ee91").unwrap(),
                     name: "rightlayer2file1".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -364,7 +368,7 @@ mod test {
                     id: Uuid::parse_str("fe777276-381f-408b-b41a-bac9b302b9cc").unwrap(),
                     parent: Uuid::parse_str("219df288-f08b-422b-adf6-59534df7ee91").unwrap(),
                     name: "rightlayer2file2".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -427,7 +431,7 @@ mod test {
                     id: Uuid::parse_str("fc50112e-5f9d-4ebf-b6a8-023ba619fd0f").unwrap(),
                     parent: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                     name: "Left3".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -439,7 +443,7 @@ mod test {
                     id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "Root".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -451,7 +455,7 @@ mod test {
                     id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "Left1".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -463,7 +467,7 @@ mod test {
                     id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                     parent: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                     name: "Left2".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -475,7 +479,7 @@ mod test {
                     id: Uuid::parse_str("6c1cb978-7c4e-4d83-825a-477287f89c69").unwrap(),
                     parent: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                     name: "Right2".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),

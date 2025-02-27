@@ -1,14 +1,11 @@
 use data::NodeLayer;
 use eframe::egui::{
-    self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, PointerState, Pos2,
-    Rect, Rounding, Sense, Stroke, Ui,
+    self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2,
+    Rect, Rounding, Stroke, Ui,
 };
-use eframe::epaint::{PathShape, PathStroke};
-//use lb_rs::model::file_metadata::FileType;
-use lb_rs::shared::file_metadata::FileType;
+use lb_rs::model::file_metadata::FileType;
 use lb_rs::Uuid;
 use serde::Deserialize;
-use std::f32::consts::PI;
 use std::hash::Hash;
 
 mod data;
@@ -48,9 +45,6 @@ struct MyApp {
 
 impl MyApp {
     fn init(_ctx: Context) -> Self {
-        // let json_info = fs::read_to_string("parth-doc-data.json").expect("Couldn't read file");
-        // let raw_data: Vec<FileRow> = serde_json::from_str(&json_info).expect("Json not formatted well");
-
         let data = data::Data::init(data::Data::from_file("parth-doc-data.json".to_owned()));
 
         Self {
@@ -267,12 +261,7 @@ impl eframe::App for MyApp {
 
             //Root drawing logic
 
-            let mut root_draw_anchor = Rect {
-                min: Pos2 { x: 0.0, y: 0.0 },
-                max: Pos2 { x: 0.0, y: 0.0 },
-            };
-
-            root_draw_anchor = Rect {
+            let root_draw_anchor = Rect {
                 min: Pos2 {
                     x: 0.0,
                     y: window_size.max.y - 40.0,
