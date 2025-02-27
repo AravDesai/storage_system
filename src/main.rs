@@ -3,6 +3,7 @@ use eframe::egui::{
     self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2,
     Rect, Rounding, Stroke, Ui,
 };
+use lb_rs::model::usage::bytes_to_human;
 use lb_rs::model::file_metadata::FileType;
 use lb_rs::Uuid;
 use serde::Deserialize;
@@ -161,14 +162,13 @@ impl MyApp {
             );
 
             let display_size = if item_filerow.file.is_folder() {
-                self.data
+                bytes_to_human(self.data
                     .folder_sizes
                     .get(&item.id)
                     .unwrap()
-                    .clone()
-                    .to_string()
+                    .clone()) 
             } else {
-                item_filerow.size.to_string()
+                bytes_to_human(item_filerow.size)
             };
 
             ui.allocate_ui_at_rect(paint_rect, |ui| {
@@ -295,12 +295,10 @@ impl eframe::App for MyApp {
                 .text(
                     bottom_text.min,
                     Align2::CENTER_BOTTOM,
-                    self.data
+                    bytes_to_human(*self.data
                         .folder_sizes
                         .get(&self.data.current_root)
-                        .unwrap()
-                        .to_string()
-                        + " B",
+                        .unwrap()),
                     FontId {
                         size: 15.0,
                         family: FontFamily::Proportional,
@@ -317,12 +315,10 @@ impl eframe::App for MyApp {
                 },
                 |ui| {
                     ui.label(
-                        self.data
+                        bytes_to_human(*self.data
                             .folder_sizes
                             .get(&self.data.current_root)
-                            .unwrap()
-                            .to_string()
-                            + " B",
+                            .unwrap()),
                     )
                     .on_hover_text(
                         self.data
