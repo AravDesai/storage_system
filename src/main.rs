@@ -1,14 +1,14 @@
+use color_art;
 use data::NodeLayer;
 use eframe::egui::{
-    self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2,
-    Rect, Rounding, Stroke, Ui,
+    self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2, Rect, Rounding,
+    Sense, Stroke, Ui,
 };
-use lb_rs::model::usage::bytes_to_human;
 use lb_rs::model::file_metadata::FileType;
+use lb_rs::model::usage::bytes_to_human;
 use lb_rs::Uuid;
 use serde::Deserialize;
 use std::hash::Hash;
-
 mod data;
 
 #[derive(Debug, Deserialize, Clone, Hash, PartialEq, Eq)]
@@ -24,6 +24,11 @@ struct HashData {
 struct DrawHelper {
     id: Uuid,
     starting_position: f32,
+}
+
+struct ColorHelper {
+    id: Uuid,
+    color: Color32,
 }
 
 fn main() {
@@ -42,6 +47,7 @@ struct MyApp {
     data: data::Data,
     layer_height: f32,
     paint_order: Vec<NodeLayer>,
+    colors: Vec<ColorHelper>,
 }
 
 impl MyApp {
@@ -52,46 +58,19 @@ impl MyApp {
             data: data,
             paint_order: vec![],
             layer_height: 20.0,
+            colors: vec![],
         }
     }
 
-    pub fn get_color(mut general: usize, mut specific: usize) -> Color32 {
-        //Need to change this so it becomes more consistent when clicking through different roots
-        let colors = vec![
-            [
-                Color32::RED,
-                Color32::DARK_RED,
-                Color32::LIGHT_RED,
-                Color32::from_rgb(255, 165, 0),
-            ],
-            [
-                Color32::GREEN,
-                Color32::DARK_GREEN,
-                Color32::LIGHT_GREEN,
-                Color32::from_rgb(0, 250, 154),
-            ],
-            [
-                Color32::BLUE,
-                Color32::DARK_BLUE,
-                Color32::LIGHT_BLUE,
-                Color32::from_rgb(123, 104, 238),
-            ],
-            [
-                Color32::YELLOW,
-                Color32::from_rgb(139, 128, 0),
-                Color32::from_rgb(255, 245, 158),
-                Color32::from_rgb(249, 166, 2),
-            ],
-        ];
-
-        if general >= colors.len() {
-            general = general % colors.len();
+    pub fn get_color(current_position: f32, layer: u64) -> Color32 {
+        let mut filtered_position = current_position;
+        if filtered_position > 360.0 {
+            let factor = (filtered_position / 360.0) as u64;
+            filtered_position -= (360 * factor) as f32;
         }
-
-        if specific >= colors[0].len() {
-            specific = specific % colors[0].len();
-        }
-        return colors[general][specific];
+        let color = color_art::color!(HSL, filtered_position, 1.0 / (layer as f32), 0.5);
+        let hex = color.hex();
+        return egui::Color32::from_hex(&hex).unwrap_or(Color32::DEBUG_COLOR);
     }
 
     pub fn change_root(&mut self, new_root: Uuid) {
@@ -151,10 +130,23 @@ impl MyApp {
                     y: root_anchor.min.y - ((current_layer - 1) as f32) * self.layer_height,
                 },
             };
+
+            let current_color = self
+                .colors
+                .iter()
+                .find_map(|element| {
+                    if element.id == item.id {
+                        return Some(element.color);
+                    } else {
+                        return None;
+                    }
+                })
+                .unwrap_or(MyApp::get_color(current_position, current_layer));
+
             painter.clone().rect(
                 paint_rect,
                 Rounding::ZERO,
-                MyApp::get_color(general_counter, current_layer as usize), //I'll make this look nicer soon,
+                current_color,
                 Stroke {
                     width: 0.5,
                     color: Color32::BLACK,
@@ -162,63 +154,44 @@ impl MyApp {
             );
 
             let display_size = if item_filerow.file.is_folder() {
-                bytes_to_human(self.data
-                    .folder_sizes
-                    .get(&item.id)
-                    .unwrap()
-                    .clone()) 
+                bytes_to_human(self.data.folder_sizes.get(&item.id).unwrap().clone())
             } else {
                 bytes_to_human(item_filerow.size)
             };
 
-            ui.allocate_ui_at_rect(paint_rect, |ui| {
-                ui.with_layer_id(
-                    LayerId {
-                        order: eframe::egui::Order::Foreground,
-                        id: Id::new(3),
-                    },
-                    |ui| {
-                        if ui
-                            .colored_label(Color32::WHITE, ".")
-                            .on_hover_text(
-                                "Name:\n".to_owned()
-                                    + &self
-                                        .data
-                                        .all_files
-                                        .get(&item.id)
-                                        .unwrap()
-                                        .file
-                                        .name
-                                        .to_string()
-                                    + "\nSize:\n"
-                                    + &display_size
-                                    + "\nParent:\n"
-                                    + &self
-                                        .data
-                                        .all_files
-                                        .get(
-                                            &self.data.all_files.get(&item.id).unwrap().file.parent,
-                                        )
-                                        .unwrap()
-                                        .file
-                                        .name
-                                        .to_string(),
-                            )
-                            .clicked()
-                        {
-                            if item_filerow.file.is_folder() {
-                                root_status = Some(item.id.clone());
-                            }
-                        }
-                    },
-                )
-            });
+            let response = ui.interact(paint_rect, Id::new(general_counter), Sense::click());
+
+            if response.clicked() {
+                if item_filerow.file.is_folder() {
+                    root_status = Some(item.id.clone());
+                }
+            }
+
+            response.on_hover_text(
+                "Name:\n".to_owned()
+                    + &self
+                        .data
+                        .all_files
+                        .get(&item.id)
+                        .unwrap()
+                        .file
+                        .name
+                        .to_string()
+                    + "\nSize:\n"
+                    + &display_size,
+            );
+
             if item_filerow.file.is_folder() {
                 visited_folders.push(DrawHelper {
                     id: item.id.clone(),
                     starting_position: current_position.clone(),
                 });
             }
+            self.colors.push(ColorHelper {
+                id: item.id,
+                color: current_color,
+            });
+
             current_position += item.portion * root_anchor.max.x;
 
             general_counter += 1;
@@ -295,10 +268,7 @@ impl eframe::App for MyApp {
                 .text(
                     bottom_text.min,
                     Align2::CENTER_BOTTOM,
-                    bytes_to_human(*self.data
-                        .folder_sizes
-                        .get(&self.data.current_root)
-                        .unwrap()),
+                    bytes_to_human(*self.data.folder_sizes.get(&self.data.current_root).unwrap()),
                     FontId {
                         size: 15.0,
                         family: FontFamily::Proportional,
@@ -314,12 +284,9 @@ impl eframe::App for MyApp {
                     max: bottom_text.max,
                 },
                 |ui| {
-                    ui.label(
-                        bytes_to_human(*self.data
-                            .folder_sizes
-                            .get(&self.data.current_root)
-                            .unwrap()),
-                    )
+                    ui.label(bytes_to_human(
+                        *self.data.folder_sizes.get(&self.data.current_root).unwrap(),
+                    ))
                     .on_hover_text(
                         self.data
                             .all_files
