@@ -1,17 +1,17 @@
-use data::FileRow;
+use color_art;
+use data::NodeLayer;
 use eframe::egui::{
-    self, Align2, Button, Color32, Context, FontFamily, FontId, Id, LayerId, Order, Pos2, Rect,
-    Rounding, Stroke, TextBuffer, TextWrapMode, Ui, Vec2,
+    self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2, Rect, Rounding,
+    Sense, Stroke, Ui,
 };
-use egui_circle_trim::egui_circle_trim::{CircleResponse, CircleTrim};
-//use lb_rs::model::file_metadata::FileType;
-use lb_rs::shared::file_metadata::FileType;
+use lb_rs::model::file_metadata::FileType;
+use lb_rs::model::usage::bytes_to_human;
 use lb_rs::Uuid;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs::{self};
 use std::hash::Hash;
-
+use std::vec;
 mod data;
 pub mod egui_circle_trim;
 
@@ -30,6 +30,11 @@ pub(crate) enum ViewType {
     Circular,
 }
 
+struct ColorHelper {
+    id: Uuid,
+    color: Color32,
+}
+
 fn main() {
     let options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default().with_inner_size([1500.0, 750.0]),
@@ -43,10 +48,10 @@ fn main() {
 }
 
 struct MyApp {
-    folder_table: HashMap<HashData, Vec<HashData>>,
-    current_root: HashData,
-    inner_radius: f32,
-    view_type: ViewType,
+    data: data::Data,
+    layer_height: f32,
+    paint_order: Vec<NodeLayer>,
+    colors: Vec<ColorHelper>,
 }
 
 impl MyApp {
@@ -171,148 +176,144 @@ impl MyApp {
         }
 
         Self {
-            folder_table: folder_table,
-            current_root: root_hash_pass,
-            inner_radius: 20.0,
-            view_type: ViewType::Rectangular,
+            data: data,
+            paint_order: vec![],
+            layer_height: 20.0,
+            colors: vec![],
         }
     }
 
-    pub fn get_color(mut general: usize, mut specific: usize) -> Color32 {
-        let colors = vec![
-            [
-                Color32::RED,
-                Color32::DARK_RED,
-                Color32::LIGHT_RED,
-                Color32::from_rgb(255, 165, 0),
-            ],
-            [
-                Color32::GREEN,
-                Color32::DARK_GREEN,
-                Color32::LIGHT_GREEN,
-                Color32::from_rgb(0, 250, 154),
-            ],
-            [
-                Color32::BLUE,
-                Color32::DARK_BLUE,
-                Color32::LIGHT_BLUE,
-                Color32::from_rgb(123, 104, 238),
-            ],
-            [
-                Color32::YELLOW,
-                Color32::from_rgb(139, 128, 0),
-                Color32::from_rgb(255, 245, 158),
-                Color32::from_rgb(249, 166, 2),
-            ],
-        ];
-
-        if general >= colors.len() {
-            general = general % colors.len();
+    pub fn get_color(current_position: f32, layer: u64) -> Color32 {
+        let mut filtered_position = current_position;
+        if filtered_position > 360.0 {
+            let factor = (filtered_position / 360.0) as u64;
+            filtered_position -= (360 * factor) as f32;
         }
-
-        if specific >= colors[0].len() {
-            specific = specific % colors[0].len();
-        }
-        return colors[general][specific];
+        let color = color_art::color!(HSL, filtered_position, 1.0 / (layer as f32), 0.5);
+        let hex = color.hex();
+        return egui::Color32::from_hex(&hex).unwrap_or(Color32::DEBUG_COLOR);
     }
 
-    pub fn file_recurser(
-        &self,
-        ui: &mut Ui,
-        layer_id: i32,
-        parent: HashData,
-        radius: f32,
-        mut inner_bound: f32,
-        outer_bound: u64,
-        center: Rect,
-        view_type: ViewType,
-        mut general_color: usize,
-        specific_color: usize,
-    ) -> Option<HashData> {
-        let potential_children = self.folder_table.get(&parent);
-        match potential_children {
-            Some(children) => {
-                for child in children {
-                    let child_length =
-                        (child.size as f32 / parent.size as f32) * outer_bound as f32;
-                    let trim = CircleTrim {
-                        color: Self::get_color(general_color, specific_color),
-                        inner_radius: radius,
-                        start_angle: inner_bound,
-                        end_angle: inner_bound + child_length,
-                        center,
-                        layer_id: LayerId {
-                            order: Order::PanelResizeLine,
-                            id: Id::new(layer_id),
-                        },
-                        button_pressed: false,
-                        view_type,
-                    };
-                    CircleTrim::paint_annulus_sector(&trim, ui);
-                    if child.file_type == FileType::Folder {
-                        ui.with_layer_id(
-                            LayerId {
-                                order: eframe::egui::Order::Foreground,
-                                id: Id::new(1),
-                            },
-                            |ui| {
-                                ui.allocate_ui_at_rect(trim.get_center_rect(), |ui| {
-                                    let mut checker = false;
-                                    if ui
-                                        .add(
-                                            Button::new("")
-                                                .fill(Color32::WHITE)
-                                                .rounding(100.0)
-                                                .small(),
-                                        )
-                                        .on_hover_text(child.name.clone())
-                                        .clicked()
-                                    {
-                                        println!("Name: {}", child.name);
-                                        println!("Parent: {}", child.parent);
-                                        println!("Size: {}", child.size);
-                                        println!("Radius: {}", radius);
-                                        println!("Layer: {}", layer_id);
-                                        println!(
-                                            "Color: {:?}",
-                                            Self::get_color(general_color, specific_color)
-                                        );
-                                        println!("Rect: {}", trim.get_center_rect());
-                                        println!("Child Length: {}", child_length);
-                                        println!("Out: {}", outer_bound);
-                                        println!("");
-                                        checker = true;
-                                        //return Some(child);
-                                    }
-                                    if checker {
-                                        println!("Inside if");
-                                        println!("{:?}", Some(child));
-                                        return Some(child);
-                                    } else {
-                                        return None;
-                                    }
-                                })
-                            },
-                        );
-                        self.file_recurser(
-                            ui,
-                            layer_id + 9,
-                            child.clone(),
-                            radius + 20.0,
-                            inner_bound,
-                            (child_length) as u64,
-                            center,
-                            view_type,
-                            general_color,
-                            specific_color + 1,
-                        );
-                    }
-                    inner_bound += child_length;
-                    general_color += 1;
-                }
-                return None;
+    pub fn change_root(&mut self, new_root: Uuid) {
+        self.data.current_root = new_root;
+        self.paint_order = vec![];
+    }
+
+    pub fn reset_root(&mut self) {
+        self.data.current_root = self.data.overall_root;
+        self.paint_order = vec![];
+    }
+
+    pub fn follow_paint_order(&mut self, ui: &mut Ui, root_anchor: Rect) -> Option<Uuid> {
+        let mut root_status: Option<Uuid> = None;
+        let mut current_layer = 0;
+        let mut current_position = 0.0;
+        let mut general_counter = 1;
+        let mut visited_folders: Vec<DrawHelper> = vec![];
+        let mut current_parent = DrawHelper {
+            id: self.data.current_root,
+            starting_position: 0.0,
+        };
+        for item in &self.paint_order {
+            let item_filerow = self.data.all_files.get(&item.id).unwrap();
+
+            if current_layer != item.layer {
+                current_position = 0.0;
+                current_layer = item.layer;
             }
-            None => return None,
+
+            if item_filerow.file.parent != current_parent.id {
+                current_position = visited_folders
+                    .iter()
+                    .find(|parent| parent.id == item_filerow.file.parent)
+                    .unwrap()
+                    .starting_position;
+                current_parent = DrawHelper {
+                    id: self
+                        .data
+                        .all_files
+                        .get(&item.id)
+                        .unwrap()
+                        .file
+                        .parent
+                        .clone(),
+                    starting_position: current_position.clone(),
+                };
+            }
+            let painter = ui.painter();
+            let paint_rect = Rect {
+                min: Pos2 {
+                    x: current_position,
+                    y: root_anchor.min.y - (current_layer as f32) * self.layer_height,
+                },
+                max: Pos2 {
+                    x: current_position + (item.portion * root_anchor.max.x),
+                    y: root_anchor.min.y - ((current_layer - 1) as f32) * self.layer_height,
+                },
+            };
+            let current_color = self
+                .colors
+                .iter()
+                .find_map(|element| {
+                    if element.id == item.id {
+                        return Some(element.color);
+                    } else {
+                        return None;
+                    }
+                })
+                .unwrap_or(MyApp::get_color(current_position, current_layer));
+
+            painter.clone().rect(
+                paint_rect,
+                Rounding::ZERO,
+                current_color,
+                Stroke {
+                    width: 0.5,
+                    color: Color32::BLACK,
+                },
+            );
+
+            let display_size = if item_filerow.file.is_folder() {
+                bytes_to_human(self.data.folder_sizes.get(&item.id).unwrap().clone())
+            } else {
+                bytes_to_human(item_filerow.size)
+            };
+
+            let response = ui.interact(paint_rect, Id::new(general_counter), Sense::click());
+
+            if response.clicked() {
+                if item_filerow.file.is_folder() {
+                    root_status = Some(item.id.clone());
+                }
+            }
+
+            response.on_hover_text(
+                "Name:\n".to_owned()
+                    + &self
+                        .data
+                        .all_files
+                        .get(&item.id)
+                        .unwrap()
+                        .file
+                        .name
+                        .to_string()
+                    + "\nSize:\n"
+                    + &display_size,
+            );
+
+            if item_filerow.file.is_folder() {
+                visited_folders.push(DrawHelper {
+                    id: item.id.clone(),
+                    starting_position: current_position.clone(),
+                });
+            }
+            self.colors.push(ColorHelper {
+                id: item.id,
+                color: current_color,
+            });
+            current_position += item.portion * root_anchor.max.x;
+
+            general_counter += 1;
         }
     }
 }
@@ -388,17 +389,69 @@ impl eframe::App for MyApp {
                         });
                     });
 
-                    self.file_recurser(
-                        ui,
-                        1,
-                        self.current_root.clone(),
-                        self.inner_radius,
-                        0.0,
-                        360,
-                        center,
-                        self.view_type,
-                        0,
-                        0,
+            //Root drawing logic
+
+            let root_draw_anchor = Rect {
+                min: Pos2 {
+                    x: 0.0,
+                    y: window_size.max.y - 40.0,
+                },
+                max: window_size.max,
+            };
+
+            let bottom_text = Rect {
+                min: Pos2 {
+                    x: root_draw_anchor.max.x / 2.0,
+                    y: root_draw_anchor.max.y - 15.0,
+                },
+                max: window_size.max,
+            };
+
+            let painter = ui.painter();
+            painter
+                .clone()
+                .with_layer_id(LayerId {
+                    order: egui::Order::Foreground,
+                    id: Id::new(1),
+                })
+                .rect_filled(root_draw_anchor, 0.0, Color32::WHITE);
+
+            painter
+                .clone()
+                .with_layer_id(LayerId {
+                    order: egui::Order::Debug,
+                    id: Id::new(2),
+                })
+                .text(
+                    bottom_text.min,
+                    Align2::CENTER_BOTTOM,
+                    bytes_to_human(*self.data.folder_sizes.get(&self.data.current_root).unwrap()),
+                    FontId {
+                        size: 15.0,
+                        family: FontFamily::Proportional,
+                    },
+                    Color32::BLACK,
+                );
+            ui.allocate_ui_at_rect(
+                Rect {
+                    min: Pos2 {
+                        x: bottom_text.min.x - 30.0,
+                        y: bottom_text.min.y - 15.0,
+                    },
+                    max: bottom_text.max,
+                },
+                |ui| {
+                    ui.label(bytes_to_human(
+                        *self.data.folder_sizes.get(&self.data.current_root).unwrap(),
+                    ))
+                    .on_hover_text(
+                        self.data
+                            .all_files
+                            .get(&self.data.current_root)
+                            .unwrap()
+                            .file
+                            .name
+                            .to_string(),
                     );
                 }
                 ViewType::Rectangular => {
