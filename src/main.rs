@@ -3,7 +3,7 @@ use colors_transform::{self, Color};
 use data::NodeLayer;
 use eframe::egui::{
     self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2, Rect, Rounding,
-    Sense, Stroke, Ui,
+    Sense, Stroke, TextWrapMode, Ui,
 };
 use eframe::epaint::color;
 use lb_rs::model::file_metadata::FileType;
@@ -110,8 +110,10 @@ impl MyApp {
             new_hue = 360.0;
         }
 
+        let new_lum = (1.0 / layer as f32).max(0.5);
+
         return Color32::from_hex(
-            &(color_art::color!(HSL, new_hue, 1.0 / layer as f32, 0.5)).hex(),
+            &(color_art::color!(HSL, new_hue, 1.0 / layer as f32, new_lum)).hex(),
         )
         .unwrap_or(Color32::DEBUG_COLOR);
     }
@@ -193,6 +195,19 @@ impl MyApp {
                     child_number,
                 ));
 
+            let tab_intel: egui::WidgetText = egui::RichText::new(item.name.clone())
+                .font(egui::FontId::monospace(12.0))
+                .color(Color32::BLACK)
+                .into();
+            let tab_intel_galley = tab_intel.into_galley(
+                ui,
+                Some(TextWrapMode::Truncate),
+                paint_rect.width(),
+                egui::TextStyle::Body,
+            );
+            let tab_intel_rect = egui::Align2::LEFT_TOP
+                .anchor_size(paint_rect.left_center(), tab_intel_galley.size());
+
             painter.clone().rect(
                 paint_rect,
                 Rounding::ZERO,
@@ -202,6 +217,14 @@ impl MyApp {
                     color: Color32::BLACK,
                 },
             );
+
+            if paint_rect.width() >= 50.0 {
+                ui.painter().galley(
+                    tab_intel_rect.left_center() - egui::vec2(0.0, 5.5),
+                    tab_intel_galley,
+                    ui.visuals().text_color(),
+                );
+            }
 
             let display_size = if item_filerow.file.is_folder() {
                 bytes_to_human(self.data.folder_sizes.get(&item.id).unwrap().clone())
