@@ -10,6 +10,7 @@ use lb_rs::model::usage::bytes_to_human;
 use lb_rs::Uuid;
 use serde::Deserialize;
 use std::hash::Hash;
+use std::str::FromStr;
 mod data;
 
 #[derive(Debug, Deserialize, Clone, Hash, PartialEq, Eq)]
@@ -151,13 +152,129 @@ impl MyApp {
 
         let new_lum = (1.0 / layer as f32).max(0.5);
 
-        println!("Hue: {:?}", new_hue);
-        println!("Lum: {:?}\n", new_lum);
-
         return Color32::from_hex(
             &(color_art::color!(HSL, new_hue, 1.0 / layer as f32, new_lum)).hex(),
         )
         .unwrap_or(Color32::DEBUG_COLOR);
+    }
+
+    pub fn get_color_at_home(
+        &self,
+        curr_id: Uuid,
+        mut layer: usize,
+        mut child_number: usize,
+    ) -> Color32 {
+        let big_table = vec![
+            //Red - orange - yellow
+            [
+                //l1
+                Color32::from_hex("#991b1b").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#9a3412").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#92400e").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#854d0e").unwrap_or(Color32::DEBUG_COLOR),
+                //l2
+                Color32::from_hex("#b91c1c").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#c2410c").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#b45309").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#a16207").unwrap_or(Color32::DEBUG_COLOR),
+                //l3
+                Color32::from_hex("#dc2626").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#ea580c").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#d97706").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#ca8a04").unwrap_or(Color32::DEBUG_COLOR),
+                //l4
+                Color32::from_hex("#ef4444").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#f97316").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#f59e0b").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#eab308").unwrap_or(Color32::DEBUG_COLOR),
+            ],
+            //Green - blue
+            [
+                //l1
+                Color32::from_hex("#065f46").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#115e59").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#155e75").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#075985").unwrap_or(Color32::DEBUG_COLOR),
+                //l2
+                Color32::from_hex("#047857").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#0f766e").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#0e7490").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#0369a1").unwrap_or(Color32::DEBUG_COLOR),
+                //l3
+                Color32::from_hex("#059669").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#0d9488").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#0891b2").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#0284c7").unwrap_or(Color32::DEBUG_COLOR),
+                //l4
+                Color32::from_hex("#10b981").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#14b8a6").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#06b6d4").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#0ea5e9").unwrap_or(Color32::DEBUG_COLOR),
+            ],
+            //blue - purple - pink
+            [
+                //l1
+                Color32::from_hex("#1e40af").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#3730a3").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#5b21b6").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#6b21a8").unwrap_or(Color32::DEBUG_COLOR),
+                //l2
+                Color32::from_hex("#1d4ed8").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#4338ca").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#6d28d9").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#7e22ce").unwrap_or(Color32::DEBUG_COLOR),
+                //l3
+                Color32::from_hex("#2563eb").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#4f46e5").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#7c3aed").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#9333ea").unwrap_or(Color32::DEBUG_COLOR),
+                //l4
+                Color32::from_hex("#3b82f6").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#6366f1").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#8b5cf6").unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex("#a855f7").unwrap_or(Color32::DEBUG_COLOR),
+            ],
+        ];
+        if layer == 1 {
+            if child_number > 2 {
+                child_number = child_number % 3;
+            }
+            return big_table[child_number][0];
+        }
+
+        //could potentially get rid of these if statements
+        if layer > 4 {
+            layer = layer % 4;
+        }
+
+        if child_number > 3 {
+            child_number = child_number % 4;
+        }
+
+        let parent_color = self
+            .colors
+            .iter()
+            .find(|item| item.id == self.data.all_files.get(&curr_id).unwrap().file.parent)
+            .unwrap()
+            .color;
+
+        let parent_type = big_table
+            .iter()
+            .enumerate()
+            .find_map(|(row_index, row)| {
+                row.iter()
+                    .position(|&x| x == parent_color)
+                    .map(|col_index| (row_index, col_index))
+            })
+            .unwrap()
+            .0;
+
+        let second_term = if child_number == 0 {
+            (layer - 1) * 4
+        } else {
+            layer * child_number
+        };
+        return big_table[parent_type][second_term];
     }
 
     pub fn change_root(&mut self, new_root: Uuid) {
@@ -174,7 +291,7 @@ impl MyApp {
         let mut root_status: Option<Uuid> = None;
         let mut current_layer = 0;
         let mut current_position = 0.0;
-        let mut general_counter = 1;
+        let mut general_counter = 0;
         let mut child_number = 1;
         let mut visited_folders: Vec<DrawHelper> = vec![];
         let mut current_parent = DrawHelper {
@@ -220,6 +337,23 @@ impl MyApp {
                 },
             };
 
+            // let current_color = self
+            //     .colors
+            //     .iter()
+            //     .find_map(|element| {
+            //         if element.id == item.id {
+            //             return Some(element.color);
+            //         } else {
+            //             return None;
+            //         }
+            //     })
+            //     .unwrap_or(MyApp::get_color(
+            //         &self,
+            //         item_filerow.file.parent,
+            //         current_layer,
+            //         child_number,
+            //     ));
+
             let current_color = self
                 .colors
                 .iter()
@@ -230,11 +364,11 @@ impl MyApp {
                         return None;
                     }
                 })
-                .unwrap_or(MyApp::get_color(
+                .unwrap_or(MyApp::get_color_at_home(
                     &self,
-                    item_filerow.file.parent,
-                    current_layer,
-                    child_number,
+                    item.id,
+                    current_layer as usize,
+                    child_number - 1,
                 ));
 
             let tab_intel: egui::WidgetText = egui::RichText::new(item.name.clone())
