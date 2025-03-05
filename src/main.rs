@@ -64,17 +64,6 @@ impl MyApp {
         }
     }
 
-    // pub fn get_color(current_position: f32, layer: u64) -> Color32 {
-    //     let mut filtered_position = current_position;
-    //     if filtered_position > 360.0 {
-    //         let factor = (filtered_position / 360.0) as u64;
-    //         filtered_position -= (360 * factor) as f32;
-    //     }
-    //     let color = color_art::color!(HSL, filtered_position, 1.0 / (layer as f32), 0.5);
-    //     let hex = color.hex();
-    //     return egui::Color32::from_hex(&hex).unwrap_or(Color32::DEBUG_COLOR);
-    // }
-
     pub fn get_color(&self, parent: Uuid, layer: u64, mut child_number: usize) -> Color32 {
         if layer == 1 {
             let starting_colors = vec![
@@ -111,11 +100,6 @@ impl MyApp {
         )
         .to_hsl();
 
-        let parent_hue = parent_hsl_color.get_hue();
-        println!("Parent hue: {:?}", parent_hue);
-        println!("Hue diff: {:?}", hue_difference);
-        println!("Layer: {:?}", layer);
-
         let mut new_hue = parent_hsl_color.get_hue()
             + (hue_difference - ((1.0 / 2.0) * (120.0 / layer as f32))).round();
 
@@ -125,8 +109,6 @@ impl MyApp {
         if new_hue > 360.0 {
             new_hue = 360.0;
         }
-
-        println!("New hue: {:?}\n", new_hue);
 
         return Color32::from_hex(
             &(color_art::color!(HSL, new_hue, 1.0 / layer as f32, 0.5)).hex(),
@@ -210,7 +192,6 @@ impl MyApp {
                     current_layer,
                     child_number,
                 ));
-            //.unwrap_or(MyApp::get_color(current_position, current_layer));
 
             painter.clone().rect(
                 paint_rect,
