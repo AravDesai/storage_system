@@ -5,7 +5,6 @@ use eframe::egui::{
     self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2, Rect, Rounding,
     Sense, Stroke, TextWrapMode, Ui,
 };
-use eframe::epaint::color;
 use lb_rs::model::file_metadata::FileType;
 use lb_rs::model::usage::bytes_to_human;
 use lb_rs::Uuid;
@@ -65,7 +64,10 @@ impl MyApp {
     }
 
     pub fn get_color(&self, parent: Uuid, layer: u64, mut child_number: usize) -> Color32 {
+        //change first number in gap depending on scheme
+        let gap = 60.0 * 2.0;
         if layer == 1 {
+            //60 gap
             let starting_colors = vec![
                 Color32::from_hex(&(color_art::color!(HSL, 30.0, 1.0, 0.5)).hex())
                     .unwrap_or(Color32::DEBUG_COLOR),
@@ -80,6 +82,43 @@ impl MyApp {
                 Color32::from_hex(&(color_art::color!(HSL, 330.0, 1.0, 0.5)).hex())
                     .unwrap_or(Color32::DEBUG_COLOR),
             ];
+
+            //72 gap
+            // let starting_colors = vec![
+            //     Color32::from_hex(&(color_art::color!(HSL, 36.0, 1.0, 0.5)).hex())
+            //         .unwrap_or(Color32::DEBUG_COLOR),
+            //     Color32::from_hex(&(color_art::color!(HSL, 108.0, 1.0, 0.5)).hex())
+            //         .unwrap_or(Color32::DEBUG_COLOR),
+            //     Color32::from_hex(&(color_art::color!(HSL, 180.0, 1.0, 0.5)).hex())
+            //         .unwrap_or(Color32::DEBUG_COLOR),
+            //     Color32::from_hex(&(color_art::color!(HSL, 252.0, 1.0, 0.5)).hex())
+            //         .unwrap_or(Color32::DEBUG_COLOR),
+            //     Color32::from_hex(&(color_art::color!(HSL, 324.0, 1.0, 0.5)).hex())
+            //         .unwrap_or(Color32::DEBUG_COLOR),
+            // ];
+
+            //90 gap
+            // let starting_colors = vec![
+            //     Color32::from_hex(&(color_art::color!(HSL, 45.0, 1.0, 0.5)).hex())
+            //         .unwrap_or(Color32::DEBUG_COLOR),
+            //     Color32::from_hex(&(color_art::color!(HSL, 135.0, 1.0, 0.5)).hex())
+            //         .unwrap_or(Color32::DEBUG_COLOR),
+            //     Color32::from_hex(&(color_art::color!(HSL, 225.0, 1.0, 0.5)).hex())
+            //         .unwrap_or(Color32::DEBUG_COLOR),
+            //     Color32::from_hex(&(color_art::color!(HSL, 315.0, 1.0, 0.5)).hex())
+            //         .unwrap_or(Color32::DEBUG_COLOR),
+            // ];
+
+            //120 gap
+            // let starting_colors = vec![
+            //     Color32::from_hex(&(color_art::color!(HSL, 60.0, 1.0, 0.5)).hex())
+            //         .unwrap_or(Color32::DEBUG_COLOR),
+            //     Color32::from_hex(&(color_art::color!(HSL, 180.0, 1.0, 0.5)).hex())
+            //         .unwrap_or(Color32::DEBUG_COLOR),
+            //     Color32::from_hex(&(color_art::color!(HSL, 300.0, 1.0, 0.5)).hex())
+            //         .unwrap_or(Color32::DEBUG_COLOR),
+            // ];
+
             if child_number >= starting_colors.len() {
                 child_number = child_number % starting_colors.len();
             }
@@ -91,7 +130,7 @@ impl MyApp {
         let child_fraction =
             (child_number as f32) / (self.data.get_children(&parent_color.id).len() as f32);
 
-        let hue_difference = (120.0 / layer as f32) * child_fraction;
+        let hue_difference = (gap / layer as f32) * child_fraction;
 
         let parent_hsl_color = colors_transform::Rgb::from(
             parent_color.color.r() as f32,
@@ -101,16 +140,19 @@ impl MyApp {
         .to_hsl();
 
         let mut new_hue = parent_hsl_color.get_hue()
-            + (hue_difference - ((1.0 / 2.0) * (120.0 / layer as f32))).round();
+            + (hue_difference - ((1.0 / 2.0) * (gap / layer as f32))).round();
 
-        if new_hue < 0.0 {
+        if new_hue <= 0.0 {
             new_hue = 0.0;
         }
-        if new_hue > 360.0 {
-            new_hue = 360.0;
+        if new_hue >= 360.0 {
+            new_hue = 359.9;
         }
 
         let new_lum = (1.0 / layer as f32).max(0.5);
+
+        println!("Hue: {:?}", new_hue);
+        println!("Lum: {:?}\n", new_lum);
 
         return Color32::from_hex(
             &(color_art::color!(HSL, new_hue, 1.0 / layer as f32, new_lum)).hex(),
