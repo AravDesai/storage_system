@@ -1,9 +1,11 @@
 use color_art;
+use colors_transform::{self, Color};
 use data::NodeLayer;
 use eframe::egui::{
     self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2, Rect, Rounding,
     Sense, Stroke, Ui,
 };
+use eframe::epaint::color;
 use lb_rs::model::file_metadata::FileType;
 use lb_rs::model::usage::bytes_to_human;
 use lb_rs::Uuid;
@@ -57,20 +59,79 @@ impl MyApp {
         Self {
             data: data,
             paint_order: vec![],
-            layer_height: 20.0,
+            layer_height: 50.0,
             colors: vec![],
         }
     }
 
-    pub fn get_color(current_position: f32, layer: u64) -> Color32 {
-        let mut filtered_position = current_position;
-        if filtered_position > 360.0 {
-            let factor = (filtered_position / 360.0) as u64;
-            filtered_position -= (360 * factor) as f32;
+    // pub fn get_color(current_position: f32, layer: u64) -> Color32 {
+    //     let mut filtered_position = current_position;
+    //     if filtered_position > 360.0 {
+    //         let factor = (filtered_position / 360.0) as u64;
+    //         filtered_position -= (360 * factor) as f32;
+    //     }
+    //     let color = color_art::color!(HSL, filtered_position, 1.0 / (layer as f32), 0.5);
+    //     let hex = color.hex();
+    //     return egui::Color32::from_hex(&hex).unwrap_or(Color32::DEBUG_COLOR);
+    // }
+
+    pub fn get_color(&self, parent: Uuid, layer: u64, mut child_number: usize) -> Color32 {
+        if layer == 1 {
+            let starting_colors = vec![
+                Color32::from_hex(&(color_art::color!(HSL, 30.0, 1.0, 0.5)).hex())
+                    .unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex(&(color_art::color!(HSL, 90.0, 1.0, 0.5)).hex())
+                    .unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex(&(color_art::color!(HSL, 150.0, 1.0, 0.5)).hex())
+                    .unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex(&(color_art::color!(HSL, 210.0, 1.0, 0.5)).hex())
+                    .unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex(&(color_art::color!(HSL, 270.0, 1.0, 0.5)).hex())
+                    .unwrap_or(Color32::DEBUG_COLOR),
+                Color32::from_hex(&(color_art::color!(HSL, 330.0, 1.0, 0.5)).hex())
+                    .unwrap_or(Color32::DEBUG_COLOR),
+            ];
+            if child_number >= starting_colors.len() {
+                child_number = child_number % starting_colors.len();
+            }
+            return starting_colors[child_number];
         }
-        let color = color_art::color!(HSL, filtered_position, 1.0 / (layer as f32), 0.5);
-        let hex = color.hex();
-        return egui::Color32::from_hex(&hex).unwrap_or(Color32::DEBUG_COLOR);
+
+        let parent_color = self.colors.iter().find(|p| p.id == parent).unwrap();
+
+        let child_fraction =
+            (child_number as f32) / (self.data.get_children(&parent_color.id).len() as f32);
+
+        let hue_difference = (120.0 / layer as f32) * child_fraction;
+
+        let parent_hsl_color = colors_transform::Rgb::from(
+            parent_color.color.r() as f32,
+            parent_color.color.g() as f32,
+            parent_color.color.b() as f32,
+        )
+        .to_hsl();
+
+        let parent_hue = parent_hsl_color.get_hue();
+        println!("Parent hue: {:?}", parent_hue);
+        println!("Hue diff: {:?}", hue_difference);
+        println!("Layer: {:?}", layer);
+
+        let mut new_hue = parent_hsl_color.get_hue()
+            + (hue_difference - ((1.0 / 2.0) * (120.0 / layer as f32))).round();
+
+        if new_hue < 0.0 {
+            new_hue = 0.0;
+        }
+        if new_hue > 360.0 {
+            new_hue = 360.0;
+        }
+
+        println!("New hue: {:?}\n", new_hue);
+
+        return Color32::from_hex(
+            &(color_art::color!(HSL, new_hue, 1.0 / layer as f32, 0.5)).hex(),
+        )
+        .unwrap_or(Color32::DEBUG_COLOR);
     }
 
     pub fn change_root(&mut self, new_root: Uuid) {
@@ -88,6 +149,7 @@ impl MyApp {
         let mut current_layer = 0;
         let mut current_position = 0.0;
         let mut general_counter = 1;
+        let mut child_number = 1;
         let mut visited_folders: Vec<DrawHelper> = vec![];
         let mut current_parent = DrawHelper {
             id: self.data.current_root,
@@ -102,6 +164,7 @@ impl MyApp {
             }
 
             if item_filerow.file.parent != current_parent.id {
+                child_number = 1;
                 current_position = visited_folders
                     .iter()
                     .find(|parent| parent.id == item_filerow.file.parent)
@@ -141,7 +204,13 @@ impl MyApp {
                         return None;
                     }
                 })
-                .unwrap_or(MyApp::get_color(current_position, current_layer));
+                .unwrap_or(MyApp::get_color(
+                    &self,
+                    item_filerow.file.parent,
+                    current_layer,
+                    child_number,
+                ));
+            //.unwrap_or(MyApp::get_color(current_position, current_layer));
 
             painter.clone().rect(
                 paint_rect,
@@ -193,7 +262,7 @@ impl MyApp {
             });
 
             current_position += item.portion * root_anchor.max.x;
-
+            child_number += 1;
             general_counter += 1;
         }
         return root_status;
