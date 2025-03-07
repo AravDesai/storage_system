@@ -277,6 +277,68 @@ impl MyApp {
         return big_table[parent_type][second_term];
     }
 
+    pub fn only_layers(&self, curr_id: Uuid, mut layer: usize, mut child_number: usize) -> Color32 {
+        let big_table = vec![
+            //red
+            [
+                Color32::from_rgb(128, 15, 47),
+                Color32::from_rgb(164, 19, 60),
+                Color32::from_rgb(201, 24, 74),
+                Color32::from_rgb(255, 77, 109),
+                Color32::from_rgb(255, 117, 143),
+                Color32::from_rgb(255, 143, 163),
+            ],
+            //green
+            [
+                Color32::from_rgb(27, 67, 50),
+                Color32::from_rgb(45, 106, 79),
+                Color32::from_rgb(64, 145, 108),
+                Color32::from_rgb(82, 183, 136),
+                Color32::from_rgb(116, 198, 157),
+                Color32::from_rgb(116, 198, 157),
+            ],
+            //blue
+            [
+                Color32::from_rgb(2, 62, 138),
+                Color32::from_rgb(0, 119, 182),
+                Color32::from_rgb(0, 150, 199),
+                Color32::from_rgb(0, 180, 216),
+                Color32::from_rgb(72, 202, 228),
+                Color32::from_rgb(144, 224, 239),
+            ],
+        ];
+        if layer == 1 {
+            if child_number > 2 {
+                child_number = child_number % 3;
+            }
+            return big_table[child_number][0];
+        }
+
+        let parent_color = self
+            .colors
+            .iter()
+            .find(|item| item.id == self.data.all_files.get(&curr_id).unwrap().file.parent)
+            .unwrap()
+            .color;
+
+        let parent_type = big_table
+            .iter()
+            .enumerate()
+            .find_map(|(row_index, row)| {
+                row.iter()
+                    .position(|&x| x == parent_color)
+                    .map(|col_index| (row_index, col_index))
+            })
+            .unwrap()
+            .0;
+
+        if layer > 4 {
+            layer = layer % 4;
+        }
+
+        return big_table[parent_type][layer];
+    }
+
     pub fn change_root(&mut self, new_root: Uuid) {
         self.data.current_root = new_root;
         self.paint_order = vec![];
@@ -354,6 +416,23 @@ impl MyApp {
             //         child_number,
             //     ));
 
+            // let current_color = self
+            //     .colors
+            //     .iter()
+            //     .find_map(|element| {
+            //         if element.id == item.id {
+            //             return Some(element.color);
+            //         } else {
+            //             return None;
+            //         }
+            //     })
+            //     .unwrap_or(MyApp::get_color_at_home(
+            //         &self,
+            //         item.id,
+            //         current_layer as usize,
+            //         child_number - 1,
+            //     ));
+
             let current_color = self
                 .colors
                 .iter()
@@ -364,7 +443,7 @@ impl MyApp {
                         return None;
                     }
                 })
-                .unwrap_or(MyApp::get_color_at_home(
+                .unwrap_or(MyApp::only_layers(
                     &self,
                     item.id,
                     current_layer as usize,
