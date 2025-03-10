@@ -5,29 +5,18 @@ use eframe::egui::{
     self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2, Rect, Rounding,
     Sense, Stroke, TextWrapMode, Ui,
 };
-use lb_rs::model::file_metadata::FileType;
 use lb_rs::model::usage::bytes_to_human;
 use lb_rs::Uuid;
-use serde::Deserialize;
-use std::hash::Hash;
-use std::str::FromStr;
 mod data;
 
-#[derive(Debug, Deserialize, Clone, Hash, PartialEq, Eq)]
-struct HashData {
-    id: Uuid,
-    parent: Uuid,
-    name: String,
-    file_type: FileType,
-    size: u64,
-}
-
+//Responsible for tracking on screen locations for folders
 #[derive(Debug)]
 struct DrawHelper {
     id: Uuid,
     starting_position: f32,
 }
 
+//Responsible for keeping colors consistent
 struct ColorHelper {
     id: Uuid,
     color: Color32,
@@ -54,6 +43,7 @@ struct MyApp {
 
 impl MyApp {
     fn init(_ctx: Context) -> Self {
+        //Will be accepting real data here soon
         let data = data::Data::init(data::Data::from_file("parth-doc-data.json".to_owned()));
 
         Self {
@@ -64,220 +54,17 @@ impl MyApp {
         }
     }
 
-    pub fn get_color(&self, parent: Uuid, layer: u64, mut child_number: usize) -> Color32 {
-        //change first number in gap depending on scheme
-        let gap = 60.0 * 2.0;
-        if layer == 1 {
-            //60 gap
-            let starting_colors = vec![
-                Color32::from_hex(&(color_art::color!(HSL, 30.0, 1.0, 0.5)).hex())
-                    .unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex(&(color_art::color!(HSL, 90.0, 1.0, 0.5)).hex())
-                    .unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex(&(color_art::color!(HSL, 150.0, 1.0, 0.5)).hex())
-                    .unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex(&(color_art::color!(HSL, 210.0, 1.0, 0.5)).hex())
-                    .unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex(&(color_art::color!(HSL, 270.0, 1.0, 0.5)).hex())
-                    .unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex(&(color_art::color!(HSL, 330.0, 1.0, 0.5)).hex())
-                    .unwrap_or(Color32::DEBUG_COLOR),
-            ];
-
-            //72 gap
-            // let starting_colors = vec![
-            //     Color32::from_hex(&(color_art::color!(HSL, 36.0, 1.0, 0.5)).hex())
-            //         .unwrap_or(Color32::DEBUG_COLOR),
-            //     Color32::from_hex(&(color_art::color!(HSL, 108.0, 1.0, 0.5)).hex())
-            //         .unwrap_or(Color32::DEBUG_COLOR),
-            //     Color32::from_hex(&(color_art::color!(HSL, 180.0, 1.0, 0.5)).hex())
-            //         .unwrap_or(Color32::DEBUG_COLOR),
-            //     Color32::from_hex(&(color_art::color!(HSL, 252.0, 1.0, 0.5)).hex())
-            //         .unwrap_or(Color32::DEBUG_COLOR),
-            //     Color32::from_hex(&(color_art::color!(HSL, 324.0, 1.0, 0.5)).hex())
-            //         .unwrap_or(Color32::DEBUG_COLOR),
-            // ];
-
-            //90 gap
-            // let starting_colors = vec![
-            //     Color32::from_hex(&(color_art::color!(HSL, 45.0, 1.0, 0.5)).hex())
-            //         .unwrap_or(Color32::DEBUG_COLOR),
-            //     Color32::from_hex(&(color_art::color!(HSL, 135.0, 1.0, 0.5)).hex())
-            //         .unwrap_or(Color32::DEBUG_COLOR),
-            //     Color32::from_hex(&(color_art::color!(HSL, 225.0, 1.0, 0.5)).hex())
-            //         .unwrap_or(Color32::DEBUG_COLOR),
-            //     Color32::from_hex(&(color_art::color!(HSL, 315.0, 1.0, 0.5)).hex())
-            //         .unwrap_or(Color32::DEBUG_COLOR),
-            // ];
-
-            //120 gap
-            // let starting_colors = vec![
-            //     Color32::from_hex(&(color_art::color!(HSL, 60.0, 1.0, 0.5)).hex())
-            //         .unwrap_or(Color32::DEBUG_COLOR),
-            //     Color32::from_hex(&(color_art::color!(HSL, 180.0, 1.0, 0.5)).hex())
-            //         .unwrap_or(Color32::DEBUG_COLOR),
-            //     Color32::from_hex(&(color_art::color!(HSL, 300.0, 1.0, 0.5)).hex())
-            //         .unwrap_or(Color32::DEBUG_COLOR),
-            // ];
-
-            if child_number >= starting_colors.len() {
-                child_number = child_number % starting_colors.len();
-            }
-            return starting_colors[child_number];
-        }
-
-        let parent_color = self.colors.iter().find(|p| p.id == parent).unwrap();
-
-        let child_fraction =
-            (child_number as f32) / (self.data.get_children(&parent_color.id).len() as f32);
-
-        let hue_difference = (gap / layer as f32) * child_fraction;
-
-        let parent_hsl_color = colors_transform::Rgb::from(
-            parent_color.color.r() as f32,
-            parent_color.color.g() as f32,
-            parent_color.color.b() as f32,
-        )
-        .to_hsl();
-
-        let mut new_hue = parent_hsl_color.get_hue()
-            + (hue_difference - ((1.0 / 2.0) * (gap / layer as f32))).round();
-
-        if new_hue <= 0.0 {
-            new_hue = 0.0;
-        }
-        if new_hue >= 360.0 {
-            new_hue = 359.9;
-        }
-
-        let new_lum = (1.0 / layer as f32).max(0.5);
-
-        return Color32::from_hex(
-            &(color_art::color!(HSL, new_hue, 1.0 / layer as f32, new_lum)).hex(),
-        )
-        .unwrap_or(Color32::DEBUG_COLOR);
+    pub fn change_root(&mut self, new_root: Uuid) {
+        self.data.current_root = new_root;
+        self.paint_order = vec![];
     }
 
-    pub fn get_color_at_home(
-        &self,
-        curr_id: Uuid,
-        mut layer: usize,
-        mut child_number: usize,
-    ) -> Color32 {
-        let big_table = vec![
-            //Red - orange - yellow
-            [
-                //l1
-                Color32::from_hex("#991b1b").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#9a3412").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#92400e").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#854d0e").unwrap_or(Color32::DEBUG_COLOR),
-                //l2
-                Color32::from_hex("#b91c1c").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#c2410c").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#b45309").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#a16207").unwrap_or(Color32::DEBUG_COLOR),
-                //l3
-                Color32::from_hex("#dc2626").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#ea580c").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#d97706").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#ca8a04").unwrap_or(Color32::DEBUG_COLOR),
-                //l4
-                Color32::from_hex("#ef4444").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#f97316").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#f59e0b").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#eab308").unwrap_or(Color32::DEBUG_COLOR),
-            ],
-            //Green - blue
-            [
-                //l1
-                Color32::from_hex("#065f46").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#115e59").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#155e75").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#075985").unwrap_or(Color32::DEBUG_COLOR),
-                //l2
-                Color32::from_hex("#047857").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#0f766e").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#0e7490").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#0369a1").unwrap_or(Color32::DEBUG_COLOR),
-                //l3
-                Color32::from_hex("#059669").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#0d9488").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#0891b2").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#0284c7").unwrap_or(Color32::DEBUG_COLOR),
-                //l4
-                Color32::from_hex("#10b981").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#14b8a6").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#06b6d4").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#0ea5e9").unwrap_or(Color32::DEBUG_COLOR),
-            ],
-            //blue - purple - pink
-            [
-                //l1
-                Color32::from_hex("#1e40af").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#3730a3").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#5b21b6").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#6b21a8").unwrap_or(Color32::DEBUG_COLOR),
-                //l2
-                Color32::from_hex("#1d4ed8").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#4338ca").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#6d28d9").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#7e22ce").unwrap_or(Color32::DEBUG_COLOR),
-                //l3
-                Color32::from_hex("#2563eb").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#4f46e5").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#7c3aed").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#9333ea").unwrap_or(Color32::DEBUG_COLOR),
-                //l4
-                Color32::from_hex("#3b82f6").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#6366f1").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#8b5cf6").unwrap_or(Color32::DEBUG_COLOR),
-                Color32::from_hex("#a855f7").unwrap_or(Color32::DEBUG_COLOR),
-            ],
-        ];
-        if layer == 1 {
-            if child_number > 2 {
-                child_number = child_number % 3;
-            }
-            return big_table[child_number][0];
-        }
-
-        //could potentially get rid of these if statements
-        if layer > 4 {
-            layer = layer % 4;
-        }
-
-        if child_number > 3 {
-            child_number = child_number % 4;
-        }
-
-        let parent_color = self
-            .colors
-            .iter()
-            .find(|item| item.id == self.data.all_files.get(&curr_id).unwrap().file.parent)
-            .unwrap()
-            .color;
-
-        let parent_type = big_table
-            .iter()
-            .enumerate()
-            .find_map(|(row_index, row)| {
-                row.iter()
-                    .position(|&x| x == parent_color)
-                    .map(|col_index| (row_index, col_index))
-            })
-            .unwrap()
-            .0;
-
-        let second_term = if child_number == 0 {
-            (layer - 1) * 4
-        } else {
-            layer * child_number
-        };
-        return big_table[parent_type][second_term];
+    pub fn reset_root(&mut self) {
+        self.data.current_root = self.data.overall_root;
+        self.paint_order = vec![];
     }
 
-    pub fn only_layers(&self, curr_id: Uuid, mut layer: usize, mut child_number: usize) -> Color32 {
+    pub fn get_color(&self, curr_id: Uuid, mut layer: usize, mut child_number: usize) -> Color32 {
         let big_table = vec![
             //red
             [
@@ -332,21 +119,13 @@ impl MyApp {
             .unwrap()
             .0;
 
-        if layer > 4 {
-            layer = layer % 4;
+        layer -= 1;
+
+        if layer > 5 {
+            layer = layer % 6;
         }
 
         return big_table[parent_type][layer];
-    }
-
-    pub fn change_root(&mut self, new_root: Uuid) {
-        self.data.current_root = new_root;
-        self.paint_order = vec![];
-    }
-
-    pub fn reset_root(&mut self) {
-        self.data.current_root = self.data.overall_root;
-        self.paint_order = vec![];
     }
 
     pub fn follow_paint_order(&mut self, ui: &mut Ui, root_anchor: Rect) -> Option<Uuid> {
@@ -399,40 +178,6 @@ impl MyApp {
                 },
             };
 
-            // let current_color = self
-            //     .colors
-            //     .iter()
-            //     .find_map(|element| {
-            //         if element.id == item.id {
-            //             return Some(element.color);
-            //         } else {
-            //             return None;
-            //         }
-            //     })
-            //     .unwrap_or(MyApp::get_color(
-            //         &self,
-            //         item_filerow.file.parent,
-            //         current_layer,
-            //         child_number,
-            //     ));
-
-            // let current_color = self
-            //     .colors
-            //     .iter()
-            //     .find_map(|element| {
-            //         if element.id == item.id {
-            //             return Some(element.color);
-            //         } else {
-            //             return None;
-            //         }
-            //     })
-            //     .unwrap_or(MyApp::get_color_at_home(
-            //         &self,
-            //         item.id,
-            //         current_layer as usize,
-            //         child_number - 1,
-            //     ));
-
             let current_color = self
                 .colors
                 .iter()
@@ -443,25 +188,54 @@ impl MyApp {
                         return None;
                     }
                 })
-                .unwrap_or(MyApp::only_layers(
+                .unwrap_or(MyApp::get_color(
                     &self,
                     item.id,
                     current_layer as usize,
                     child_number - 1,
                 ));
 
+            //Folder text logic
             let tab_intel: egui::WidgetText = egui::RichText::new(item.name.clone())
                 .font(egui::FontId::monospace(12.0))
-                .color(Color32::BLACK)
+                .color({
+                    let hsl_color = colors_transform::Rgb::from(
+                        current_color.r().into(),
+                        current_color.g().into(),
+                        current_color.b().into(),
+                    )
+                    .to_hsl();
+                    let mut luminance = 0.5;
+                    if hsl_color.get_lightness() > 50.0 {
+                        luminance = (hsl_color.get_lightness() - 35.0) / 100.0;
+                    } else {
+                        luminance = (hsl_color.get_lightness() + 35.0) / 100.0;
+                    }
+                    Color32::from_hex(
+                        &(color_art::color!(
+                            HSL,
+                            hsl_color.get_hue(),
+                            hsl_color.get_saturation() / 100.0,
+                            luminance
+                        ))
+                        .hex(),
+                    )
+                    .unwrap_or(Color32::DEBUG_COLOR)
+                })
                 .into();
             let tab_intel_galley = tab_intel.into_galley(
                 ui,
                 Some(TextWrapMode::Truncate),
-                paint_rect.width(),
+                paint_rect.width() - 5.0,
                 egui::TextStyle::Body,
             );
-            let tab_intel_rect = egui::Align2::LEFT_TOP
-                .anchor_size(paint_rect.left_center(), tab_intel_galley.size());
+            let tab_intel_rect = egui::Align2::LEFT_TOP.anchor_size(
+                Pos2 {
+                    x: paint_rect.left_center().x + 5.0,
+                    y: paint_rect.left_center().y,
+                },
+                tab_intel_galley.size(),
+            );
 
             painter.clone().rect(
                 paint_rect,
@@ -626,7 +400,10 @@ impl eframe::App for MyApp {
                     );
                 },
             );
+
+            //Starts drawing the rest of the folders and files
             let potential_new_root = self.follow_paint_order(ui, root_draw_anchor);
+            //assigning a new root if selected
             match potential_new_root {
                 Some(_) => self.change_root(potential_new_root.unwrap()),
                 None => (),
