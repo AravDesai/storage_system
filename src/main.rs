@@ -207,9 +207,9 @@ impl MyApp {
                     .to_hsl();
                     let mut luminance = 0.5;
                     if hsl_color.get_lightness() > 50.0 {
-                        luminance = (hsl_color.get_lightness() - 35.0) / 100.0;
+                        luminance = (hsl_color.get_lightness() - 50.0) / 100.0;
                     } else {
-                        luminance = (hsl_color.get_lightness() + 35.0) / 100.0;
+                        luminance = (hsl_color.get_lightness() + 50.0) / 100.0;
                     }
                     Color32::from_hex(
                         &(color_art::color!(
