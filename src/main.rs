@@ -1,29 +1,25 @@
+use color_art;
+use colors_transform::{self, Color};
 use data::NodeLayer;
 use eframe::egui::{
-    self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2,
-    Rect, Rounding, Stroke, Ui,
+    self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2, Rect, Rounding,
+    Sense, Stroke, TextWrapMode, Ui,
 };
 use lb_rs::model::usage::bytes_to_human;
-use lb_rs::model::file_metadata::FileType;
 use lb_rs::Uuid;
-use serde::Deserialize;
-use std::hash::Hash;
-
 mod data;
 
-#[derive(Debug, Deserialize, Clone, Hash, PartialEq, Eq)]
-struct HashData {
-    id: Uuid,
-    parent: Uuid,
-    name: String,
-    file_type: FileType,
-    size: u64,
-}
-
+//Responsible for tracking on screen locations for folders
 #[derive(Debug)]
 struct DrawHelper {
     id: Uuid,
     starting_position: f32,
+}
+
+//Responsible for keeping colors consistent
+struct ColorHelper {
+    id: Uuid,
+    color: Color32,
 }
 
 fn main() {
@@ -42,56 +38,20 @@ struct MyApp {
     data: data::Data,
     layer_height: f32,
     paint_order: Vec<NodeLayer>,
+    colors: Vec<ColorHelper>,
 }
 
 impl MyApp {
     fn init(_ctx: Context) -> Self {
+        //Will be accepting real data here soon
         let data = data::Data::init(data::Data::from_file("parth-doc-data.json".to_owned()));
 
         Self {
             data: data,
             paint_order: vec![],
-            layer_height: 20.0,
+            layer_height: 50.0,
+            colors: vec![],
         }
-    }
-
-    pub fn get_color(mut general: usize, mut specific: usize) -> Color32 {
-        //Need to change this so it becomes more consistent when clicking through different roots
-        let colors = vec![
-            [
-                Color32::RED,
-                Color32::DARK_RED,
-                Color32::LIGHT_RED,
-                Color32::from_rgb(255, 165, 0),
-            ],
-            [
-                Color32::GREEN,
-                Color32::DARK_GREEN,
-                Color32::LIGHT_GREEN,
-                Color32::from_rgb(0, 250, 154),
-            ],
-            [
-                Color32::BLUE,
-                Color32::DARK_BLUE,
-                Color32::LIGHT_BLUE,
-                Color32::from_rgb(123, 104, 238),
-            ],
-            [
-                Color32::YELLOW,
-                Color32::from_rgb(139, 128, 0),
-                Color32::from_rgb(255, 245, 158),
-                Color32::from_rgb(249, 166, 2),
-            ],
-        ];
-
-        if general >= colors.len() {
-            general = general % colors.len();
-        }
-
-        if specific >= colors[0].len() {
-            specific = specific % colors[0].len();
-        }
-        return colors[general][specific];
     }
 
     pub fn change_root(&mut self, new_root: Uuid) {
@@ -104,11 +64,76 @@ impl MyApp {
         self.paint_order = vec![];
     }
 
+    pub fn get_color(&self, curr_id: Uuid, mut layer: usize, mut child_number: usize) -> Color32 {
+        let big_table = vec![
+            //red
+            [
+                Color32::from_rgb(128, 15, 47),
+                Color32::from_rgb(164, 19, 60),
+                Color32::from_rgb(201, 24, 74),
+                Color32::from_rgb(255, 77, 109),
+                Color32::from_rgb(255, 117, 143),
+                Color32::from_rgb(255, 143, 163),
+            ],
+            //green
+            [
+                Color32::from_rgb(27, 67, 50),
+                Color32::from_rgb(45, 106, 79),
+                Color32::from_rgb(64, 145, 108),
+                Color32::from_rgb(82, 183, 136),
+                Color32::from_rgb(116, 198, 157),
+                Color32::from_rgb(116, 198, 157),
+            ],
+            //blue
+            [
+                Color32::from_rgb(2, 62, 138),
+                Color32::from_rgb(0, 119, 182),
+                Color32::from_rgb(0, 150, 199),
+                Color32::from_rgb(0, 180, 216),
+                Color32::from_rgb(72, 202, 228),
+                Color32::from_rgb(144, 224, 239),
+            ],
+        ];
+        if layer == 1 {
+            if child_number > 2 {
+                child_number = child_number % 3;
+            }
+            return big_table[child_number][0];
+        }
+
+        let parent_color = self
+            .colors
+            .iter()
+            .find(|item| item.id == self.data.all_files.get(&curr_id).unwrap().file.parent)
+            .unwrap()
+            .color;
+
+        let parent_type = big_table
+            .iter()
+            .enumerate()
+            .find_map(|(row_index, row)| {
+                row.iter()
+                    .position(|&x| x == parent_color)
+                    .map(|col_index| (row_index, col_index))
+            })
+            .unwrap()
+            .0;
+
+        layer -= 1;
+
+        if layer > 5 {
+            layer = layer % 6;
+        }
+
+        return big_table[parent_type][layer];
+    }
+
     pub fn follow_paint_order(&mut self, ui: &mut Ui, root_anchor: Rect) -> Option<Uuid> {
         let mut root_status: Option<Uuid> = None;
         let mut current_layer = 0;
         let mut current_position = 0.0;
-        let mut general_counter = 1;
+        let mut general_counter = 0;
+        let mut child_number = 1;
         let mut visited_folders: Vec<DrawHelper> = vec![];
         let mut current_parent = DrawHelper {
             id: self.data.current_root,
@@ -123,6 +148,7 @@ impl MyApp {
             }
 
             if item_filerow.file.parent != current_parent.id {
+                child_number = 1;
                 current_position = visited_folders
                     .iter()
                     .find(|parent| parent.id == item_filerow.file.parent)
@@ -151,76 +177,125 @@ impl MyApp {
                     y: root_anchor.min.y - ((current_layer - 1) as f32) * self.layer_height,
                 },
             };
+
+            let current_color = self
+                .colors
+                .iter()
+                .find_map(|element| {
+                    if element.id == item.id {
+                        return Some(element.color);
+                    } else {
+                        return None;
+                    }
+                })
+                .unwrap_or(MyApp::get_color(
+                    &self,
+                    item.id,
+                    current_layer as usize,
+                    child_number - 1,
+                ));
+
+            //Folder text logic
+            let tab_intel: egui::WidgetText = egui::RichText::new(item.name.clone())
+                .font(egui::FontId::monospace(12.0))
+                .color({
+                    let hsl_color = colors_transform::Rgb::from(
+                        current_color.r().into(),
+                        current_color.g().into(),
+                        current_color.b().into(),
+                    )
+                    .to_hsl();
+                    let mut luminance = 0.5;
+                    if hsl_color.get_lightness() > 50.0 {
+                        luminance = (hsl_color.get_lightness() - 50.0) / 100.0;
+                    } else {
+                        luminance = (hsl_color.get_lightness() + 50.0) / 100.0;
+                    }
+                    Color32::from_hex(
+                        &(color_art::color!(
+                            HSL,
+                            hsl_color.get_hue(),
+                            hsl_color.get_saturation() / 100.0,
+                            luminance
+                        ))
+                        .hex(),
+                    )
+                    .unwrap_or(Color32::DEBUG_COLOR)
+                })
+                .into();
+            let tab_intel_galley = tab_intel.into_galley(
+                ui,
+                Some(TextWrapMode::Truncate),
+                paint_rect.width() - 5.0,
+                egui::TextStyle::Body,
+            );
+            let tab_intel_rect = egui::Align2::LEFT_TOP.anchor_size(
+                Pos2 {
+                    x: paint_rect.left_center().x + 5.0,
+                    y: paint_rect.left_center().y,
+                },
+                tab_intel_galley.size(),
+            );
+
             painter.clone().rect(
                 paint_rect,
                 Rounding::ZERO,
-                MyApp::get_color(general_counter, current_layer as usize), //I'll make this look nicer soon,
+                current_color,
                 Stroke {
                     width: 0.5,
                     color: Color32::BLACK,
                 },
             );
 
+            if paint_rect.width() >= 50.0 {
+                ui.painter().galley(
+                    tab_intel_rect.left_center() - egui::vec2(0.0, 5.5),
+                    tab_intel_galley,
+                    ui.visuals().text_color(),
+                );
+            }
+
             let display_size = if item_filerow.file.is_folder() {
-                bytes_to_human(self.data
-                    .folder_sizes
-                    .get(&item.id)
-                    .unwrap()
-                    .clone()) 
+                bytes_to_human(self.data.folder_sizes.get(&item.id).unwrap().clone())
             } else {
                 bytes_to_human(item_filerow.size)
             };
 
-            ui.allocate_ui_at_rect(paint_rect, |ui| {
-                ui.with_layer_id(
-                    LayerId {
-                        order: eframe::egui::Order::Foreground,
-                        id: Id::new(3),
-                    },
-                    |ui| {
-                        if ui
-                            .colored_label(Color32::WHITE, ".")
-                            .on_hover_text(
-                                "Name:\n".to_owned()
-                                    + &self
-                                        .data
-                                        .all_files
-                                        .get(&item.id)
-                                        .unwrap()
-                                        .file
-                                        .name
-                                        .to_string()
-                                    + "\nSize:\n"
-                                    + &display_size
-                                    + "\nParent:\n"
-                                    + &self
-                                        .data
-                                        .all_files
-                                        .get(
-                                            &self.data.all_files.get(&item.id).unwrap().file.parent,
-                                        )
-                                        .unwrap()
-                                        .file
-                                        .name
-                                        .to_string(),
-                            )
-                            .clicked()
-                        {
-                            if item_filerow.file.is_folder() {
-                                root_status = Some(item.id.clone());
-                            }
-                        }
-                    },
-                )
-            });
+            let response = ui.interact(paint_rect, Id::new(general_counter), Sense::click());
+
+            if response.clicked() {
+                if item_filerow.file.is_folder() {
+                    root_status = Some(item.id.clone());
+                }
+            }
+
+            response.on_hover_text(
+                "Name:\n".to_owned()
+                    + &self
+                        .data
+                        .all_files
+                        .get(&item.id)
+                        .unwrap()
+                        .file
+                        .name
+                        .to_string()
+                    + "\nSize:\n"
+                    + &display_size,
+            );
+
             if item_filerow.file.is_folder() {
                 visited_folders.push(DrawHelper {
                     id: item.id.clone(),
                     starting_position: current_position.clone(),
                 });
             }
-            current_position += item.portion * root_anchor.max.x;
+            self.colors.push(ColorHelper {
+                id: item.id,
+                color: current_color,
+            });
 
+            current_position += item.portion * root_anchor.max.x;
+            child_number += 1;
             general_counter += 1;
         }
         return root_status;
@@ -295,10 +370,7 @@ impl eframe::App for MyApp {
                 .text(
                     bottom_text.min,
                     Align2::CENTER_BOTTOM,
-                    bytes_to_human(*self.data
-                        .folder_sizes
-                        .get(&self.data.current_root)
-                        .unwrap()),
+                    bytes_to_human(*self.data.folder_sizes.get(&self.data.current_root).unwrap()),
                     FontId {
                         size: 15.0,
                         family: FontFamily::Proportional,
@@ -314,12 +386,9 @@ impl eframe::App for MyApp {
                     max: bottom_text.max,
                 },
                 |ui| {
-                    ui.label(
-                        bytes_to_human(*self.data
-                            .folder_sizes
-                            .get(&self.data.current_root)
-                            .unwrap()),
-                    )
+                    ui.label(bytes_to_human(
+                        *self.data.folder_sizes.get(&self.data.current_root).unwrap(),
+                    ))
                     .on_hover_text(
                         self.data
                             .all_files
@@ -331,7 +400,10 @@ impl eframe::App for MyApp {
                     );
                 },
             );
+
+            //Starts drawing the rest of the folders and files
             let potential_new_root = self.follow_paint_order(ui, root_draw_anchor);
+            //assigning a new root if selected
             match potential_new_root {
                 Some(_) => self.change_root(potential_new_root.unwrap()),
                 None => (),

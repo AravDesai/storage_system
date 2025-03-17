@@ -107,7 +107,11 @@ impl Data {
         for child in children.into_iter() {
             gathered_children.push(child);
         }
-        gathered_children.sort_by(|a, b| b.children.iter().count().cmp(&a.children.iter().count()));
+        gathered_children.sort_by(|a, b| {
+            let a_size = (a.portion * 10000.0) as u32;
+            let b_size = (b.portion * 10000.0) as u32;
+            b_size.cmp(&a_size)
+        });
         return gathered_children;
     }
 
