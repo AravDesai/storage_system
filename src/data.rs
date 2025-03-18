@@ -1,22 +1,21 @@
-use std::{collections::HashMap, fs};
-//model::file::File
-use lb_rs::{shared::file::File, shared::file_metadata::FileType, Uuid};
+use lb_rs::model::file::File;
+use lb_rs::Uuid;
 use serde::Deserialize;
-use std::cmp::Ordering;
+use std::{collections::HashMap, fs};
 
 #[derive(Debug)]
 pub struct Data {
-    current_root: Uuid,
-    all_files: HashMap<Uuid, FileRow>,
-    folder_sizes: HashMap<Uuid, u64>,
-    overall_root: Uuid,
+    pub current_root: Uuid,
+    pub all_files: HashMap<Uuid, FileRow>,
+    pub folder_sizes: HashMap<Uuid, u64>,
+    pub overall_root: Uuid,
 }
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct Node {
     pub id: Uuid,
     pub name: String,
-    pub portion: f64,
+    pub portion: f32,
     pub children: Vec<Node>,
 }
 
@@ -24,7 +23,7 @@ pub struct Node {
 pub struct NodeLayer {
     pub id: Uuid,
     pub name: String,
-    pub portion: f64,
+    pub portion: f32,
     pub layer: u64,
 }
 
@@ -35,11 +34,9 @@ pub struct FileRow {
 }
 
 impl Data {
-    pub fn from_file() {
-        let file_contents = fs::read_to_string("parth-doc-data.json").expect("Couldn't read file");
-        let data: Vec<FileRow> =
-            serde_json::from_str(&file_contents).expect("Json not formatted well");
-        Self::init(data);
+    pub fn from_file(file: String) -> Vec<FileRow> {
+        let file_contents = fs::read_to_string(file).expect("Couldn't read file");
+        return serde_json::from_str(&file_contents).expect("Json not formatted well");
     }
 
     pub fn init(data: Vec<FileRow>) -> Self {
@@ -56,7 +53,7 @@ impl Data {
         //Initial for loop for folders is necessary to give folders starting value as we need to go over folders again to update sizes
         for datum in data.clone() {
             if datum.file.is_folder() {
-                folder_sizes.insert(datum.file.id, datum.size);
+                folder_sizes.insert(datum.file.id, datum.size); //change to datum.size when metadata is accounted for
             }
         }
         for datum in data {
@@ -89,15 +86,15 @@ impl Data {
         if !self.all_files.get(id).unwrap().file.is_folder() {
             return vec![];
         }
-        let total_size = *self.folder_sizes.get(&self.current_root).unwrap() as f64;
+        let total_size = *self.folder_sizes.get(&self.current_root).unwrap() as f32;
         let children = self
             .all_files
             .values()
             .filter(|f| f.file.parent == *id && f.file.id != *id)
             .map(|f| {
-                let mut current_size = f.size as f64;
+                let mut current_size = f.size as f32;
                 if f.file.is_folder() {
-                    current_size = *self.folder_sizes.get(&f.file.id).unwrap() as f64;
+                    current_size = *self.folder_sizes.get(&f.file.id).unwrap() as f32;
                 }
                 Node {
                     id: f.file.id,
@@ -110,11 +107,12 @@ impl Data {
         for child in children.into_iter() {
             gathered_children.push(child);
         }
+        gathered_children.sort_by(|a, b| {
+            let a_size = (a.portion * 10000.0) as u32;
+            let b_size = (b.portion * 10000.0) as u32;
+            b_size.cmp(&a_size)
+        });
         return gathered_children;
-    }
-
-    pub fn reset_root(&mut self) {
-        self.current_root = self.overall_root;
     }
 
     fn set_layers(
@@ -132,7 +130,7 @@ impl Data {
             if !slice.children.is_empty() {
                 let hold = Data::set_layers(&slice.children, current_layer + 1, raw_layers.clone());
                 for item in hold {
-                    if raw_layers.contains(&item){
+                    if raw_layers.contains(&item) {
                         continue;
                     }
                     raw_layers.push(item.clone());
@@ -147,42 +145,28 @@ impl Data {
 
         let tree = self.get_children(&self.current_root);
         let mut paint_order_vec = Data::set_layers(&tree, 1, vec![]);
-        paint_order_vec.push(NodeLayer {
-            id: self.current_root,
-            name: self
-                .all_files
-                .get(&self.current_root)
-                .unwrap()
-                .file
-                .name
-                .clone(),
-            portion: 1.0,
-            layer: 0,
-        });
-        paint_order_vec.sort_by(|a, b| b.layer.cmp(&a.layer));
+        paint_order_vec.sort_by(|a, b| a.layer.cmp(&b.layer));
         return paint_order_vec;
     }
 }
 
+//Some of these tests may not work due to change in logic - will be fixed soon
 #[cfg(test)]
 mod test {
-    use std::{collections::HashMap, fs};
-
-    use eframe::egui::TextBuffer;
-    use lb_rs::{File, Uuid};
-
-    use crate::data::{FileRow, Node, NodeLayer};
-
     use super::Data;
+    use crate::data::{FileRow, Node, NodeLayer};
+    use lb_rs::model::file::File;
+    use lb_rs::model::file_metadata::FileType;
+    use lb_rs::Uuid;
 
-    fn get_root_two_files()->Vec<FileRow>{
+    fn get_root_two_files() -> Vec<FileRow> {
         return vec![
             FileRow {
                 file: File {
                     id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "Root".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -194,7 +178,7 @@ mod test {
                     id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "file1".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -206,7 +190,7 @@ mod test {
                     id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "file2".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -255,7 +239,7 @@ mod test {
                     id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "Root".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -267,7 +251,7 @@ mod test {
                     id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "Layer1".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -279,7 +263,7 @@ mod test {
                     id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                     parent: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                     name: "Layer2".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -291,7 +275,7 @@ mod test {
                     id: Uuid::parse_str("fc50112e-5f9d-4ebf-b6a8-023ba619fd0f").unwrap(),
                     parent: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                     name: "file".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -328,7 +312,7 @@ mod test {
                     id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "Root".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -340,7 +324,7 @@ mod test {
                     id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "leftlayer1".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -352,7 +336,7 @@ mod test {
                     id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                     parent: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                     name: "leftlayer2file".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -364,7 +348,7 @@ mod test {
                     id: Uuid::parse_str("219df288-f08b-422b-adf6-59534df7ee91").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "rightlayer1".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -376,7 +360,7 @@ mod test {
                     id: Uuid::parse_str("f2c90c41-4aea-44be-a79d-caea3f0306aa").unwrap(),
                     parent: Uuid::parse_str("219df288-f08b-422b-adf6-59534df7ee91").unwrap(),
                     name: "rightlayer2file1".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -388,7 +372,7 @@ mod test {
                     id: Uuid::parse_str("fe777276-381f-408b-b41a-bac9b302b9cc").unwrap(),
                     parent: Uuid::parse_str("219df288-f08b-422b-adf6-59534df7ee91").unwrap(),
                     name: "rightlayer2file2".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -434,21 +418,24 @@ mod test {
                 portion: 1.0,
                 layer: 0,
             },
-
         ];
         let actual_order = Data::get_paint_order(&hold);
-        assert_eq!(expected_order, actual_order, "\nExpected: \n{:?}\nActual:\n{:?}\n",expected_order,actual_order);
+        assert_eq!(
+            expected_order, actual_order,
+            "\nExpected: \n{:?}\nActual:\n{:?}\n",
+            expected_order, actual_order
+        );
     }
 
     #[test]
-    fn jumbled_input_uneven_tree(){
+    fn jumbled_input_uneven_tree() {
         let data: Vec<FileRow> = vec![
             FileRow {
                 file: File {
                     id: Uuid::parse_str("fc50112e-5f9d-4ebf-b6a8-023ba619fd0f").unwrap(),
                     parent: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                     name: "Left3".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -460,7 +447,7 @@ mod test {
                     id: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "Root".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -472,7 +459,7 @@ mod test {
                     id: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                     parent: Uuid::parse_str("8cac2286-87d0-4df3-b6f7-5c86c4fa928c").unwrap(),
                     name: "Left1".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -484,7 +471,7 @@ mod test {
                     id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                     parent: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                     name: "Left2".to_string(),
-                    file_type: lb_rs::FileType::Folder,
+                    file_type: FileType::Folder,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -496,7 +483,7 @@ mod test {
                     id: Uuid::parse_str("6c1cb978-7c4e-4d83-825a-477287f89c69").unwrap(),
                     parent: Uuid::parse_str("1c890596-1df9-4638-b0c1-ec77fdaa7a49").unwrap(),
                     name: "Right2".to_string(),
-                    file_type: lb_rs::FileType::Document,
+                    file_type: FileType::Document,
                     last_modified: 1693063210788,
                     last_modified_by: "parth".to_string(),
                     shares: [].to_vec(),
@@ -510,19 +497,19 @@ mod test {
             NodeLayer {
                 id: Uuid::parse_str("fc50112e-5f9d-4ebf-b6a8-023ba619fd0f").unwrap(),
                 name: "Left3".to_string(),
-                portion: 800.0/5800.0,
+                portion: 800.0 / 5800.0,
                 layer: 3,
             },
             NodeLayer {
                 id: Uuid::parse_str("9b052bca-50b4-47b1-8f6a-8a51e3310d86").unwrap(),
                 name: "Left2".to_string(),
-                portion: 1800.0/5800.0,
+                portion: 1800.0 / 5800.0,
                 layer: 2,
             },
             NodeLayer {
                 id: Uuid::parse_str("6c1cb978-7c4e-4d83-825a-477287f89c69").unwrap(),
                 name: "Right2".to_string(),
-                portion: 2000.0/5800.0,
+                portion: 2000.0 / 5800.0,
                 layer: 2,
             },
             NodeLayer {
@@ -538,6 +525,10 @@ mod test {
                 layer: 0,
             },
         ];
-        assert_eq!(expected_order, actual_order, "\nExpected: \n{:?}\nActual:\n{:?}\n",expected_order,actual_order);
+        assert_eq!(
+            expected_order, actual_order,
+            "\nExpected: \n{:?}\nActual:\n{:?}\n",
+            expected_order, actual_order
+        );
     }
 }
