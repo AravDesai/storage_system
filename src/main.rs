@@ -5,6 +5,8 @@ use eframe::egui::{
     self, menu, Align2, Color32, Context, FontFamily, FontId, Id, LayerId, Pos2, Rect, Rounding,
     Sense, Stroke, TextWrapMode, Ui,
 };
+use lb_rs::blocking::Lb;
+use lb_rs::model::core_config::Config;
 use lb_rs::model::usage::bytes_to_human;
 use lb_rs::Uuid;
 mod data;
@@ -23,6 +25,9 @@ struct ColorHelper {
 }
 
 fn main() {
+    let lb = Lb::init(Config::cli_config("cli")).unwrap();
+    lb.get_usage().unwrap();
+    lb.list_metadatas().unwrap();
     let options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default().with_inner_size([1500.0, 750.0]),
         ..Default::default()
